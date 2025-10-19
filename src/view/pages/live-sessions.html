@@ -14,7 +14,7 @@
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/index.html">
+                <a href="../../index.html">
                     <span class="material-icons">explore</span>
                     <span class="logo-text">Navigate</span>
                 </a>
@@ -40,31 +40,31 @@
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
-                    <a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/services.html">
+                    <a href="services.html">
                         <span class="material-icons">miscellaneous_services</span>
                         <span class="menu-text">Services</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/schedule.html">
+                    <a href="schedule.html">
                         <span class="material-icons">calendar_today</span>
                         <span class="menu-text">Schedule</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/dashboard.html">
+                    <a href="dashboard.html">
                         <span class="material-icons">dashboard</span>
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/resources.html">
+                    <a href="resources.html">
                         <span class="material-icons">library_books</span>
                         <span class="menu-text">Resources</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/about.html">
+                    <a href="about.html">
                         <span class="material-icons">info</span>
                         <span class="menu-text">About</span>
                     </a>
@@ -192,9 +192,9 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/index.html">Home</a></li>
-                    <li><a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/services.html">Services</a></li>
-                    <li><a href="file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/about.html">About</a></li>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -270,12 +270,12 @@
                 `;
 
                 card.querySelector('.join-session-btn').addEventListener('click', function() {
-                    const joinUrl = new URL('file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/join-session.html');
-                    joinUrl.searchParams.set('subject', session.subject);
-                    joinUrl.searchParams.set('date', session.date);
-                    joinUrl.searchParams.set('time', session.time);
-                    joinUrl.searchParams.set('meetLink', session.meetLink);
-                    window.location.href = joinUrl.toString();
+                    const params = new URLSearchParams();
+                    params.set('subject', session.subject);
+                    params.set('date', session.date);
+                    params.set('time', session.time);
+                    params.set('meetLink', session.meetLink);
+                    window.location.href = `join-session.html?${params.toString()}`;
                 });
 
                 return card;
@@ -465,12 +465,12 @@
                             localStorage.setItem('sessions', JSON.stringify(sessions));
 
                             // Navigate to join session page
-                            const joinUrl = new URL('file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/join-session.html');
-                            joinUrl.searchParams.set('subject', selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1));
-                            joinUrl.searchParams.set('date', selectedDate);
-                            joinUrl.searchParams.set('time', selectedTime);
-                            joinUrl.searchParams.set('meetLink', meetLink);
-                            window.location.href = joinUrl.toString();
+                            const params = new URLSearchParams();
+                            params.set('subject', selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1));
+                            params.set('date', selectedDate);
+                            params.set('time', selectedTime);
+                            params.set('meetLink', meetLink);
+                            window.location.href = `join-session.html?${params.toString()}`;
                         }, 300); // Short delay for the selection animation
                     }
                 });
@@ -600,12 +600,12 @@
                         localStorage.setItem('sessions', JSON.stringify(sessions));
 
                         // Navigate to join session
-                        const joinUrl = new URL('file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/join-session.html');
-                        joinUrl.searchParams.set('subject', selectedSubject);
-                        joinUrl.searchParams.set('date', selectedDate);
-                        joinUrl.searchParams.set('time', selectedTime);
-                        joinUrl.searchParams.set('meetLink', meetLink);
-                        window.location.href = joinUrl.toString();
+                        const params = new URLSearchParams();
+                        params.set('subject', selectedSubject);
+                        params.set('date', selectedDate);
+                        params.set('time', selectedTime);
+                        params.set('meetLink', meetLink);
+                        window.location.href = `join-session.html?${params.toString()}`;
                     });
                 });
             });
@@ -675,12 +675,12 @@
                     
                     // Add click event to navigate to join session page
                     newSession.addEventListener('click', function() {
-                        const joinUrl = new URL('file:///Users/sreehaasinijakkaraju/Documents/Development/Applications/Navigate_vscode/src/view/pages/join-session.html');
-                        joinUrl.searchParams.set('subject', selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1));
-                        joinUrl.searchParams.set('date', selectedDate);
-                        joinUrl.searchParams.set('time', selectedTime);
-                        joinUrl.searchParams.set('meetLink', meetLink);
-                        window.location.href = joinUrl.toString();
+                        const params = new URLSearchParams();
+                        params.set('subject', selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1));
+                        params.set('date', selectedDate);
+                        params.set('time', selectedTime);
+                        params.set('meetLink', meetLink);
+                        window.location.href = `join-session.html?${params.toString()}`;
                     });
                     
                     upcomingSessions.appendChild(newSession);
