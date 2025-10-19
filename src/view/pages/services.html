@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Services - Navigate</title>
+
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="../../css/chatbot.css">
     <link rel="stylesheet" href="../../css/messenger.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
     <style>
-        .menu-item a[href*="services"] {
-            background-color: var(--hover-color);
-            color: var(--text-color);
-        }
-        .menu-item a[href*="services"] .material-icons {
-            color: var(--accent-color);
-        }
+        /* Active tab highlighting */
+        .menu-item a[href*="services"] { background-color: var(--hover-color); color: var(--text-color); }
+        .menu-item a[href*="services"] .material-icons { color: var(--accent-color); }
+
+        /* hide chatbot & messenger by default; show when .visible added */
+        .toggle-section { display: none; }
+        .toggle-section.visible { display: block; }
+
+        /* a small visual transition */
+        .chat-window, .messenger-window { transition: transform .12s ease, opacity .12s ease; }
+        .toggle-section.visible .chat-window,
+        .toggle-section.visible .messenger-window { transform: none; opacity: 1; }
     </style>
 </head>
 <body>
@@ -30,14 +37,8 @@
             </div>
             <h1 class="title">Navigate</h1>
             <div class="auth-buttons">
-                <button class="auth-btn">
-                    <span class="material-icons">person_outline</span>
-                    <span>Sign In</span>
-                </button>
-                <button class="auth-btn">
-                    <span class="material-icons">person_add</span>
-                    <span>Sign Up</span>
-                </button>
+                <button class="auth-btn"><span class="material-icons">person_outline</span><span>Sign In</span></button>
+                <button class="auth-btn"><span class="material-icons">person_add</span><span>Sign Up</span></button>
             </div>
         </div>
     </header>
@@ -45,36 +46,11 @@
     <main class="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
-                <li class="menu-item">
-                    <a href="services.html">
-                        <span class="material-icons">miscellaneous_services</span>
-                        <span class="menu-text">Services</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="schedule.html">
-                        <span class="material-icons">calendar_today</span>
-                        <span class="menu-text">Schedule</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="dashboard.html">
-                        <span class="material-icons">dashboard</span>
-                        <span class="menu-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="resources.html">
-                        <span class="material-icons">library_books</span>
-                        <span class="menu-text">Resources</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="about.html">
-                        <span class="material-icons">info</span>
-                        <span class="menu-text">About</span>
-                    </a>
-                </li>
+                <li class="menu-item"><a href="services.html"><span class="material-icons">miscellaneous_services</span><span class="menu-text">Services</span></a></li>
+                <li class="menu-item"><a href="schedule.html"><span class="material-icons">calendar_today</span><span class="menu-text">Schedule</span></a></li>
+                <li class="menu-item"><a href="dashboard.html"><span class="material-icons">dashboard</span><span class="menu-text">Dashboard</span></a></li>
+                <li class="menu-item"><a href="resources.html"><span class="material-icons">library_books</span><span class="menu-text">Resources</span></a></li>
+                <li class="menu-item"><a href="about.html"><span class="material-icons">info</span><span class="menu-text">About</span></a></li>
             </ul>
         </nav>
 
@@ -89,7 +65,8 @@
             </div>
 
             <div class="service-card">
-                <a href="#services-chatbot" style="text-decoration: none; color: inherit;">
+                <!-- clicking this will show the chatbot section -->
+                <a href="#services-chatbot" class="toggle-link" data-target="services-chatbot" style="text-decoration: none; color: inherit;">
                     <span class="material-icons">chat</span>
                     <h3>Chatbot</h3>
                     <p>Ask the Navigate Bot quick questions about scheduling, resources, and joining sessions.</p>
@@ -97,7 +74,8 @@
             </div>
 
             <div class="service-card">
-                <a href="#services-messenger" style="text-decoration: none; color: inherit;">
+                <!-- clicking this will show the messenger (tutor chat) section -->
+                <a href="#services-messenger" class="toggle-link" data-target="services-messenger" style="text-decoration: none; color: inherit;">
                     <span class="material-icons">forum</span>
                     <h3>Tutor Chat</h3>
                     <p>Get direct help from our expert tutors during business hours (9 AM - 5 PM).</p>
@@ -105,21 +83,23 @@
             </div>
         </div>
 
-        <section id="services-chatbot" class="page-section">
+        <!-- chatbot is hidden by default; shown when user clicks the Chatbot card -->
+        <section id="services-chatbot" class="page-section toggle-section" aria-hidden="true">
             <h2>Ask the Navigate Bot</h2>
             <p>Get quick help about scheduling, resources, or how to use Navigate.</p>
 
             <div class="chat-window">
-                <div id="chat-messages" class="chat-messages"></div>
+                <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-atomic="false"></div>
                 <form id="chat-form" class="chat-form">
-                    <input id="chat-input" class="chat-input" type="text" 
+                    <input id="chat-input" class="chat-input" type="text" autocomplete="off"
                            placeholder="Ask about schedules, resources, joining sessions..." />
                     <button id="chat-send" class="chat-send" type="submit">Send</button>
                 </form>
             </div>
         </section>
 
-        <section id="services-messenger" class="page-section">
+        <!-- messenger is hidden by default; shown when user clicks the Tutor Chat card -->
+        <section id="services-messenger" class="page-section toggle-section" aria-hidden="true">
             <h2>Message Our Tutors</h2>
             <p>Get personalized help from our expert tutors during business hours (9 AM - 5 PM).</p>
 
@@ -128,21 +108,15 @@
                     <div id="tutor-status" class="tutor-status"></div>
                     <h3>Tutor Chat</h3>
                 </div>
-                <div id="tutor-messages" class="messenger-messages"></div>
+                <div id="tutor-messages" class="messenger-messages" aria-live="polite"></div>
                 <form id="messenger-form" class="messenger-form">
-                    <textarea id="messenger-input" 
-                        class="messenger-input"
-                        placeholder="Type your message here..."
-                        rows="2"></textarea>
-                    <button type="submit" class="messenger-send">
-                        <span class="material-icons">send</span>
-                        <span>Send</span>
-                    </button>
+                    <textarea id="messenger-input" class="messenger-input" placeholder="Type your message here..." rows="2"></textarea>
+                    <button type="submit" class="messenger-send"><span class="material-icons">send</span><span>Send</span></button>
                 </form>
             </div>
         </section>
     </main>
-    
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -167,12 +141,70 @@
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Navigate. All rights reserved.</p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2025 Navigate. All rights reserved.</p></div>
     </footer>
 
     <script src="../../js/chatbot.js" defer></script>
     <script src="../../js/messenger.js" defer></script>
+
+    <script>
+        // show/hide logic for chatbot & messenger sections
+        (function () {
+            function $(s){ return document.querySelectorAll(s); }
+            const toggles = document.querySelectorAll('.toggle-link');
+            const sections = {
+                'services-chatbot': document.getElementById('services-chatbot'),
+                'services-messenger': document.getElementById('services-messenger')
+            };
+
+            function hideAll() {
+                Object.values(sections).forEach(sec => {
+                    if (sec) {
+                        sec.classList.remove('visible');
+                        sec.setAttribute('aria-hidden','true');
+                    }
+                });
+            }
+
+            function show(id) {
+                hideAll();
+                const sec = sections[id];
+                if (!sec) return;
+                sec.classList.add('visible');
+                sec.setAttribute('aria-hidden','false');
+                // focus first interactive element for accessibility
+                const focusEl = sec.querySelector('input, textarea, button, [tabindex]');
+                if (focusEl) focusEl.focus({preventScroll:true});
+                // smooth scroll into view
+                sec.scrollIntoView({behavior:'smooth', block:'start'});
+            }
+
+            // attach click handlers to toggle links
+            toggles.forEach(a => {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = a.getAttribute('data-target') || (a.getAttribute('href') || '').slice(1);
+                    if (!target) return;
+                    // toggle: if visible, hide; otherwise show
+                    const sec = sections[target];
+                    if (!sec) return;
+                    if (sec.classList.contains('visible')) {
+                        sec.classList.remove('visible');
+                        sec.setAttribute('aria-hidden','true');
+                    } else {
+                        show(target);
+                    }
+                    // update URL hash without jumping
+                    history.replaceState(null, '', '#'+target);
+                });
+            });
+
+            // if page loaded with hash that matches our sections, show it
+            document.addEventListener('DOMContentLoaded', () => {
+                const h = (location.hash || '').replace('#','');
+                if (h && sections[h]) show(h);
+            });
+        })();
+    </script>
 </body>
 </html>
