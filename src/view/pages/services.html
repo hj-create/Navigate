@@ -20,10 +20,63 @@
     </style>
 </head>
 <body>
-    <!-- ...existing header code... -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="material-icons">explore</span>
+                    <span class="logo-text">Navigate</span>
+                </a>
+            </div>
+            <h1 class="title">Navigate</h1>
+            <div class="auth-buttons">
+                <button class="auth-btn">
+                    <span class="material-icons">person_outline</span>
+                    <span>Sign In</span>
+                </button>
+                <button class="auth-btn">
+                    <span class="material-icons">person_add</span>
+                    <span>Sign Up</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
     <main class="main-content">
-        <!-- ...existing nav code... -->
+        <nav class="horizontal-menu">
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="services.html">
+                        <span class="material-icons">miscellaneous_services</span>
+                        <span class="menu-text">Services</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="schedule.html">
+                        <span class="material-icons">calendar_today</span>
+                        <span class="menu-text">Schedule</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <span class="material-icons">dashboard</span>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="resources.html">
+                        <span class="material-icons">library_books</span>
+                        <span class="menu-text">Resources</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="about.html">
+                        <span class="material-icons">info</span>
+                        <span class="menu-text">About</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
         <h1>Our Services</h1>
         <div class="services-grid">
@@ -35,7 +88,6 @@
                 </a>
             </div>
 
-            <!-- Replace Helpful Videos with Chatbot -->
             <div class="service-card">
                 <a href="#services-chatbot" style="text-decoration: none; color: inherit;">
                     <span class="material-icons">chat</span>
@@ -44,20 +96,19 @@
                 </a>
             </div>
 
-            <!-- Keep existing cards -->
             <div class="service-card">
                 <span class="material-icons">quiz</span>
                 <h3>Quizzes</h3>
-                <p>Regular assessment quizzes to test your knowledge and track your progress.</p>
+                <p>Regular assessment quizzes to test your knowledge and track your progress through the course material.</p>
             </div>
+
             <div class="service-card">
                 <span class="material-icons">menu_book</span>
                 <h3>Online Readings</h3>
-                <p>Curated collection of reading materials and resources to supplement your learning.</p>
+                <p>Curated collection of online reading materials, articles, and resources to supplement your learning.</p>
             </div>
         </div>
 
-        <!-- Add Chatbot section -->
         <section id="services-chatbot" class="page-section">
             <h2>Ask the Navigate Bot</h2>
             <p>Get quick help about scheduling, resources, or how to use Navigate.</p>
@@ -73,7 +124,6 @@
         </section>
     </main>
     
-    <!-- Update footer links to use relative paths -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
