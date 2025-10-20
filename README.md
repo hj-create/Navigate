@@ -55,7 +55,4 @@ Contributing
 License
 - Add a LICENSE file as needed for your project.
 
-If you want, I can:
-- Add a simple npm dev-server + build script.
-- Convert the router to work with the current file layout.
-- Create a CONTRIBUTING.md template.
+
