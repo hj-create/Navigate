@@ -54,5 +54,3 @@ Contributing
 
 License
 - Add a LICENSE file as needed for your project.
-
-
