@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    // ...existing code...
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/chatbot.css">  <!-- Add this line -->
+    // ...existing code...
+</head>
+<body>
+    // ...existing code until services-grid...
+
+    <div class="services-grid">
+        // ...first card stays same...
+
+        <!-- Replace Helpful Videos card with this -->
+        <div class="service-card">
+            <a href="#services-chatbot" style="text-decoration: none; color: inherit;">
+                <span class="material-icons">chat</span>
+                <h3>Chatbot</h3>
+                <p>Ask the Navigate Bot quick questions about scheduling, resources, and joining sessions.</p>
+            </a>
+        </div>
+
+        // ...keep other cards same...
+    </div>
+
+    <!-- Add this section before closing main tag -->
+    <section id="services-chatbot" class="page-section">
+        <h2>Services — Ask the Navigate Bot</h2>
+        <p>Use the chatbot below to get quick help about scheduling, resources, or how to use Navigate.</p>
+
+        <div class="chat-window">
+            <div id="chat-messages" class="chat-messages"></div>
+            <form id="chat-form" class="chat-form">
+                <input id="chat-input" class="chat-input" type="text" 
+                       placeholder="Ask about schedules, resources, joining sessions..." />
+                <button id="chat-send" class="chat-send" type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+    </main>
+
+    // ...existing footer...
+
+    <!-- Add this before closing body tag -->
+    <script src="../../js/chatbot.js" defer></script>
+</body>
+</html>
