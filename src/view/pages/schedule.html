@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Active tab highlighting */
         .menu-item a[href*="schedule"] {
             background-color: var(--hover-color);
             color: var(--text-color);
@@ -16,7 +15,6 @@
         .menu-item a[href*="schedule"] .material-icons {
             color: var(--accent-color);
         }
-
         .calendar-container {
             background: white;
             border-radius: 8px;
@@ -25,14 +23,12 @@
             margin: 2rem auto;
             max-width: 1000px;
         }
-
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
-
         .calendar-nav {
             background: none;
             border: none;
@@ -41,17 +37,14 @@
             border-radius: 50%;
             transition: background-color 0.3s;
         }
-
         .calendar-nav:hover {
             background-color: var(--hover-color);
         }
-
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 0.5rem;
         }
-
         .calendar-day {
             aspect-ratio: 1;
             padding: 0.5rem;
@@ -60,27 +53,21 @@
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
+            background: #fff;
         }
-
         .calendar-day:hover {
             z-index: 2;
-        }
-
-        .calendar-day:hover {
             background: var(--hover-color);
             transform: translateY(-2px);
         }
-
         .calendar-day.has-event {
             background: #e8f5e9;
             border: 2px solid #4CAF50;
         }
-
         .calendar-day .date {
             font-weight: bold;
             margin-bottom: 0.25rem;
         }
-
         .event-dot {
             width: 8px;
             height: 8px;
@@ -90,7 +77,6 @@
             bottom: 4px;
             right: 4px;
         }
-
         .event-popup {
             display: none;
             position: absolute;
@@ -105,7 +91,6 @@
             transform: translateX(-50%);
             animation: fadeInUp 0.3s ease;
         }
-
         .event-popup::after {
             content: '';
             position: absolute;
@@ -116,7 +101,6 @@
             border-right: 8px solid transparent;
             border-top: 8px solid white;
         }
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -127,17 +111,14 @@
                 transform: translate(-50%, 0);
             }
         }
-
         .calendar-day:hover .event-popup {
             display: block;
         }
-
         .event-title {
             font-weight: bold;
             color: var(--accent-color);
             margin-bottom: 0.5rem;
         }
-
         .event-time {
             color: #666;
             font-size: 0.9rem;
@@ -145,7 +126,6 @@
             align-items: center;
             gap: 0.25rem;
         }
-
         .day-header {
             text-align: center;
             font-weight: bold;
@@ -153,6 +133,11 @@
             background: var(--hover-color);
             border-radius: 4px;
             margin-bottom: 0.5rem;
+        }
+        .calendar-day.past {
+            background: #f5f5f5 !important;
+            color: #bbb !important;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -218,14 +203,14 @@
         <div class="content-header">
             <div class="content-title">
                 <h1>Schedule</h1>
-                <p>View upcoming history sessions and events</p>
+                <p>View upcoming history sessions and your booked live sessions</p>
             </div>
         </div>
 
         <div class="calendar-container">
             <div class="calendar-header">
                 <button class="calendar-nav" id="prevMonth"><span class="material-icons">chevron_left</span></button>
-                <h2 id="currentMonth">October 2025</h2>
+                <h2 id="currentMonth"></h2>
                 <button class="calendar-nav" id="nextMonth"><span class="material-icons">chevron_right</span></button>
             </div>
             <div class="calendar-grid" id="calendarGrid">
@@ -236,8 +221,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Sample history sessions data
-            const historySessions = {
+            // Static history sessions (example)
+            const staticSessions = {
                 '2025-10-20': [
                     { title: 'World History', time: '10:00 AM - 11:30 AM', topic: 'Ancient Civilizations' },
                     { title: 'US History', time: '2:00 PM - 3:30 PM', topic: 'American Revolution' }
@@ -264,6 +249,59 @@
                 ]
             };
 
+            // Load booked live sessions from localStorage
+            function getBookedSessions() {
+                const ZOOM_LINK = 'https://us02web.zoom.us/j/86878301632?pwd=XFKHYWOAmJ';
+                const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+                // Group by date string (YYYY-MM-DD)
+                const grouped = {};
+                sessions.forEach(s => {
+                    // Try to parse date string like "October 20, 2025"
+                    let dateObj = null;
+                    if (s.date) {
+                        dateObj = new Date(s.date);
+                        if (!isNaN(dateObj)) {
+                            const y = dateObj.getFullYear();
+                            const m = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                            const d = dateObj.getDate().toString().padStart(2, '0');
+                            const key = `${y}-${m}-${d}`;
+                            if (!grouped[key]) grouped[key] = [];
+                            grouped[key].push({
+                                title: s.subject + " (Booked)",
+                                time: s.time,
+                                topic: "Live Session",
+                                meetLink: s.meetLink === ZOOM_LINK ? ZOOM_LINK : undefined
+                            });
+                        }
+                    }
+                });
+                return grouped;
+            }
+
+            // Merge static and booked sessions
+            function getAllSessions() {
+                const booked = getBookedSessions();
+                // Deep copy static sessions
+                const all = JSON.parse(JSON.stringify(staticSessions));
+                // Merge booked sessions
+                for (const date in booked) {
+                    if (!all[date]) all[date] = [];
+                    all[date] = all[date].concat(booked[date]);
+                }
+                return all;
+            }
+
+            // Calendar state
+            let currentMonth = new Date().getMonth();
+            let currentYear = new Date().getFullYear();
+
+            function updateCalendarHeader() {
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+                document.getElementById('currentMonth').textContent =
+                    `${monthNames[currentMonth]} ${currentYear}`;
+            }
+
             function generateCalendar() {
                 const calendarGrid = document.getElementById('calendarGrid');
                 calendarGrid.innerHTML = '';
@@ -278,9 +316,9 @@
                 });
 
                 // Add calendar days
-                const currentDate = new Date(2025, 9, 1); // October 2025
-                const lastDay = new Date(2025, 10, 0).getDate();
-                const firstDayIndex = currentDate.getDay();
+                const firstDayDate = new Date(currentYear, currentMonth, 1);
+                const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
+                const firstDayIndex = firstDayDate.getDay();
 
                 // Add empty cells for days before the 1st
                 for (let i = 0; i < firstDayIndex; i++) {
@@ -289,16 +327,33 @@
                     calendarGrid.appendChild(emptyDay);
                 }
 
+                // Get all sessions for this month
+                const allSessions = getAllSessions();
+
+                // Today's date for greying out past days
+                const today = new Date();
+                today.setHours(0,0,0,0);
+
                 // Add actual days
                 for (let day = 1; day <= lastDay; day++) {
                     const dayElement = document.createElement('div');
                     dayElement.className = 'calendar-day';
-                    const dateString = `2025-10-${day.toString().padStart(2, '0')}`;
-                    
+                    const m = (currentMonth + 1).toString().padStart(2, '0');
+                    const d = day.toString().padStart(2, '0');
+                    const dateString = `${currentYear}-${m}-${d}`;
+
                     // Check if there are events on this day
-                    const hasEvents = historySessions[dateString];
+                    const hasEvents = allSessions[dateString];
                     if (hasEvents) {
                         dayElement.classList.add('has-event');
+                    }
+
+                    // Grey out past dates
+                    const thisDate = new Date(currentYear, currentMonth, day);
+                    thisDate.setHours(0,0,0,0);
+                    if (thisDate < today) {
+                        dayElement.classList.add('past');
+                        dayElement.tabIndex = -1;
                     }
 
                     dayElement.innerHTML = `
@@ -315,6 +370,7 @@
                                         </div>
                                         <div class="event-topic" style="margin-top: 0.25rem; font-size: 0.9rem;">
                                             Topic: ${event.topic}
+                                            ${event.meetLink ? `<br><a href="${event.meetLink}" target="_blank" style="color:#1e88e5;text-decoration:underline;">Join Zoom</a>` : ''}
                                         </div>
                                     </div>
                                 `).join('<hr style="margin: 0.5rem 0; border: none; border-top: 1px solid #eee;">')}
@@ -327,17 +383,28 @@
             }
 
             // Initialize calendar
+            updateCalendarHeader();
             generateCalendar();
 
-            // Add month navigation functionality
+            // Month navigation
             document.getElementById('prevMonth').addEventListener('click', () => {
-                // For demo, just show an alert
-                alert('Previous month navigation would be implemented here');
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                updateCalendarHeader();
+                generateCalendar();
             });
 
             document.getElementById('nextMonth').addEventListener('click', () => {
-                // For demo, just show an alert
-                alert('Next month navigation would be implemented here');
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                updateCalendarHeader();
+                generateCalendar();
             });
         });
     </script>
