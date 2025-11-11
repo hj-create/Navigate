@@ -16,6 +16,27 @@
         .menu-item a[href*="about"] .material-icons {
             color: var(--accent-color);
         }
+        .team-grid {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .team-member {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            flex: 1 1 200px;
+            min-width: 200px;
+            max-width: 250px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .team-member .material-icons {
+            font-size: 48px;
+            color: var(--accent-color, #1e88e5);
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -81,18 +102,16 @@
         <div class="about-content">
             <section class="about-section">
                 <h2>Our Story</h2>
-                <p>We’re a team of students who believe learning history should feel like an adventure, not a chore. That’s why we created Navigate — a student-built online learning hub that helps peers explore the past in creative, interactive ways.
-
-Our site combines accessibility, collaboration, and design to bring history to life. From planning the color palette to coding every feature, we worked together to make learning engaging and inclusive for all.</p>
+                <p>
+                    Navigate was founded with a vision to make history learning engaging, accessible, and effective for students everywhere. Our team saw the need for a platform that combines live sessions, curated resources, and interactive tools to help students succeed in their history courses and exams.
+                </p>
             </section>
 
             <section class="about-section">
                 <h2>Our Mission</h2>
-                <p>At Navigate, our mission is to make history learning accessible, interactive, and collaborative.
-
-We believe students learn best when they’re curious, connected, and in control of their learning journey. By combining peer-to-peer learning, engaging digital resources, and real-time study sessions, Navigate turns history from memorization into exploration.
-
-Just like a compass guides travelers, Navigate helps students find direction in the stories that shaped our world.</p>
+                <p>
+                    Our mission is to empower students to master history through structured learning, expert guidance, and a supportive community. We strive to provide high-quality educational experiences that inspire curiosity and foster academic growth.
+                </p>
             </section>
 
             <section class="about-section">
@@ -100,44 +119,39 @@ Just like a compass guides travelers, Navigate helps students find direction in 
                 <div class="team-grid">
                     <div class="team-member">
                         <span class="material-icons">person</span>
-                        <h3>John Doe</h3>
-                        <p>11th Grade, History Major</p>
+                        <h3>Team Member 1</h3>
+                        <p>Lead Developer</p>
                     </div>
                     <div class="team-member">
                         <span class="material-icons">person</span>
-                        <h3>Jane Doe</h3>
-                        <p>12th Grade, History Major</p>
+                        <h3>Team Member 2</h3>
+                        <p>Curriculum Designer</p>
                     </div>
+                    <div class="team-member">
+                        <span class="material-icons">person</span>
+                        <h3>Team Member 3</h3>
+                        <p>Project Manager</p>
+                      </div>
                 </div>
             </section>
-
-            <section class="works-cited">
+                       
+       <section class="works-cited">
                 <h2>Works Cited</h2>
-                <ul>
-                    <li>
-                        Content adapted from <em>Khan Academy</em> © Khan Academy, licensed under CC BY-NC-SA 4.0.<br>
-                        Note: All Khan Academy content is available for free at 
-                        <a href="https://www.khanacademy.org" target="_blank">khanacademy.org</a>
-                    </li>
-                    <li>
-                        U.S. History PDF: <em>U.S. History Master Notes.</em> n.d. 
-                        <a href="https://www.paulding.k12.ga.us/cms/lib/GA01903603/Centricity/Domain/2569/US%20History%20Master%20Notes.pdf" target="_blank">
-                            View PDF-
-                        </a>
-                    </li>
-                    <li>
-                        World History PDF: <em>World History Textbook.</em> University of North Georgia Press, 2017. 
-                        <a href="https://web.ung.edu/media/university-press/World%20History%20Textbook-082817.pdf" target="_blank">
-                            View PDF
-                        </a>
-                    </li>
-                    <li>
-                        © 2025 <strong>Navigate</strong>. All rights reserved.<br>
-                        <strong>Navigate</strong> is a 501(c)(3) nonprofit organization. Contributions are tax-deductible to the extent permitted by law.
-                    </li>
-                </ul>
-            </section>
+                <p>Content adapted from <em>Khan Academy</em> © Khan Academy, licensed under CC BY-NC-SA 4.0.</p>
+                <p><strong>Note:</strong> All Khan Academy content is available for free at 
+                    <a href="https://www.khanacademy.org" target="_blank">khanacademy.org</a>.
+                </p>
+                <div class="works-cited-list">
+                    <p><strong>U.S. History PDF:</strong> <em>U.S. History Master Notes.</em> n.d. <a href="#">View PDF</a></p>
+                    <p><strong>World History PDF:</strong> <em>World History Textbook.</em> University of North Georgia Press, 2017. <a href="#">View PDF</a></p>
+                </div>
+                <p>© 2025 Navigate. All rights reserved.</p>
+                <p>
+                    Navigate is a 501(c)(3) nonprofit organization. Contributions are tax-deductible to the extent permitted by law.
+                </p>
+            </div>
         </div>
+      </section>
     </main>
     
     <footer class="footer">
@@ -166,7 +180,7 @@ Just like a compass guides travelers, Navigate helps students find direction in 
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Navigate. All rights reserved.</p>
-        </div>
+        </div> 
     </footer>
 </body>
 </html>
