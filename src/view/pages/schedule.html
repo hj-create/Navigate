@@ -146,10 +146,12 @@
                             const d = dateObj.getDate().toString().padStart(2, '0');
                             const key = `${y}-${m}-${d}`;
                             if (!grouped[key]) grouped[key] = [];
+                            const sessionTypeLabel = s.sessionType || 'Live Tutoring';
                             grouped[key].push({
                                 title: s.subject + " (Booked)",
                                 time: s.time,
                                 topic: "Live Session",
+                                sessionType: sessionTypeLabel,
                                 meetLink: s.meetLink === ZOOM_LINK ? ZOOM_LINK : undefined
                             });
                         }
@@ -250,6 +252,7 @@
                                         </div>
                                         <div class="event-topic" style="margin-top: 0.25rem; font-size: 0.9rem;">
                                             Topic: ${event.topic}
+                                            ${event.sessionType ? `<br><span style="color: var(--accent-color); font-weight: 500;"><span class="material-icons" style="font-size: 14px; vertical-align: middle;">${event.sessionType === 'Group Study' ? 'groups' : 'person'}</span> ${event.sessionType}</span>` : ''}
                                             ${event.meetLink ? `<br><a href="${event.meetLink}" target="_blank" style="color:#1e88e5;text-decoration:underline;">Join Zoom</a>` : ''}
                                         </div>
                                     </div>

@@ -76,12 +76,13 @@
 .session-card {
     background: white;
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 0.5rem 0;
 }
 
 .session-card:hover {
@@ -91,11 +92,18 @@
 
 .session-info {
     flex-grow: 1;
+    margin-right: 1.5rem;
+}
+
+.session-info h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
 }
 
 .session-date {
     color: #666;
     font-size: 0.9rem;
+    margin: 0;
 }
 
 .join-session-btn {
@@ -132,14 +140,15 @@
 
 .subject-item {
     background: white;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-size: 1rem;
 }
 
 .subject-item:hover {
@@ -155,8 +164,9 @@
 .calendar {
     background: white;
     border-radius: 8px;
-    padding: 2rem;
+    padding: 2.5rem;
     margin-top: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .calendar.active {
@@ -347,6 +357,40 @@
     display: block;
 }
 
+.booking-container .section-header {
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+}
+
+.booking-container .section-header h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.subject-selection {
+    margin-top: 2.5rem;
+    padding: 0 0.5rem;
+}
+
+.subject-selection h3 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.session-type-selection {
+    margin-top: 2.5rem;
+    padding: 0 0.5rem;
+}
+
+.session-type-selection h3 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
 .section-actions {
     display: flex;
     flex-direction: column;
@@ -432,6 +476,67 @@
     font-size: 3rem;
     color: #28a745;
     margin-bottom: 1rem;
+}
+
+/* Session Type Selection Styles */
+.session-type-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.session-type-option {
+    cursor: pointer;
+    display: block;
+}
+
+.session-type-option input[type="radio"] {
+    display: none;
+}
+
+.session-type-option .option-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.session-type-option:hover .option-content {
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+}
+
+.session-type-option input[type="radio"]:checked + .option-content {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.session-type-option .material-icons {
+    font-size: 2rem;
+}
+
+.session-type-option .option-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.session-type-option .option-text strong {
+    font-size: 1.1rem;
+}
+
+.session-type-option .option-text small {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.session-type-option input[type="radio"]:checked + .option-content .material-icons {
+    color: white;
 }
 
 @keyframes slideIn {

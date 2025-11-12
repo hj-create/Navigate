@@ -237,6 +237,32 @@
                     </ul>
                 </div>
 
+                <div class="session-type-selection" style="margin-top: 2rem;">
+                    <h3>Select Session Type</h3>
+                    <div class="session-type-options">
+                        <label class="session-type-option">
+                            <input type="radio" name="sessionType" value="Live Tutoring" checked>
+                            <span class="option-content">
+                                <span class="material-icons">person</span>
+                                <span class="option-text">
+                                    <strong>Live Tutoring</strong>
+                                    <small>One-on-one session with a tutor</small>
+                                </span>
+                            </span>
+                        </label>
+                        <label class="session-type-option">
+                            <input type="radio" name="sessionType" value="Group Study">
+                            <span class="option-content">
+                                <span class="material-icons">groups</span>
+                                <span class="option-text">
+                                    <strong>Group Study</strong>
+                                    <small>Collaborative learning with peers</small>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="calendar" id="sessionCalendar" style="display: none;">
                     <div class="calendar-header">
                         <button class="calendar-nav"><span class="material-icons">chevron_left</span></button>
@@ -329,6 +355,7 @@
         let selectedSubject = '';
         let selectedDate = '';
         let selectedTime = '';
+        let selectedSessionType = 'Live Tutoring'; // Default value
         let sessionToReschedule = null;
         const sessionsPerPage = 5;
         let currentPage = 1;
@@ -342,10 +369,16 @@
         function createSessionCard(session) {
             const card = document.createElement('div');
             card.className = 'session-card';
+            const sessionTypeIcon = session.sessionType === 'Group Study' ? 'groups' : 'person';
+            const sessionTypeText = session.sessionType || 'Live Tutoring';
             card.innerHTML = `
                 <div class="session-info">
                     <h4>${session.subject}</h4>
                     <p class="session-date">${session.date} - ${session.time}</p>
+                    <p class="session-type" style="color: var(--accent-color); font-size: 0.9rem; margin-top: 0.25rem;">
+                        <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">${sessionTypeIcon}</span>
+                        ${sessionTypeText}
+                    </p>
                 </div>
                 <div class="session-actions">
                     <button class="reschedule-btn" title="Reschedule Session">
@@ -569,10 +602,16 @@
 
                 const bookingMessageDiv = document.createElement('div');
                 bookingMessageDiv.className = 'booking-message';
+                
+                // Get selected session type
+                const sessionTypeRadio = document.querySelector('input[name="sessionType"]:checked');
+                selectedSessionType = sessionTypeRadio ? sessionTypeRadio.value : 'Live Tutoring';
+                
                 bookingMessageDiv.innerHTML = `
                     <div class="booking-summary">
                         <h3>Booking Summary</h3>
                         <p><strong>Subject:</strong> ${selectedSubject}</p>
+                        <p><strong>Session Type:</strong> ${selectedSessionType}</p>
                         <p><strong>Date:</strong> ${selectedDate}</p>
                         <p><strong>Time:</strong> ${selectedTime}</p>
                         <button class="confirm-booking-btn">
@@ -599,9 +638,10 @@
                         sessionToReschedule = null;
                     }
                     
-                    // Add new session
+                    // Add new session with session type
                     sessions.push({
                         subject: selectedSubject,
+                        sessionType: selectedSessionType,
                         date: selectedDate,
                         time: selectedTime,
                         meetLink: ZOOM_LINK
@@ -619,13 +659,28 @@
             selectedSubject = '';
             selectedDate = '';
             selectedTime = '';
+            selectedSessionType = 'Live Tutoring';
             sessionToReschedule = null;
             subjectItems.forEach(i => i.classList.remove('active'));
             calendar.classList.remove('active');
             timeSlots.classList.remove('active');
             calendar.style.display = 'none';
             timeSlots.style.display = 'none';
+            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+            const existingMsg = document.querySelector('.booking-message');
+            if (existingMsg) existingMsg.remove();
+            // Reset session type to default
+            const defaultRadio = document.querySelector('input[name="sessionType"][value="Live Tutoring"]');
+            if (defaultRadio) defaultRadio.checked = true;
         }
+
+        // Add event listener for session type selection
+        document.querySelectorAll('input[name="sessionType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                selectedSessionType = this.value;
+            });
+        });
 
         // Initial setup
         updatePagination();
