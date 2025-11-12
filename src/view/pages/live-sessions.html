@@ -396,14 +396,21 @@
             // Add event listeners
             card.querySelector('.cancel-btn').addEventListener('click', function() {
                 if(confirm('Are you sure you want to cancel this session?')) {
-                    const sessions = loadZoomSessions();
-                    const updatedSessions = sessions.filter(s => 
+                    const allSessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+                    const updatedSessions = allSessions.filter(s => 
                         !(s.subject === session.subject && 
                           s.date === session.date && 
-                          s.time === session.time)
+                          s.time === session.time &&
+                          s.meetLink === session.meetLink)
                     );
                     localStorage.setItem('sessions', JSON.stringify(updatedSessions));
+                    
+                    // Update the current page and refresh display
+                    const totalPages = Math.max(1, Math.ceil((updatedSessions.filter(s => s.meetLink === ZOOM_LINK).length) / sessionsPerPage));
+                    if (currentPage > totalPages) currentPage = totalPages;
+                    
                     updatePagination();
+                    alert('Session cancelled successfully!');
                 }
             });
 
@@ -413,16 +420,39 @@
                 bookingContainer.style.display = 'block';
                 bookingContainer.classList.add('active');
                 
+                // Reset form
+                resetBookingForm();
+                selectedSubject = session.subject;
+                selectedSessionType = session.sessionType || 'Live Tutoring';
+                
                 // Pre-select the subject
                 const subjectItem = Array.from(subjectItems)
                     .find(item => item.dataset.subject === session.subject);
                 if(subjectItem) {
                     subjectItem.click();
                 }
+                
+                // Pre-select the session type
+                const sessionTypeRadio = document.querySelector(`input[name="sessionType"][value="${selectedSessionType}"]`);
+                if (sessionTypeRadio) {
+                    sessionTypeRadio.checked = true;
+                }
+                
+                // Scroll to booking section
+                bookingContainer.scrollIntoView({ behavior: 'smooth' });
             });
 
             card.querySelector('.join-session-btn').addEventListener('click', function() {
-                window.open(session.meetLink, '_blank');
+                if (session.meetLink) {
+                    // Open Zoom link in new tab
+                    const newWindow = window.open(session.meetLink, '_blank');
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                        // Popup was blocked
+                        alert('Please allow popups for this site to join the session. You can manually open: ' + session.meetLink);
+                    }
+                } else {
+                    alert('Meeting link not available for this session.');
+                }
             });
 
             return card;
@@ -577,6 +607,7 @@
             bookingContainer.style.display = 'block';
             bookingContainer.classList.add('active');
             resetBookingForm();
+            bookingContainer.scrollIntoView({ behavior: 'smooth' });
         });
 
         backToSessions.addEventListener('click', function() {
@@ -584,6 +615,7 @@
             bookingContainer.classList.remove('active');
             upcomingSessionsContainer.style.display = 'block';
             resetBookingForm();
+            upcomingSessionsContainer.scrollIntoView({ behavior: 'smooth' });
         });
 
         document.querySelectorAll('.time-slot').forEach(slot => {
@@ -624,6 +656,8 @@
                 bookingMessageDiv.querySelector('.confirm-booking-btn').addEventListener('click', function() {
                     const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
                     
+                    const wasReschedule = !!sessionToReschedule;
+                    
                     if(sessionToReschedule) {
                         // Remove old session
                         const index = sessions.findIndex(s => 
@@ -645,9 +679,23 @@
                     });
                     
                     localStorage.setItem('sessions', JSON.stringify(sessions));
+                    
+                    // Reset the form
+                    resetBookingForm();
+                    
+                    // Switch back to sessions view
                     bookingContainer.style.display = 'none';
                     upcomingSessionsContainer.style.display = 'block';
+                    
+                    // Update display
                     updatePagination();
+                    
+                    // Show success message
+                    const message = wasReschedule ? 'Session rescheduled successfully!' : 'Session booked successfully!';
+                    alert(message);
+                    
+                    // Scroll to sessions section
+                    upcomingSessionsContainer.scrollIntoView({ behavior: 'smooth' });
                 });
             });
         });
