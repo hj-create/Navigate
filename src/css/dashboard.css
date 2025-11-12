@@ -201,9 +201,8 @@
 .table-container {
     background: white;
     border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(74, 20, 140, 0.15);
     overflow-x: auto;
-    border: 1px solid rgba(var(--primary-color-rgb), 0.1);
     margin-top: 32px;
 }
 
