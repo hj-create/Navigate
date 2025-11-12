@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-</head>
     <style>
         /* Active tab highlighting (resources) */
         .menu-item a[href*="resources"] {
@@ -28,6 +27,149 @@
         }
         .menu-item a[href*="resources"] .material-icons {
             color: var(--accent-color);
+        }
+        
+        /* Quiz container styles */
+        .quiz-selection {
+            display: none;
+        }
+        
+        .quiz-selection.active {
+            display: block;
+        }
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .question {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .question h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+        
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option-label:hover {
+            border-color: var(--accent-color);
+            background: #fff5f0;
+        }
+        
+        .option-label input[type="radio"] {
+            margin-right: 0.75rem;
+        }
+        
+        .feedback {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: #e64a19;
+            transform: translateY(-2px);
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #555;
+        }
+        
+        .score-summary {
+            display: none;
+            background: #e3f2fd;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 2px solid #2196f3;
+        }
+        
+        .score-summary.show {
+            display: block;
+        }
+        
+        .score-summary h2 {
+            color: #1976d2;
+            margin: 0;
+            font-size: 2rem;
+        }
+        
+        .score-summary p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -91,22 +233,1055 @@
         </nav>
 
         <h1>Quizzes</h1>
-        <p>Timed and untimed quizzes to check comprehension and track progress.</p>
+        <p>Test your knowledge with our interactive quizzes covering World History, US History, and European History.</p>
 
-        <div class="resources-grid">
+        <!-- Quiz Category Selection -->
+        <div id="quizCategories" class="resources-grid">
             <div class="resource-card">
-                <span class="material-icons">help</span>
-                <h3>Quiz 1: Beginnings - 600 BCE</h3>
-                <p>7 questions covering fundamentals.</p>
-                <a href="https://www.khanacademy.org/humanities/world-history/world-history-beginnings/birth-agriculture-neolithic-revolution/quiz/world-history-beginnings-quiz-1?referrer=upsell" class="resource-link">Start Quiz</a>
+                <span class="material-icons">public</span>
+                <h3>World History</h3>
+                <p>Test your knowledge of ancient civilizations and world events.</p>
+                <button onclick="showQuiz('world')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
             </div>
             <div class="resource-card">
-                <span class="material-icons">help</span>
-                <h3>Quiz 2: Beginnings - 600 BCE</h3>
-                <p>5 questions reviewing the major events.</p>
-                <a href="https://www.khanacademy.org/humanities/world-history/world-history-beginnings/ancient-egypt-hittites/quiz/world-history-beginnings-quiz-2?referrer=upsell" class="resource-link">Start Quiz</a>
+                <span class="material-icons">flag</span>
+                <h3>US History</h3>
+                <p>Explore American history from colonial times to present.</p>
+                <button onclick="showQuiz('us')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
+            </div>
+            <div class="resource-card">
+                <span class="material-icons">account_balance</span>
+                <h3>European History</h3>
+                <p>Journey through European civilizations and empires.</p>
+                <button onclick="showQuiz('european')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
             </div>
         </div>
+
+        <!-- World History Quiz -->
+        <div id="worldQuiz" class="quiz-selection">
+            <button class="back-btn" onclick="backToCategories()">
+                <span class="material-icons">arrow_back</span>
+                Back to Categories
+            </button>
+            
+            <div class="quiz-container">
+                <h2>Ancient Civilizations Quiz</h2>
+                
+                <div class="score-summary" id="scoreSummary">
+                    <h2 id="finalScore"></h2>
+                    <p id="scoreMessage"></p>
+                </div>
+                
+                <form id="quizForm">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <h3>1. Which metal is associated with the end of the Stone Age?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="Titanium">
+                                Titanium
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="Bronze">
+                                Bronze
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="Aluminum">
+                                Aluminum
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="Silver">
+                                Silver
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Bronze" data-feedback="The Bronze Age, marking the beginnings of metallurgy, followed the Stone Age."></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <h3>2. Where did the ancient Phoenicians live?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="Phoenicia">
+                                Phoenicia
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="Phoenix">
+                                Phoenix
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="Portugal">
+                                Portugal
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="Phrygia">
+                                Phrygia
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Phoenicia" data-feedback="Phoenicia was located on a narrow strip of the Syrian coast. The area now includes Lebanon and parts of Syria and Israel."></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <h3>3. The Stone Age is called that because of its:</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="scarcity">
+                                scarcity of stones, which were used as money
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="statues">
+                                abundance of stone statues
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="houses">
+                                abundance of stone houses
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="tools">
+                                abundance of stone tools
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="tools" data-feedback="The Stone Age carries that name because archaeologists discovered great numbers of stone tools in association with that period of human prehistory."></div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <h3>4. Which of these was not an ancient Phoenician deity?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="Baal">
+                                Baal
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="Astarte">
+                                Astarte
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="Moloch">
+                                Moloch
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="Jupiter">
+                                Jupiter
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Jupiter" data-feedback="The chief gods of the Phoenician religion were the god Baal and the goddess Astarte. In times of great difficulty, human sacrifices were offered to the god Moloch."></div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <h3>5. Who colonized Tunisia in ancient times?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="Philistines">
+                                Philistines
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="Pyrgamese">
+                                Pyrgamese
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="Palmyrans">
+                                Palmyrans
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="Phoenicians">
+                                Phoenicians
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Phoenicians" data-feedback="In ancient times Tunisia was a colony of the Phoenicians, a people from what is now Lebanon. About the 800s BCE, the Phoenicians founded Carthage in the area of what is now Tunis."></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <h3>6. Which was not an achievement of ancient Egyptians?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="medicine">
+                                medicine
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="golf">
+                                golf
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="architecture">
+                                architecture
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="mathematics">
+                                mathematics
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="golf" data-feedback="The ancient Egyptians developed a highly sophisticated understanding of mathematics and architecture, and an effective system of medicine. They were not known, however, to play golf."></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <h3>7. What structure was built during the Old Kingdom in Egypt?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="Temple">
+                                The Temple of Queen Nzingha
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="Tower">
+                                The Tower of Babel
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="Pyramids">
+                                The Pyramids of Judah
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="Sphinx">
+                                The Sphinx
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Sphinx" data-feedback="The Sphinx, or The Great Sphinx of Giza, is a limestone statue depicting a mythical creature with a lion's body and a human head. It was built during the Old Kingdom of Egypt, a period lasting from about 2700–2200 BC."></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <h3>8. Which of these was not an ancient Phoenician city?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="Tyre">
+                                Tyre
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="Berot">
+                                Berot
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="Sidon">
+                                Sidon
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="Madrid">
+                                Madrid
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Madrid" data-feedback="The main cities of Phoenicia were Sidon, Tyre, and Berot (modern Beirut)."></div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <h3>9. Why were the Tigris and Euphrates Rivers important to Mesopotamia?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="protection">
+                                They provided protection from invaders.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="trade">
+                                They offered trade routes to China.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="fertile">
+                                They created fertile soil through annual flooding.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="limited">
+                                They limited agriculture and settlement.
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="fertile" data-feedback="The Tigris and Euphrates created fertile farmland through flooding, allowing agriculture and civilization to develop in Mesopotamia."></div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <h3>10. What did most ancient civilizations have in common?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="Isolation">
+                                Isolation from trade
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="Nomadic">
+                                Nomadic lifestyles
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="farming">
+                                Dependence on fertile land for farming
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="hunting">
+                                Reliance on hunting and gathering
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="farming" data-feedback="Ancient civilizations all depended on fertile land and farming, which provided the food surplus necessary for permanent settlements and complex societies to grow."></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Quiz</button>
+                </form>
+                
+                <!-- Citation -->
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
+                    <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        The Editors of Encyclopedia Britannica. "List of Ancient Civilizations." <em>Encyclopædia Britannica</em>, 15 Nov. 2016, www.britannica.com/topic/list-of-ancient-civilizations-2079395.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- US History Quiz -->
+        <div id="usQuiz" class="quiz-selection">
+            <button class="back-btn" onclick="backToCategories()">
+                <span class="material-icons">arrow_back</span>
+                Back to Categories
+            </button>
+            
+            <div class="quiz-container">
+                <h2>Worlds Collide Quiz</h2>
+                
+                <div class="score-summary" id="usScoreSummary">
+                    <h2 id="usFinalScore"></h2>
+                    <p id="usScoreMessage"></p>
+                </div>
+                
+                <form id="usQuizForm">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <h3>1. Which of the following had the greatest impact on influencing Native American culture?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq1" value="Tribal warfare">
+                                Tribal warfare
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq1" value="The Northwest Passage">
+                                The Northwest Passage
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq1" value="The Middle Passage">
+                                The Middle Passage
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq1" value="Nature and environment">
+                                Nature and environment
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Nature and environment" data-feedback="A. While a feature of many groups and a significant cultural aspect, warfare was often influenced by environmental factors (e.g., competition for scarce resources) and later by European intervention (e.g., access to firearms). It was a cultural expression, not the primary influencer of culture itself. B. This refers to the sea route explorers sought through North America to Asia. Its significance was almost entirely centered on European exploration and trade; it had a minimal, indirect, and localized impact on Native American cultures near the passage, but it was not the greatest overall cultural influence. C. This term refers to the forced voyage of enslaved Africans across the Atlantic. It is historically related to the trans-Atlantic slave trade and had no direct cultural influence on the original development and structure of Native American societies."></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <h3>2. Which of the following is the most widely accepted theory to explain how Native Americans immigrated to the Western Hemisphere?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq2" value="Native Americans traveled by boat across the Atlantic Ocean.">
+                                Native Americans traveled by boat across the Atlantic Ocean.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq2" value="Native Americans traveled over a land bridge that once connected Asia and North America.">
+                                Native Americans traveled over a land bridge that once connected Asia and North America.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq2" value="European explorers brought Native Americans to North America.">
+                                European explorers brought Native Americans to North America.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq2" value="Native Americans have always inhabited the Western Hemisphere.">
+                                Native Americans have always inhabited the Western Hemisphere.
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Native Americans traveled over a land bridge that once connected Asia and North America." data-feedback="Most historians and scientists agree that Native Americans are descendants from prehistoric peoples who crossed a land bridge in the Bering Strait that, during the last Ice Age, connected the lands now referred to as Siberia and Alaska."></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <h3>3. Many early Native Americans were considered nomads. This means that they:</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq3" value="Migrated from place to place in search of food and resources">
+                                Migrated from place to place in search of food and resources
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq3" value="Did not have a spoken language">
+                                Did not have a spoken language
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq3" value="Created permanent settlements">
+                                Created permanent settlements
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq3" value="Did not eat meat">
+                                Did not eat meat
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Migrated from place to place in search of food and resources" data-feedback="B. This is false. All human communities, including early Native Americans, have complex spoken languages. C. This is the opposite of being nomadic. Creating permanent settlements describes a sedentary lifestyle, often adopted after the development of agriculture (e.g., the Pueblo people of the Southwest). D. This is false. Early Native Americans were primarily hunter-gatherers, meaning their diet included significant amounts of meat from hunting, which was often their main source of protein and fat, especially during winter."></div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <h3>4. Which of the following skills would allow a culture to shift from being nomadic to settled?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq4" value="The ability to make durable weapons">
+                                The ability to make durable weapons
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq4" value="The ability to make fire">
+                                The ability to make fire
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq4" value="Learning the skills necessary to farm">
+                                Learning the skills necessary to farm
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq4" value="Developing a written language">
+                                Developing a written language
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Learning the skills necessary to farm" data-feedback="A. Nomadic hunter-gatherers were already skilled at making durable weapons (like spears, bows, and axes) for hunting and protection. This skill is essential for a nomadic life, but it doesn't require them to settle down. B. The ability to control fire was a skill mastered by humans long before the Neolithic Revolution, dating back to Homo erectus. It was a vital skill for both nomadic and settled cultures but was not the trigger for settlement. D. While written language is a characteristic of many advanced, settled civilizations, it usually develops after a culture has become settled and accumulated a surplus, creating the need for record-keeping (e.g., for trade, laws, or storage) that a settled lifestyle makes possible. It is a consequence of settlement, not the cause."></div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <h3>5. Which of the following cultures developed first?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq5" value="Aztec">
+                                Aztec
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq5" value="Inca">
+                                Inca
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq5" value="Olmec">
+                                Olmec
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq5" value="Maya">
+                                Maya
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Olmec" data-feedback="A. 1325 CE – 1521 CE (The Aztec Empire was one of the last major indigenous empires before the Spanish Conquest.) B. 1400 CE – 1532 CE (The Inca Empire was a relatively late, short-lived, but massive empire.) D. 250 CE – 900 CE (Though Maya culture began earlier, the Classic period represents their peak cities and sophistication.)"></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <h3>6. Which of the following terms describes the picture-based written language of the Mayan people?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq6" value="Hieroglyphics">
+                                Hieroglyphics
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq6" value="Myopic">
+                                Myopic
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq6" value="Tenochtitlan">
+                                Tenochtitlan
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq6" value="Script">
+                                Script
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Hieroglyphics" data-feedback="B. This is an adjective meaning nearsighted or lacking foresight; it has nothing to do with written language. C. This was the capital city of the Aztec Empire, not a term for the Maya writing system. D. While 'script' is a general term for a writing system, hieroglyphics is the specific, correct term used to describe the nature and form of the Mayan written language."></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <h3>7. Which of the following best describes the government of the Mayans?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq7" value="Democracy">
+                                Democracy
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq7" value="Dictatorship">
+                                Dictatorship
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq7" value="Oligarchy">
+                                Oligarchy
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq7" value="Theocracy">
+                                Theocracy
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Theocracy" data-feedback="A. A democracy is a system where the populace holds the power, either directly or through elected representatives. The Maya government was hereditary and hierarchical, with power concentrated in the hands of the divine ruler and the nobility, not the general population. B. While the Maya ruler held absolute power, the term dictatorship in a modern context usually refers to a regime where power is seized and maintained by force, often without a hereditary or divine claim. The Maya system was characterized by a hereditary, divinely sanctioned authority rather than a secular strongman ruling by military might, making 'theocracy' a more precise descriptor of the fundamental basis of their rule. C. An oligarchy is a system where a small group of people, usually wealthy and elite, controls a country or organization. While the Maya had a powerful noble class that certainly held significant influence and power beneath the Divine Lord, the supreme authority was vested in a single, divinely sanctioned ruler, making theocracy a more accurate term for the ultimate source and structure of the government's power."></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <h3>8. Why did the Mayans construct pyramids such as those built in the city of Tikal?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq8" value="To be used as a site for ceremonial burials">
+                                To be used as a site for ceremonial burials
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq8" value="To be used during religious ceremonies">
+                                To be used during religious ceremonies
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq8" value="To help people navigate through the dense jungles of Central America">
+                                To help people navigate through the dense jungles of Central America
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq8" value="All of the above">
+                                All of the above
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="All of the above" data-feedback="The Mayan pyramids were both practically and culturally important. While they were at the center of much of Mayan political and religious life, they also served as key landmarks to help people find their way to the city centers."></div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <h3>9. What crop made it possible for cultures in Mexico and Central America to transition from being nomadic to being settled?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq9" value="Tobacco">
+                                Tobacco
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq9" value="Maize">
+                                Maize
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq9" value="Squash">
+                                Squash
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq9" value="Sugar">
+                                Sugar
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Maize" data-feedback="A. While native to the Americas and culturally important, tobacco is a non-food cash crop used for ritual, medicinal, and recreational purposes. It does not provide the primary caloric sustenance required to sustain a large, settled population. C. Squash (and beans) were vital components of the Mesoamerican diet, often grown alongside maize in the complementary system known as the 'Three Sisters.' However, maize was the single most important, primary calorie source and the foundation of the agrarian transition; squash alone couldn't have supported the complete shift to settled life. D. Sugar cane is not native to the Americas. It was brought to the New World by Europeans during the colonial era (after 1492 CE), long after the indigenous cultures of Mexico and Central America had already transitioned to settled agriculture based on maize."></div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <h3>10. How did the Native Americans of the Great Plains come to acquire and domesticate horses?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="usq10" value="Spanish explorers gave them to the Native Americans as a peace offering.">
+                                Spanish explorers gave them to the Native Americans as a peace offering.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq10" value="Spanish horses got loose and eventually migrated north into the Great Plains.">
+                                Spanish horses got loose and eventually migrated north into the Great Plains.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq10" value="Horses had always been in North America, the Spanish simply showed the Native Americans how to tame and ride them.">
+                                Horses had always been in North America, the Spanish simply showed the Native Americans how to tame and ride them.
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="usq10" value="The Native Americans of the Great Plains acquired and learned about horses from Native Americans on the west coast of the continent.">
+                                The Native Americans of the Great Plains acquired and learned about horses from Native Americans on the west coast of the continent.
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Spanish horses got loose and eventually migrated north into the Great Plains." data-feedback="A. While some horses may have been traded or given, this was not the primary way that the vast numbers of horses spread throughout the Plains. The initial Spanish policy was often to restrict access to horses and technology to maintain dominance. C. This is factually incorrect. Horses originated in North America but went extinct there around 10,000 years ago. The Spanish brought them back. D. This reverses the historical sequence. Horses spread northward from Spanish settlements in the Southwest (New Mexico/Texas area), moving inland and then north across the Plains. The movement started from the Spanish interior, not the Pacific Coast."></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Quiz</button>
+                </form>
+                
+                <!-- Citation -->
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
+                    <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Foner, Eric. <em>Give Me Liberty!: An American History</em>. 6th ed., W.W. Norton & Company, 2020.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Gilder Lehrman Institute of American History. <em>Colonial Foundations and the Atlantic World</em>.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Khan Academy. <em>U.S. History – Worlds Collide (Pre-Columbian to 1607)</em>.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Library of Congress. <em>Early America: 1492–1607 Collection</em>.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Smithsonian National Museum of the American Indian. <em>Native Cultures Before Contact</em>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- European History Quiz -->
+        <div id="europeanQuiz" class="quiz-selection">
+            <button class="back-btn" onclick="backToCategories()">
+                <span class="material-icons">arrow_back</span>
+                Back to Categories
+            </button>
+            
+            <div class="quiz-container">
+                <h2>European History Quiz</h2>
+                
+                <div class="score-summary" id="europeanScoreSummary">
+                    <h2 id="europeanFinalScore"></h2>
+                    <p id="europeanScoreMessage"></p>
+                </div>
+                
+                <form id="europeanQuizForm">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <h3>1. The Renaissance began in Italy largely because:</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq1" value="Italy had recently been unified under one king">
+                                Italy had recently been unified under one king
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq1" value="The Catholic Church supported scientific discovery">
+                                The Catholic Church supported scientific discovery
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq1" value="Italian city-states were wealthy from trade and banking">
+                                Italian city-states were wealthy from trade and banking
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq1" value="The Crusades destroyed feudalism in northern Europe">
+                                The Crusades destroyed feudalism in northern Europe
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Italian city-states were wealthy from trade and banking" data-feedback="Cities like Florence and Venice gained great wealth through Mediterranean trade, which funded art, learning, and new ideas that fueled the Renaissance."></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <h3>2. Which term best describes the Renaissance emphasis on human potential and individual achievement?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq2" value="Scholasticism">
+                                Scholasticism
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq2" value="Humanism">
+                                Humanism
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq2" value="Nationalism">
+                                Nationalism
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq2" value="Absolutism">
+                                Absolutism
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Humanism" data-feedback="Humanism focused on the study of classical works and the belief that humans could shape their own destiny and improve the world through reason and art."></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <h3>3. What was Johannes Gutenberg's most important contribution to European history?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq3" value="Creating the first universities">
+                                Creating the first universities
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq3" value="Inventing the printing press">
+                                Inventing the printing press
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq3" value="Discovering the laws of gravity">
+                                Discovering the laws of gravity
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq3" value="Mapping trade routes to Asia">
+                                Mapping trade routes to Asia
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Inventing the printing press" data-feedback="Gutenberg's printing press (c. 1450) made books cheaper and more available, spreading literacy and Renaissance/Reformation ideas across Europe."></div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <h3>4. Which event is most closely associated with the start of the Protestant Reformation?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq4" value="The signing of the Magna Carta">
+                                The signing of the Magna Carta
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq4" value="Martin Luther's Ninety-Five Theses">
+                                Martin Luther's Ninety-Five Theses
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq4" value="The Council of Trent">
+                                The Council of Trent
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq4" value="The invention of the telescope">
+                                The invention of the telescope
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Martin Luther's Ninety-Five Theses" data-feedback="In 1517, Luther challenged the Catholic Church's sale of indulgences, sparking religious reform movements throughout Europe."></div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <h3>5. What was a major result of the Protestant Reformation?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq5" value="The Catholic Church gained complete control of Europe">
+                                The Catholic Church gained complete control of Europe
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq5" value="Religious unity in Europe increased">
+                                Religious unity in Europe increased
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq5" value="New Christian denominations such as Lutheranism and Calvinism emerged">
+                                New Christian denominations such as Lutheranism and Calvinism emerged
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq5" value="Monarchs lost power to the Pope">
+                                Monarchs lost power to the Pope
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="New Christian denominations such as Lutheranism and Calvinism emerged" data-feedback="The Reformation broke the unity of Western Christianity and created lasting divisions between Catholics and Protestants."></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <h3>6. Which of the following best explains why Henry VIII broke away from the Catholic Church?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq6" value="He disagreed with the Bible">
+                                He disagreed with the Bible
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq6" value="He wanted more political power and a divorce">
+                                He wanted more political power and a divorce
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq6" value="He supported Martin Luther's teachings">
+                                He supported Martin Luther's teachings
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq6" value="He converted to Calvinism">
+                                He converted to Calvinism
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="He wanted more political power and a divorce" data-feedback="When the Pope refused to grant Henry a divorce, he created the Church of England (Anglican Church), making himself its head."></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <h3>7. Which of the following was a major goal of European exploration in the 15th and 16th centuries?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq7" value="To spread Islam">
+                                To spread Islam
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq7" value="To find a sea route to Asia for spices and trade">
+                                To find a sea route to Asia for spices and trade
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq7" value="To conquer the Mongol Empire">
+                                To conquer the Mongol Empire
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq7" value="To end slavery in Africa">
+                                To end slavery in Africa
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="To find a sea route to Asia for spices and trade" data-feedback="European explorers like Columbus, da Gama, and Magellan sought faster trade routes to Asia's markets for spices, silk, and gold."></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <h3>8. Which country led the early European voyages of exploration?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq8" value="Spain">
+                                Spain
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq8" value="England">
+                                England
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq8" value="Portugal">
+                                Portugal
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq8" value="France">
+                                France
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Portugal" data-feedback="Under Prince Henry the Navigator, Portugal explored Africa's coast and pioneered ocean navigation before other nations joined."></div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <h3>9. The Scientific Revolution challenged which traditional European institution the most?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq9" value="Feudal monarchies">
+                                Feudal monarchies
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq9" value="The Catholic Church">
+                                The Catholic Church
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq9" value="Merchant guilds">
+                                Merchant guilds
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq9" value="The Ottoman Empire">
+                                The Ottoman Empire
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="The Catholic Church" data-feedback="Scientific discoveries by Copernicus, Galileo, and Newton questioned Church teachings about the universe and promoted observation and reason."></div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <h3>10. What was one major economic effect of the Age of Exploration?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="eq10" value="The decline of European trade">
+                                The decline of European trade
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq10" value="The creation of a global trading network">
+                                The creation of a global trading network
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq10" value="The end of slavery">
+                                The end of slavery
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="eq10" value="The collapse of European monarchies">
+                                The collapse of European monarchies
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="The creation of a global trading network" data-feedback="Exploration connected Europe, Africa, Asia, and the Americas through trade in goods, people, and ideas, laying the foundation for the modern global economy."></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Quiz</button>
+                </form>
+                
+                <!-- Citation -->
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
+                    <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        BBC Bitesize. "The Fall of the Roman Empire." <em>BBC</em>, British Broadcasting Corporation, 2023, www.bbc.co.uk/bitesize.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        British Library. <em>Medieval Manuscripts and Early Renaissance Learning</em>.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Kagan, Donald, Steven Ozment, and Frank Turner. <em>The Western Heritage</em>. Pearson, 2016.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Khan Academy. <em>European History: Middle Ages to Renaissance</em>.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        McKay, John P., et al. <em>A History of Western Society</em>. 13th ed., Bedford/St. Martin's, 2019.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        The Met Museum. <em>Timeline of Art History – Medieval and Renaissance Europe</em>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function showQuiz(category) {
+                document.getElementById('quizCategories').style.display = 'none';
+                if (category === 'world') {
+                    document.getElementById('worldQuiz').classList.add('active');
+                } else if (category === 'us') {
+                    document.getElementById('usQuiz').classList.add('active');
+                } else if (category === 'european') {
+                    document.getElementById('europeanQuiz').classList.add('active');
+                }
+            }
+
+            function backToCategories() {
+                document.getElementById('quizCategories').style.display = 'grid';
+                document.getElementById('worldQuiz').classList.remove('active');
+                document.getElementById('usQuiz').classList.remove('active');
+                document.getElementById('europeanQuiz').classList.remove('active');
+                
+                // Reset all quizzes
+                const worldForm = document.getElementById('quizForm');
+                const usForm = document.getElementById('usQuizForm');
+                const europeanForm = document.getElementById('europeanQuizForm');
+                if (worldForm) worldForm.reset();
+                if (usForm) usForm.reset();
+                if (europeanForm) europeanForm.reset();
+                
+                document.getElementById('scoreSummary').classList.remove('show');
+                document.getElementById('usScoreSummary').classList.remove('show');
+                document.getElementById('europeanScoreSummary').classList.remove('show');
+                document.querySelectorAll('.feedback').forEach(f => f.classList.remove('show', 'correct', 'incorrect'));
+            }
+
+            // World History Quiz
+            document.getElementById('quizForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let score = 0;
+                let totalQuestions = 10;
+                
+                // Check all questions
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                    const feedbackDiv = document.querySelector(`#worldQuiz .question:nth-child(${i}) .feedback`);
+                    const correctAnswer = feedbackDiv.dataset.correct;
+                    const feedbackText = feedbackDiv.dataset.feedback;
+                    
+                    if (selectedAnswer) {
+                        const userAnswer = selectedAnswer.value;
+                        
+                        if (userAnswer === correctAnswer) {
+                            score++;
+                            feedbackDiv.classList.add('correct', 'show');
+                            feedbackDiv.innerHTML = `<strong>✓ Correct!</strong><br>${feedbackText}`;
+                        } else {
+                            feedbackDiv.classList.add('incorrect', 'show');
+                            feedbackDiv.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                        }
+                    } else {
+                        feedbackDiv.classList.add('incorrect', 'show');
+                        feedbackDiv.innerHTML = `<strong>No answer selected.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                    }
+                }
+                
+                // Show score summary
+                const scoreSummary = document.getElementById('scoreSummary');
+                const finalScore = document.getElementById('finalScore');
+                const scoreMessage = document.getElementById('scoreMessage');
+                
+                finalScore.textContent = `Your Score: ${score}/${totalQuestions}`;
+                
+                const percentage = (score / totalQuestions) * 100;
+                if (percentage >= 90) {
+                    scoreMessage.textContent = 'Excellent work! You have a strong understanding of ancient civilizations!';
+                } else if (percentage >= 70) {
+                    scoreMessage.textContent = 'Good job! You have a solid grasp of the material.';
+                } else if (percentage >= 50) {
+                    scoreMessage.textContent = 'Not bad! Review the feedback to strengthen your knowledge.';
+                } else {
+                    scoreMessage.textContent = 'Keep studying! Review the feedback and try again.';
+                }
+                
+                scoreSummary.classList.add('show');
+                scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+
+            // US History Quiz
+            document.getElementById('usQuizForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let score = 0;
+                let totalQuestions = 10;
+                
+                // Check all questions
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const selectedAnswer = document.querySelector(`input[name="usq${i}"]:checked`);
+                    const feedbackDiv = document.querySelector(`#usQuiz .question:nth-child(${i}) .feedback`);
+                    const correctAnswer = feedbackDiv.dataset.correct;
+                    const feedbackText = feedbackDiv.dataset.feedback;
+                    
+                    if (selectedAnswer) {
+                        const userAnswer = selectedAnswer.value;
+                        
+                        if (userAnswer === correctAnswer) {
+                            score++;
+                            feedbackDiv.classList.add('correct', 'show');
+                            feedbackDiv.innerHTML = `<strong>✓ Correct!</strong><br>${feedbackText}`;
+                        } else {
+                            feedbackDiv.classList.add('incorrect', 'show');
+                            feedbackDiv.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                        }
+                    } else {
+                        feedbackDiv.classList.add('incorrect', 'show');
+                        feedbackDiv.innerHTML = `<strong>No answer selected.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                    }
+                }
+                
+                // Show score summary
+                const scoreSummary = document.getElementById('usScoreSummary');
+                const finalScore = document.getElementById('usFinalScore');
+                const scoreMessage = document.getElementById('usScoreMessage');
+                
+                finalScore.textContent = `Your Score: ${score}/${totalQuestions}`;
+                
+                const percentage = (score / totalQuestions) * 100;
+                if (percentage >= 90) {
+                    scoreMessage.textContent = 'Excellent work! You have a strong understanding of Native American history and early contact!';
+                } else if (percentage >= 70) {
+                    scoreMessage.textContent = 'Good job! You have a solid grasp of the material.';
+                } else if (percentage >= 50) {
+                    scoreMessage.textContent = 'Not bad! Review the feedback to strengthen your knowledge.';
+                } else {
+                    scoreMessage.textContent = 'Keep studying! Review the feedback and try again.';
+                }
+                
+                scoreSummary.classList.add('show');
+                scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+
+            // European History Quiz
+            document.getElementById('europeanQuizForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let score = 0;
+                let totalQuestions = 10;
+                
+                // Check all questions
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const selectedAnswer = document.querySelector(`input[name="eq${i}"]:checked`);
+                    const feedbackDiv = document.querySelector(`#europeanQuiz .question:nth-child(${i}) .feedback`);
+                    const correctAnswer = feedbackDiv.dataset.correct;
+                    const feedbackText = feedbackDiv.dataset.feedback;
+                    
+                    if (selectedAnswer) {
+                        const userAnswer = selectedAnswer.value;
+                        
+                        if (userAnswer === correctAnswer) {
+                            score++;
+                            feedbackDiv.classList.add('correct', 'show');
+                            feedbackDiv.innerHTML = `<strong>✓ Correct!</strong><br>${feedbackText}`;
+                        } else {
+                            feedbackDiv.classList.add('incorrect', 'show');
+                            feedbackDiv.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                        }
+                    } else {
+                        feedbackDiv.classList.add('incorrect', 'show');
+                        feedbackDiv.innerHTML = `<strong>No answer selected.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                    }
+                }
+                
+                // Show score summary
+                const scoreSummary = document.getElementById('europeanScoreSummary');
+                const finalScore = document.getElementById('europeanFinalScore');
+                const scoreMessage = document.getElementById('europeanScoreMessage');
+                
+                finalScore.textContent = `Your Score: ${score}/${totalQuestions}`;
+                
+                const percentage = (score / totalQuestions) * 100;
+                if (percentage >= 90) {
+                    scoreMessage.textContent = 'Excellent work! You have a strong understanding of European history!';
+                } else if (percentage >= 70) {
+                    scoreMessage.textContent = 'Good job! You have a solid grasp of the material.';
+                } else if (percentage >= 50) {
+                    scoreMessage.textContent = 'Not bad! Review the feedback to strengthen your knowledge.';
+                } else {
+                    scoreMessage.textContent = 'Keep studying! Review the feedback and try again.';
+                }
+                
+                scoreSummary.classList.add('show');
+                scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        </script>
     </main>
     
     <footer class="footer">
