@@ -262,12 +262,41 @@
                     `;
 
                     calendarGrid.appendChild(dayElement);
+                    
+                    // Add click handler to pin popup for days with events
+                    if (hasEvents) {
+                        dayElement.addEventListener('click', function(e) {
+                            // Don't toggle if clicking on a link
+                            if (e.target.tagName === 'A') {
+                                return;
+                            }
+                            
+                            // Toggle pinned state
+                            this.classList.toggle('popup-pinned');
+                            
+                            // Remove pinned state from other calendar days
+                            document.querySelectorAll('.calendar-day.popup-pinned').forEach(day => {
+                                if (day !== this) {
+                                    day.classList.remove('popup-pinned');
+                                }
+                            });
+                        });
+                    }
                 }
             }
 
             // Initialize calendar
             updateCalendarHeader();
             generateCalendar();
+            
+            // Close pinned popups when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.calendar-day')) {
+                    document.querySelectorAll('.calendar-day.popup-pinned').forEach(day => {
+                        day.classList.remove('popup-pinned');
+                    });
+                }
+            });
 
             // Month navigation
             document.getElementById('prevMonth').addEventListener('click', () => {
