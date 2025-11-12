@@ -157,8 +157,7 @@ textarea:valid {
 .service-card,
 .resource-card,
 .dashboard-card,
-.summary-card,
-.session-container {
+.summary-card {
     border: 2px solid #e0e0e0;
     border-top: 4px solid var(--primary-color);
     box-shadow: 0 2px 8px rgba(74, 20, 140, 0.15);
@@ -167,8 +166,7 @@ textarea:valid {
 .service-card:hover,
 .resource-card:hover,
 .dashboard-card:hover,
-.summary-card:hover,
-.session-container:hover {
+.summary-card:hover {
     border: 3px solid var(--accent-color);
     box-shadow: 0 6px 16px rgba(74, 20, 140, 0.3) !important;
 }
