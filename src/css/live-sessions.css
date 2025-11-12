@@ -318,6 +318,65 @@
     display: block;
 }
 
+/* Booking Summary and Confirm Button */
+.booking-message {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.booking-summary {
+    text-align: center;
+}
+
+.booking-summary h3 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.booking-summary p {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.confirm-booking-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin: 1.5rem auto 0;
+    min-width: 200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.confirm-booking-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background: var(--hover-color);
+}
+
+.confirm-booking-btn:active {
+    transform: translateY(0);
+}
+
+.confirm-booking-btn .material-icons {
+    font-size: 1.2rem;
+}
+
 .confirm-btn {
     background-color: #fff !important;
     color: #4CAF50 !important;
