@@ -1,3 +1,17 @@
+/* Container Styles */
+.container,
+.session-container {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+}
+
 .section-header-content h2 {
     font-size: 1.5rem;
     font-weight: 500;
@@ -180,6 +194,12 @@
     margin-bottom: 2rem;
 }
 
+.calendar-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -204,13 +224,21 @@
 
 .time-slots {
     display: none;
-    margin-top: 1rem;
+    margin-top: 2rem;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 1rem;
 }
 
 .time-slots.active {
     display: grid;
+}
+
+.time-slots h3 {
+    grid-column: 1 / -1;
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .time-slot {
@@ -359,7 +387,6 @@
 
 .booking-container .section-header {
     margin-bottom: 2rem;
-    padding: 0 0.5rem;
 }
 
 .booking-container .section-header h2 {
@@ -368,8 +395,7 @@
 }
 
 .subject-selection {
-    margin-top: 2.5rem;
-    padding: 0 0.5rem;
+    margin-top: 2rem;
 }
 
 .subject-selection h3 {
@@ -380,8 +406,7 @@
 }
 
 .session-type-selection {
-    margin-top: 2.5rem;
-    padding: 0 0.5rem;
+    margin-top: 2rem;
 }
 
 .session-type-selection h3 {
@@ -481,7 +506,7 @@
 /* Session Type Selection Styles */
 .session-type-options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
 }
 
@@ -500,24 +525,33 @@
     gap: 1rem;
     padding: 1.5rem;
     background: white;
-    border: 2px solid #e0e0e0;
+    border: 2px solid rgba(var(--primary-color-rgb), 0.3);
     border-radius: 8px;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .session-type-option:hover .option-content {
     transform: translateY(-2px);
     border-color: var(--accent-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .session-type-option input[type="radio"]:checked + .option-content {
     background: var(--accent-color);
     color: white;
     border-color: var(--accent-color);
+    box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 255, 87, 34), 0.3);
 }
 
 .session-type-option .material-icons {
     font-size: 2rem;
+    color: var(--accent-color);
+    transition: color 0.3s ease;
+}
+
+.session-type-option input[type="radio"]:checked + .option-content .material-icons {
+    color: white;
 }
 
 .session-type-option .option-text {
@@ -528,15 +562,12 @@
 
 .session-type-option .option-text strong {
     font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .session-type-option .option-text small {
     font-size: 0.875rem;
     opacity: 0.9;
-}
-
-.session-type-option input[type="radio"]:checked + .option-content .material-icons {
-    color: white;
 }
 
 @keyframes slideIn {
