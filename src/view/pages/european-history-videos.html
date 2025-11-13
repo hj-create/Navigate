@@ -47,6 +47,54 @@
         .back-btn:hover {
             background: #e0e0e0;
         }
+        
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-content {
+            padding: 1.5rem;
+        }
+        
+        .video-content h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            color: var(--text-color);
+        }
+        
+        .video-content p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -117,20 +165,32 @@
         <p>Watch engaging video content covering European civilizations, empires, and transformative periods.</p>
 
         <div class="resources-grid">
-            <a href="https://www.youtube.com/watch?v=3PszVWZNWVA" class="resource-card" target="_blank" data-video-id="european-video-1" data-video-title="The Fall of the Roman Empire">
-                <span class="material-icons">play_circle_outline</span>
-                <h3>The Fall of the Roman Empire</h3>
-                <p>Examine the complex factors that led to the decline and fall of one of history's greatest empires.</p>
+            <a href="https://www.youtube.com/watch?v=3PszVWZNWVA" class="video-card" target="_blank" data-video-id="european-video-1" data-video-title="The Fall of the Roman Empire">
+                <div class="video-thumbnail">
+                    <iframe src="https://www.youtube.com/embed/3PszVWZNWVA" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>The Fall of the Roman Empire</h3>
+                    <p>Examine the complex factors that led to the decline and fall of one of history's greatest empires.</p>
+                </div>
             </a>
-            <a href="https://www.youtube.com/watch?v=TG55ErfdaeY" class="resource-card" target="_blank" data-video-id="european-video-2" data-video-title="The Rise of Christianity">
-                <span class="material-icons">play_circle_outline</span>
-                <h3>The Rise of Christianity</h3>
-                <p>Discover how Christianity emerged from ancient Judaism and spread throughout the Roman Empire to become a dominant world religion.</p>
+            <a href="https://www.youtube.com/watch?v=TG55ErfdaeY" class="video-card" target="_blank" data-video-id="european-video-2" data-video-title="The Rise of Christianity">
+                <div class="video-thumbnail">
+                    <iframe src="https://www.youtube.com/embed/TG55ErfdaeY" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>The Rise of Christianity</h3>
+                    <p>Discover how Christianity emerged from ancient Judaism and spread throughout the Roman Empire to become a dominant world religion.</p>
+                </div>
             </a>
-            <a href="https://www.youtube.com/watch?v=rNCw2MOfnLQ" class="resource-card" target="_blank" data-video-id="european-video-3" data-video-title="Feudalism and Manorialism">
-                <span class="material-icons">play_circle_outline</span>
-                <h3>Feudalism and Manorialism</h3>
-                <p>Learn about the medieval social, political, and economic systems that shaped European society for centuries.</p>
+            <a href="https://www.youtube.com/watch?v=rNCw2MOfnLQ" class="video-card" target="_blank" data-video-id="european-video-3" data-video-title="Feudalism and Manorialism">
+                <div class="video-thumbnail">
+                    <iframe src="https://www.youtube.com/embed/rNCw2MOfnLQ" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>Feudalism and Manorialism</h3>
+                    <p>Learn about the medieval social, political, and economic systems that shaped European society for centuries.</p>
+                </div>
             </a>
         </div>
 
@@ -168,6 +228,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Navigate. All rights reserved.</p>
+            <p class="footer-tagline">Built with ❤️ by the Navigate team for accessible history education</p>
         </div>
     </footer>
     
@@ -177,15 +238,18 @@
     <script>
         // Track video clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const videoCards = document.querySelectorAll('.resource-card[data-video-id]');
+            const videoCards = document.querySelectorAll('.video-card[data-video-id]');
             
             videoCards.forEach(card => {
                 card.addEventListener('click', function(e) {
-                    const videoId = this.dataset.videoId;
-                    const videoTitle = this.dataset.videoTitle;
-                    
-                    // Track video watched
-                    trackVideoWatched(videoId, videoTitle, 'European History');
+                    // Allow iframe clicks to work, but track when card is clicked
+                    if (e.target.tagName !== 'IFRAME') {
+                        const videoId = this.dataset.videoId;
+                        const videoTitle = this.dataset.videoTitle;
+                        
+                        // Track video watched
+                        trackVideoWatched(videoId, videoTitle, 'European History');
+                    }
                 });
             });
         });

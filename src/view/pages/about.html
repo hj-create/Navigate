@@ -38,6 +38,17 @@
             color: var(--accent-color, #1e88e5);
             margin-bottom: 0.5rem;
         }
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .team-member img[src*="nandana.jpeg"] {
+            transform: rotate(90deg);
+        }
         
         /* About page image styling */
         .about-image {
@@ -144,18 +155,18 @@
                 <h2>Our Team</h2>
                 <div class="team-grid">
                     <div class="team-member">
-                        <span class="material-icons">person</span>
-                        <h3>Team Member 1</h3>
-                        <p>Lead Developer</p>
+                        <img src="../../images/haasini.png" alt="Lead Architect">
+                        <h3>Haasini Jakkaraju</h3>
+                        <p>Lead Architect</p>
                     </div>
                     <div class="team-member">
-                        <span class="material-icons">person</span>
-                        <h3>Team Member 2</h3>
+                        <img src="../../images/sayali.png" alt="Curriculum Designer">
+                        <h3>Sayali Rane</h3>
                         <p>Curriculum Designer</p>
                     </div>
                     <div class="team-member">
-                        <span class="material-icons">person</span>
-                        <h3>Team Member 3</h3>
+                        <img src="../../images/nandana.jpeg" alt="Project Lead">
+                        <h3>Nandana Atukuri</h3>
                         <p>Project Manager</p>
                       </div>
                 </div>
@@ -195,7 +206,8 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Navigate. All rights reserved.</p>
-        </div> 
+            <p class="footer-tagline">Built with ❤️ by the Navigate team for accessible history education</p>
+        </div>
     </footer>
     
     <script src="../../controller/auth.js"></script>

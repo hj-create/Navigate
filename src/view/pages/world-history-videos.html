@@ -47,6 +47,54 @@
         .back-btn:hover {
             background: #e0e0e0;
         }
+        
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-content {
+            padding: 1.5rem;
+        }
+        
+        .video-content h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            color: var(--text-color);
+        }
+        
+        .video-content p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -117,20 +165,32 @@
         <p>Watch engaging video content covering major civilizations and global historical events.</p>
 
         <div class="resources-grid">
-            <a href="https://www.youtube.com/watch?v=sohXPx_XZ6Y" class="resource-card" target="_blank" data-video-id="world-video-1" data-video-title="Ancient Mesopotamia">
-                <span class="material-icons">play_circle_outline</span>
-                <h3>Ancient Mesopotamia</h3>
-                <p>Explore the "Cradle of Civilization" and learn about the Sumerians, Babylonians, and their lasting contributions to human history.</p>
+            <a href="https://www.youtube.com/watch?v=sohXPx_XZ6Y" class="video-card" target="_blank" data-video-id="world-video-1" data-video-title="Ancient Mesopotamia">
+                <div class="video-thumbnail">
+                    <iframe src="https://www.youtube.com/embed/sohXPx_XZ6Y" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>Ancient Mesopotamia</h3>
+                    <p>Explore the "Cradle of Civilization" and learn about the Sumerians, Babylonians, and their lasting contributions to human history.</p>
+                </div>
             </a>
-            <a href="https://www.youtube.com/watch?v=Z3Wvw6BivVI" class="resource-card" target="_blank" data-video-id="world-video-2" data-video-title="Ancient Egypt">
-                <span class="material-icons">play_circle_outline</span>
-                <h3>Ancient Egypt</h3>
-                <p>Discover the fascinating civilization of Ancient Egypt, from the construction of pyramids to the reign of pharaohs along the Nile River.</p>
+            <a href="https://www.youtube.com/watch?v=Z3Wvw6BivVI" class="video-card" target="_blank" data-video-id="world-video-2" data-video-title="Ancient Egypt">
+                <div class="video-thumbnail">
+                    <iframe src="https://www.youtube.com/embed/Z3Wvw6BivVI" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>Ancient Egypt</h3>
+                    <p>Discover the fascinating civilization of Ancient Egypt, from the construction of pyramids to the reign of pharaohs along the Nile River.</p>
+                </div>
             </a>
-            <a href="https://www.youtube.com/watch?v=n7ndRwqJYDM" class="resource-card" target="_blank" data-video-id="world-video-3" data-video-title="Ancient India">
-                <span class="material-icons">play_circle_outline</span>
-                <h3>Ancient India</h3>
-                <p>Learn about the rich history of Ancient India, including the Indus Valley Civilization and the development of major religions and philosophies.</p>
+            <a href="https://www.youtube.com/watch?v=n7ndRwqJYDM" class="video-card" target="_blank" data-video-id="world-video-3" data-video-title="Ancient India">
+                <div class="video-thumbnail">
+                    <iframe src="https://www.youtube.com/embed/n7ndRwqJYDM" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>Ancient India</h3>
+                    <p>Learn about the rich history of Ancient India, including the Indus Valley Civilization and the development of major religions and philosophies.</p>
+                </div>
             </a>
         </div>
 
@@ -168,6 +228,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Navigate. All rights reserved.</p>
+            <p class="footer-tagline">Built with ❤️ by the Navigate team for accessible history education</p>
         </div>
     </footer>
     
@@ -177,15 +238,18 @@
     <script>
         // Track video clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const videoCards = document.querySelectorAll('.resource-card[data-video-id]');
+            const videoCards = document.querySelectorAll('.video-card[data-video-id]');
             
             videoCards.forEach(card => {
                 card.addEventListener('click', function(e) {
-                    const videoId = this.dataset.videoId;
-                    const videoTitle = this.dataset.videoTitle;
-                    
-                    // Track video watched
-                    trackVideoWatched(videoId, videoTitle, 'World History');
+                    // Allow iframe clicks to work, but track when card is clicked
+                    if (e.target.tagName !== 'IFRAME') {
+                        const videoId = this.dataset.videoId;
+                        const videoTitle = this.dataset.videoTitle;
+                        
+                        // Track video watched
+                        trackVideoWatched(videoId, videoTitle, 'World History');
+                    }
                 });
             });
         });
