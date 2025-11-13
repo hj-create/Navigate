@@ -250,21 +250,14 @@
     
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
+    <script src="../../controller/user-tracking.js"></script>
+    <script src="../../controller/dashboard.js"></script>
     <script>
         // Require authentication to view dashboard
         requireAuth('signin.html');
         
         // Display user progress
         displayUserProgress();
-        
-        // Display welcome message with username
-        const currentUser = getCurrentUser();
-        if (currentUser) {
-            const dashboardHeader = document.querySelector('.dashboard-header h1');
-            if (dashboardHeader) {
-                dashboardHeader.textContent = `Welcome back, ${currentUser.username}!`;
-            }
-        }
     </script>
 </body>
 </html>

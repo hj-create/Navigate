@@ -1174,6 +1174,11 @@
                 
                 scoreSummary.classList.add('show');
                 scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Track quiz completion
+                if (typeof trackQuizCompletion === 'function') {
+                    trackQuizCompletion('world-history-quiz', 'World History Quiz', percentage, totalQuestions);
+                }
             });
 
             // US History Quiz
@@ -1227,6 +1232,11 @@
                 
                 scoreSummary.classList.add('show');
                 scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Track quiz completion
+                if (typeof trackQuizCompletion === 'function') {
+                    trackQuizCompletion('us-history-quiz', 'US History Quiz', percentage, totalQuestions);
+                }
             });
 
             // European History Quiz
@@ -1280,6 +1290,11 @@
                 
                 scoreSummary.classList.add('show');
                 scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Track quiz completion
+                if (typeof trackQuizCompletion === 'function') {
+                    trackQuizCompletion('european-history-quiz', 'European History Quiz', percentage, totalQuestions);
+                }
             });
         </script>
     </main>
@@ -1315,5 +1330,6 @@
     
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
+    <script src="../../controller/user-tracking.js"></script>
 </body>
 </html>

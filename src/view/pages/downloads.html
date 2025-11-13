@@ -146,5 +146,24 @@
     
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
+    <script src="../../controller/user-tracking.js"></script>
+    <script>
+        // Track download clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadLinks = document.querySelectorAll('.resource-card a[download]');
+            
+            downloadLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const card = this.closest('.resource-card');
+                    const downloadTitle = card.querySelector('h3').textContent;
+                    
+                    // Track download accessed
+                    if (typeof trackDownloadAccessed === 'function') {
+                        trackDownloadAccessed(downloadTitle);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

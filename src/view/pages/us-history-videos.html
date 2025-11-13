@@ -176,5 +176,23 @@
     
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
+    <script src="../../controller/user-tracking.js"></script>
+    <script>
+        // Track video clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoLinks = document.querySelectorAll('.resource-card a');
+            
+            videoLinks.forEach((link, index) => {
+                link.addEventListener('click', function(e) {
+                    const card = this.closest('.resource-card');
+                    const videoTitle = card.querySelector('h3').textContent;
+                    const videoId = 'us-video-' + (index + 1);
+                    
+                    // Track video watched
+                    trackVideoWatched(videoId, videoTitle, 'US History');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

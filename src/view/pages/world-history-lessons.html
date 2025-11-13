@@ -169,5 +169,23 @@
     
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
+    <script src="../../controller/user-tracking.js"></script>
+    <script>
+        // Track lesson clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const lessonLinks = document.querySelectorAll('.resource-card a');
+            
+            lessonLinks.forEach((link, index) => {
+                link.addEventListener('click', function(e) {
+                    const card = this.closest('.resource-card');
+                    const lessonTitle = card.querySelector('h3').textContent;
+                    const lessonId = 'world-history-' + (index + 1);
+                    
+                    // Track lesson completion
+                    trackLessonCompletion(lessonId, lessonTitle, 'World History');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
