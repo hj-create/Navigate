@@ -117,24 +117,21 @@
         <p>Watch engaging video content covering European civilizations, empires, and transformative periods.</p>
 
         <div class="resources-grid">
-            <div class="resource-card">
+            <a href="https://www.youtube.com/watch?v=3PszVWZNWVA" class="resource-card" target="_blank" data-video-id="european-video-1" data-video-title="The Fall of the Roman Empire">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>The Fall of the Roman Empire</h3>
                 <p>Examine the complex factors that led to the decline and fall of one of history's greatest empires.</p>
-                <a href="https://www.youtube.com/watch?v=3PszVWZNWVA" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.youtube.com/watch?v=TG55ErfdaeY" class="resource-card" target="_blank" data-video-id="european-video-2" data-video-title="The Rise of Christianity">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>The Rise of Christianity</h3>
                 <p>Discover how Christianity emerged from ancient Judaism and spread throughout the Roman Empire to become a dominant world religion.</p>
-                <a href="https://www.youtube.com/watch?v=TG55ErfdaeY" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.youtube.com/watch?v=rNCw2MOfnLQ" class="resource-card" target="_blank" data-video-id="european-video-3" data-video-title="Feudalism and Manorialism">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>Feudalism and Manorialism</h3>
                 <p>Learn about the medieval social, political, and economic systems that shaped European society for centuries.</p>
-                <a href="https://www.youtube.com/watch?v=rNCw2MOfnLQ" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
+            </a>
         </div>
 
         <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
@@ -180,13 +177,12 @@
     <script>
         // Track video clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const videoLinks = document.querySelectorAll('.resource-card a');
+            const videoCards = document.querySelectorAll('.resource-card[data-video-id]');
             
-            videoLinks.forEach((link, index) => {
-                link.addEventListener('click', function(e) {
-                    const card = this.closest('.resource-card');
-                    const videoTitle = card.querySelector('h3').textContent;
-                    const videoId = 'european-video-' + (index + 1);
+            videoCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const videoId = this.dataset.videoId;
+                    const videoTitle = this.dataset.videoTitle;
                     
                     // Track video watched
                     trackVideoWatched(videoId, videoTitle, 'European History');

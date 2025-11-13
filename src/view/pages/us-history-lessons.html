@@ -117,24 +117,21 @@
         <p>Comprehensive lessons covering American history from colonial foundations to modern times.</p>
 
         <div class="resources-grid">
-            <div class="resource-card">
+            <a href="https://www.canva.com/design/DAG4hsfRMPU/-TCylGzcXJLIYFWkqyVTUA/edit?utm_content=DAG4hsfRMPU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-card" target="_blank" data-lesson-id="us-history-1" data-lesson-title="Spanish Colonization">
                 <span class="material-icons">menu_book</span>
                 <h3>Spanish Colonization</h3>
                 <p>Discover how Spanish explorers and conquistadors established colonies in the Americas, bringing significant cultural, religious, and economic changes to the New World.</p>
-                <a href="https://www.canva.com/design/DAG4hsfRMPU/-TCylGzcXJLIYFWkqyVTUA/edit?utm_content=DAG4hsfRMPU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;" target="_blank">Start Lesson</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.canva.com/design/DAG4b6KWzlk/QFC3Z8cXeECLUrz1wg7rDg/edit?utm_content=DAG4b6KWzlk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-card" target="_blank" data-lesson-id="us-history-2" data-lesson-title="Indigenous Americans">
                 <span class="material-icons">menu_book</span>
                 <h3>Indigenous Americans</h3>
                 <p>Learn about the diverse cultures, societies, and civilizations of Native American peoples before European contact and their enduring legacy in American history.</p>
-                <a href="https://www.canva.com/design/DAG4b6KWzlk/QFC3Z8cXeECLUrz1wg7rDg/edit?utm_content=DAG4b6KWzlk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;" target="_blank">Start Lesson</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.canva.com/design/DAG4b6oaQ5Y/CY_U1aDB0I5b3NXgByZfwg/edit" class="resource-card" target="_blank" data-lesson-id="us-history-3" data-lesson-title="The Columbian Exchange">
                 <span class="material-icons">menu_book</span>
                 <h3>The Columbian Exchange</h3>
                 <p>Explore the widespread transfer of plants, animals, culture, diseases, and ideas between the Americas and the Old World following Columbus's voyages.</p>
-                <a href="https://www.canva.com/design/DAG4b6oaQ5Y/CY_U1aDB0I5b3NXgByZfwg/edit" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;" target="_blank">Start Lesson</a>
-            </div>
+            </a>
         </div>
     </main>
     
@@ -173,13 +170,12 @@
     <script>
         // Track lesson clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const lessonLinks = document.querySelectorAll('.resource-card a');
+            const lessonCards = document.querySelectorAll('.resource-card[data-lesson-id]');
             
-            lessonLinks.forEach((link, index) => {
-                link.addEventListener('click', function(e) {
-                    const card = this.closest('.resource-card');
-                    const lessonTitle = card.querySelector('h3').textContent;
-                    const lessonId = 'us-history-' + (index + 1);
+            lessonCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const lessonId = this.dataset.lessonId;
+                    const lessonTitle = this.dataset.lessonTitle;
                     
                     // Track lesson completion
                     trackLessonCompletion(lessonId, lessonTitle, 'US History');

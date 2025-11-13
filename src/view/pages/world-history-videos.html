@@ -117,24 +117,21 @@
         <p>Watch engaging video content covering major civilizations and global historical events.</p>
 
         <div class="resources-grid">
-            <div class="resource-card">
+            <a href="https://www.youtube.com/watch?v=sohXPx_XZ6Y" class="resource-card" target="_blank" data-video-id="world-video-1" data-video-title="Ancient Mesopotamia">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>Ancient Mesopotamia</h3>
                 <p>Explore the "Cradle of Civilization" and learn about the Sumerians, Babylonians, and their lasting contributions to human history.</p>
-                <a href="https://www.youtube.com/watch?v=sohXPx_XZ6Y" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.youtube.com/watch?v=Z3Wvw6BivVI" class="resource-card" target="_blank" data-video-id="world-video-2" data-video-title="Ancient Egypt">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>Ancient Egypt</h3>
                 <p>Discover the fascinating civilization of Ancient Egypt, from the construction of pyramids to the reign of pharaohs along the Nile River.</p>
-                <a href="https://www.youtube.com/watch?v=Z3Wvw6BivVI" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.youtube.com/watch?v=n7ndRwqJYDM" class="resource-card" target="_blank" data-video-id="world-video-3" data-video-title="Ancient India">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>Ancient India</h3>
                 <p>Learn about the rich history of Ancient India, including the Indus Valley Civilization and the development of major religions and philosophies.</p>
-                <a href="https://www.youtube.com/watch?v=n7ndRwqJYDM" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
+            </a>
         </div>
 
         <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
@@ -180,13 +177,12 @@
     <script>
         // Track video clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const videoLinks = document.querySelectorAll('.resource-card a');
+            const videoCards = document.querySelectorAll('.resource-card[data-video-id]');
             
-            videoLinks.forEach((link, index) => {
-                link.addEventListener('click', function(e) {
-                    const card = this.closest('.resource-card');
-                    const videoTitle = card.querySelector('h3').textContent;
-                    const videoId = 'world-video-' + (index + 1);
+            videoCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const videoId = this.dataset.videoId;
+                    const videoTitle = this.dataset.videoTitle;
                     
                     // Track video watched
                     trackVideoWatched(videoId, videoTitle, 'World History');

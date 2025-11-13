@@ -117,24 +117,21 @@
         <p>Watch engaging video content covering key topics in American history.</p>
 
         <div class="resources-grid">
-            <div class="resource-card">
+            <a href="https://www.youtube.com/watch?v=TTYOQ05oDOI" class="resource-card" target="_blank" data-video-id="us-video-1" data-video-title="Indigenous America">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>Indigenous America</h3>
                 <p>Learn about the diverse cultures, societies, and civilizations of Native American peoples before European contact.</p>
-                <a href="https://www.youtube.com/watch?v=TTYOQ05oDOI" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.youtube.com/watch?v=HQPA5oNpfM4" class="resource-card" target="_blank" data-video-id="us-video-2" data-video-title="The Columbian Exchange">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>The Columbian Exchange</h3>
                 <p>Explore the widespread transfer of plants, animals, culture, diseases, and ideas between the Americas and the Old World.</p>
-                <a href="https://www.youtube.com/watch?v=HQPA5oNpfM4" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.youtube.com/watch?v=6E9WU9TGrec" class="resource-card" target="_blank" data-video-id="us-video-3" data-video-title="Spanish Colonization">
                 <span class="material-icons">play_circle_outline</span>
                 <h3>Spanish Colonization</h3>
                 <p>Discover how Spanish explorers and conquistadors established colonies in the Americas and their lasting impact on the region.</p>
-                <a href="https://www.youtube.com/watch?v=6E9WU9TGrec" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
-            </div>
+            </a>
         </div>
 
         <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
@@ -180,13 +177,12 @@
     <script>
         // Track video clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const videoLinks = document.querySelectorAll('.resource-card a');
+            const videoCards = document.querySelectorAll('.resource-card[data-video-id]');
             
-            videoLinks.forEach((link, index) => {
-                link.addEventListener('click', function(e) {
-                    const card = this.closest('.resource-card');
-                    const videoTitle = card.querySelector('h3').textContent;
-                    const videoId = 'us-video-' + (index + 1);
+            videoCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const videoId = this.dataset.videoId;
+                    const videoTitle = this.dataset.videoTitle;
                     
                     // Track video watched
                     trackVideoWatched(videoId, videoTitle, 'US History');

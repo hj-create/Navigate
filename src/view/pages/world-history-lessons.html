@@ -117,24 +117,21 @@
         <p>Explore major civilizations, empires, and transformative events across global history.</p>
 
         <div class="resources-grid">
-            <div class="resource-card">
+            <a href="https://www.canva.com/design/DAG4b-kqacw/4Y0SYYm7mmRUc4ZXTJdsCg/edit?utm_content=DAG4b-kqacw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-card" target="_blank" data-lesson-id="world-history-1" data-lesson-title="Ancient India">
                 <span class="material-icons">menu_book</span>
                 <h3>Ancient India</h3>
                 <p>Explore the rich history of Ancient India, including the Indus Valley Civilization, Vedic period, and the development of major religions and philosophical traditions.</p>
-                <a href="https://www.canva.com/design/DAG4b-kqacw/4Y0SYYm7mmRUc4ZXTJdsCg/edit?utm_content=DAG4b-kqacw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Start Lesson</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.canva.com/design/DAG4bqa1Fas/vNkh3gW6Awxxg_3BinyP7Q/edit?utm_content=DAG4bqa1Fas&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-card" target="_blank" data-lesson-id="world-history-2" data-lesson-title="Ancient Egypt">
                 <span class="material-icons">menu_book</span>
                 <h3>Ancient Egypt</h3>
                 <p>Discover the civilization of Ancient Egypt, from the construction of the pyramids to the reign of the pharaohs, and the development of hieroglyphic writing and monumental architecture.</p>
-                <a href="https://www.canva.com/design/DAG4bqa1Fas/vNkh3gW6Awxxg_3BinyP7Q/edit?utm_content=DAG4bqa1Fas&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Start Lesson</a>
-            </div>
-            <div class="resource-card">
+            </a>
+            <a href="https://www.canva.com/design/DAG4bgAaFTw/G6-P32ul7YvtbmE7hJ8Vwg/edit?utm_content=DAG4bgAaFTw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-card" target="_blank" data-lesson-id="world-history-3" data-lesson-title="Ancient Mesopotamia">
                 <span class="material-icons">menu_book</span>
                 <h3>Ancient Mesopotamia</h3>
                 <p>Learn about the "Cradle of Civilization" in Ancient Mesopotamia, including the Sumerians, Babylonians, and Assyrians, and their contributions to writing, law, and urban development.</p>
-                <a href="https://www.canva.com/design/DAG4bgAaFTw/G6-P32ul7YvtbmE7hJ8Vwg/edit?utm_content=DAG4bgAaFTw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Start Lesson</a>
-            </div>
+            </a>
         </div>
     </main>
     
@@ -173,13 +170,12 @@
     <script>
         // Track lesson clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const lessonLinks = document.querySelectorAll('.resource-card a');
+            const lessonCards = document.querySelectorAll('.resource-card[data-lesson-id]');
             
-            lessonLinks.forEach((link, index) => {
-                link.addEventListener('click', function(e) {
-                    const card = this.closest('.resource-card');
-                    const lessonTitle = card.querySelector('h3').textContent;
-                    const lessonId = 'world-history-' + (index + 1);
+            lessonCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const lessonId = this.dataset.lessonId;
+                    const lessonTitle = this.dataset.lessonTitle;
                     
                     // Track lesson completion
                     trackLessonCompletion(lessonId, lessonTitle, 'World History');
