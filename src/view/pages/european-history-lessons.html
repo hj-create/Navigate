@@ -14,12 +14,11 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lessons - Navigate</title>
+    <title>European History Lessons - Navigate</title>
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-</head>
     <style>
         /* Active tab highlighting (resources section) */
         .menu-item a[href*="resources"] {
@@ -28,6 +27,25 @@
         }
         .menu-item a[href*="resources"] .material-icons {
             color: var(--accent-color);
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-color);
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #e0e0e0;
         }
     </style>
 </head>
@@ -90,27 +108,32 @@
             </ul>
         </nav>
 
-        <h1>Lessons</h1>
-        <p>Interactive, chapter-based lessons with embedded quizzes and progress indicators.</p>
+        <a href="lessons.html" class="back-btn">
+            <span class="material-icons">arrow_back</span>
+            Back to Lessons
+        </a>
+
+        <h1>European History Lessons</h1>
+        <p>Study European civilizations, empires, and pivotal moments that shaped the modern world.</p>
 
         <div class="resources-grid">
             <div class="resource-card">
-                <span class="material-icons">flag</span>
-                <h3>U.S. History</h3>
-                <p>Explore lessons on American history from colonial times to present.</p>
-                <a href="us-history-lessons.html" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">View Lessons</a>
+                <span class="material-icons">menu_book</span>
+                <h3>The Fall of the Roman Empire</h3>
+                <p>Examine the complex factors that led to the decline and fall of one of history's greatest empires and its lasting impact on Western civilization.</p>
+                <a href="https://www.canva.com/design/DAG4hsiL420/Y3ohCReFxtezoYqKVbt3iQ/edit" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;" target="_blank">Start Lesson</a>
             </div>
             <div class="resource-card">
-                <span class="material-icons">public</span>
-                <h3>World History</h3>
-                <p>Journey through global civilizations and major historical events.</p>
-                <a href="world-history-lessons.html" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">View Lessons</a>
+                <span class="material-icons">menu_book</span>
+                <h3>The Rise of Christianity</h3>
+                <p>Discover how Christianity emerged from ancient Judaism and spread throughout the Roman Empire to become a dominant world religion.</p>
+                <a href="https://www.canva.com/design/DAG4h2jpwhw/APtvLiZcH-IsveqmKhaTEQ/edit?utm_content=DAG4h2jpwhw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;" target="_blank">Start Lesson</a>
             </div>
             <div class="resource-card">
-                <span class="material-icons">account_balance</span>
-                <h3>European History</h3>
-                <p>Study European civilizations, empires, and transformative periods.</p>
-                <a href="european-history-lessons.html" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">View Lessons</a>
+                <span class="material-icons">menu_book</span>
+                <h3>Feudalism & Manorialism</h3>
+                <p>Learn about the medieval social, political, and economic systems that structured European society during the Middle Ages.</p>
+                <a href="https://www.canva.com/design/DAG4h_bjZnQ/FuCqdWKG_uW7nNH7laeW0A/edit?utm_content=DAG4h_bjZnQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;" target="_blank">Start Lesson</a>
             </div>
         </div>
     </main>
