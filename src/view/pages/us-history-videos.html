@@ -14,20 +14,38 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Videos - Navigate</title>
+    <title>U.S. History Videos - Navigate</title>
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-</head>
     <style>
-        /* Active tab highlighting (resources) */
+        /* Active tab highlighting (resources section) */
         .menu-item a[href*="resources"] {
             background-color: var(--hover-color);
             color: var(--text-color);
         }
         .menu-item a[href*="resources"] .material-icons {
             color: var(--accent-color);
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-color);
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #e0e0e0;
         }
     </style>
 </head>
@@ -90,28 +108,40 @@
             </ul>
         </nav>
 
-        <h1>Videos</h1>
-        <p>Explore our curated video lessons and recorded sessions organized by subject.</p>
+        <a href="videos.html" class="back-btn">
+            <span class="material-icons">arrow_back</span>
+            Back to Videos
+        </a>
+
+        <h1>U.S. History Videos</h1>
+        <p>Watch engaging video content covering key topics in American history.</p>
 
         <div class="resources-grid">
             <div class="resource-card">
-                <span class="material-icons">flag</span>
-                <h3>U.S. History</h3>
-                <p>Watch engaging videos on American history from colonial times to present.</p>
-                <a href="us-history-videos.html" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">View Videos</a>
+                <span class="material-icons">play_circle_outline</span>
+                <h3>Indigenous America</h3>
+                <p>Learn about the diverse cultures, societies, and civilizations of Native American peoples before European contact.</p>
+                <a href="https://www.youtube.com/watch?v=TTYOQ05oDOI" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
             </div>
             <div class="resource-card">
-                <span class="material-icons">public</span>
-                <h3>World History</h3>
-                <p>Explore videos covering global civilizations and major historical events.</p>
-                <a href="world-history-videos.html" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">View Videos</a>
+                <span class="material-icons">play_circle_outline</span>
+                <h3>The Columbian Exchange</h3>
+                <p>Explore the widespread transfer of plants, animals, culture, diseases, and ideas between the Americas and the Old World.</p>
+                <a href="https://www.youtube.com/watch?v=HQPA5oNpfM4" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
             </div>
             <div class="resource-card">
-                <span class="material-icons">account_balance</span>
-                <h3>European History</h3>
-                <p>Discover videos on European civilizations, empires, and transformative periods.</p>
-                <a href="european-history-videos.html" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">View Videos</a>
+                <span class="material-icons">play_circle_outline</span>
+                <h3>Spanish Colonization</h3>
+                <p>Discover how Spanish explorers and conquistadors established colonies in the Americas and their lasting impact on the region.</p>
+                <a href="https://www.youtube.com/watch?v=6E9WU9TGrec" target="_blank" style="display:inline-block;margin-top:16px;padding:8px 12px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;">Watch Video</a>
             </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+            <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">"The Columbian Exchange: Crash Course World History #23." <em>YouTube</em>, uploaded by CrashCourse, 5 July 2012, https://www.youtube.com/watch?v=HQPA5oNpfM4.</p>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">"Indigenous America: Crash Course US History #1." <em>YouTube</em>, uploaded by CrashCourse, 8 Feb. 2013, https://www.youtube.com/watch?v=TTYOQ05oDOI.</p>
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">"Spanish Colonization: Crash Course US History #2." <em>YouTube</em>, uploaded by CrashCourse, 15 Feb. 2013, https://www.youtube.com/watch?v=6E9WU9TGrec.</p>
         </div>
     </main>
     
