@@ -74,10 +74,36 @@
             overflow: hidden;
         }
         
-        .video-thumbnail iframe {
+        .video-thumbnail img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
             border: none;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .play-button .material-icons {
+            color: white;
+            font-size: 32px;
+        }
+        
+        .video-card:hover .play-button {
+            background: rgba(0, 0, 0, 0.9);
+            transform: translate(-50%, -50%) scale(1.1);
         }
         
         .video-content {
@@ -167,7 +193,10 @@
         <div class="resources-grid">
             <a href="https://www.youtube.com/watch?v=sohXPx_XZ6Y" class="video-card" target="_blank" data-video-id="world-video-1" data-video-title="Ancient Mesopotamia">
                 <div class="video-thumbnail">
-                    <iframe src="https://www.youtube.com/embed/sohXPx_XZ6Y" allowfullscreen></iframe>
+                    <img src="https://img.youtube.com/vi/sohXPx_XZ6Y/maxresdefault.jpg" alt="Ancient Mesopotamia - CrashCourse" loading="lazy">
+                    <div class="play-button">
+                        <span class="material-icons">play_circle_filled</span>
+                    </div>
                 </div>
                 <div class="video-content">
                     <h3>Ancient Mesopotamia</h3>
@@ -176,7 +205,10 @@
             </a>
             <a href="https://www.youtube.com/watch?v=Z3Wvw6BivVI" class="video-card" target="_blank" data-video-id="world-video-2" data-video-title="Ancient Egypt">
                 <div class="video-thumbnail">
-                    <iframe src="https://www.youtube.com/embed/Z3Wvw6BivVI" allowfullscreen></iframe>
+                    <img src="https://img.youtube.com/vi/Z3Wvw6BivVI/maxresdefault.jpg" alt="Ancient Egypt - CrashCourse" loading="lazy">
+                    <div class="play-button">
+                        <span class="material-icons">play_circle_filled</span>
+                    </div>
                 </div>
                 <div class="video-content">
                     <h3>Ancient Egypt</h3>
@@ -185,7 +217,10 @@
             </a>
             <a href="https://www.youtube.com/watch?v=n7ndRwqJYDM" class="video-card" target="_blank" data-video-id="world-video-3" data-video-title="Ancient India">
                 <div class="video-thumbnail">
-                    <iframe src="https://www.youtube.com/embed/n7ndRwqJYDM" allowfullscreen></iframe>
+                    <img src="https://img.youtube.com/vi/n7ndRwqJYDM/maxresdefault.jpg" alt="Ancient India - CrashCourse" loading="lazy">
+                    <div class="play-button">
+                        <span class="material-icons">play_circle_filled</span>
+                    </div>
                 </div>
                 <div class="video-content">
                     <h3>Ancient India</h3>

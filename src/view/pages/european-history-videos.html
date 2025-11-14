@@ -74,10 +74,36 @@
             overflow: hidden;
         }
         
-        .video-thumbnail iframe {
+        .video-thumbnail img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
             border: none;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .play-button .material-icons {
+            color: white;
+            font-size: 32px;
+        }
+        
+        .video-card:hover .play-button {
+            background: rgba(0, 0, 0, 0.9);
+            transform: translate(-50%, -50%) scale(1.1);
         }
         
         .video-content {
@@ -167,7 +193,10 @@
         <div class="resources-grid">
             <a href="https://www.youtube.com/watch?v=3PszVWZNWVA" class="video-card" target="_blank" data-video-id="european-video-1" data-video-title="The Fall of the Roman Empire">
                 <div class="video-thumbnail">
-                    <iframe src="https://www.youtube.com/embed/3PszVWZNWVA" allowfullscreen></iframe>
+                    <img src="https://img.youtube.com/vi/3PszVWZNWVA/maxresdefault.jpg" alt="The Fall of the Roman Empire - CrashCourse" loading="lazy">
+                    <div class="play-button">
+                        <span class="material-icons">play_circle_filled</span>
+                    </div>
                 </div>
                 <div class="video-content">
                     <h3>The Fall of the Roman Empire</h3>
@@ -176,7 +205,10 @@
             </a>
             <a href="https://www.youtube.com/watch?v=TG55ErfdaeY" class="video-card" target="_blank" data-video-id="european-video-2" data-video-title="The Rise of Christianity">
                 <div class="video-thumbnail">
-                    <iframe src="https://www.youtube.com/embed/TG55ErfdaeY" allowfullscreen></iframe>
+                    <img src="https://img.youtube.com/vi/TG55ErfdaeY/maxresdefault.jpg" alt="The Rise of Christianity - CrashCourse" loading="lazy">
+                    <div class="play-button">
+                        <span class="material-icons">play_circle_filled</span>
+                    </div>
                 </div>
                 <div class="video-content">
                     <h3>The Rise of Christianity</h3>
@@ -185,7 +217,10 @@
             </a>
             <a href="https://www.youtube.com/watch?v=rNCw2MOfnLQ" class="video-card" target="_blank" data-video-id="european-video-3" data-video-title="Feudalism and Manorialism">
                 <div class="video-thumbnail">
-                    <iframe src="https://www.youtube.com/embed/rNCw2MOfnLQ" allowfullscreen></iframe>
+                    <img src="https://img.youtube.com/vi/rNCw2MOfnLQ/maxresdefault.jpg" alt="Feudalism and Manorialism - CrashCourse" loading="lazy">
+                    <div class="play-button">
+                        <span class="material-icons">play_circle_filled</span>
+                    </div>
                 </div>
                 <div class="video-content">
                     <h3>Feudalism and Manorialism</h3>
