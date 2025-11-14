@@ -6,7 +6,8 @@
         const form = document.getElementById('messenger-form');
         const input = document.getElementById('messenger-input');
         const statusEl = document.getElementById('tutor-status');
-        
+        const micBtn = form ? form.querySelector('.mic-btn') : null;
+
         if (!messagesEl || !form || !input) return;
 
         function formatTime(date) {
@@ -57,6 +58,34 @@
                 appendMessage("Thanks for your message. A tutor will respond shortly.", 'System');
             }, 1000);
         });
+
+        // Voice-to-text for mic button (Web Speech API)
+        if (micBtn && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            micBtn.addEventListener('click', function () {
+                recognition.start();
+                micBtn.classList.add('listening');
+            });
+
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                input.value += (input.value ? ' ' : '') + transcript;
+                input.focus();
+            };
+
+            recognition.onend = function () {
+                micBtn.classList.remove('listening');
+            };
+
+            recognition.onerror = function () {
+                micBtn.classList.remove('listening');
+            };
+        }
 
         // Initial status
         updateTutorStatus();
