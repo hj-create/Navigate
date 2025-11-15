@@ -6,7 +6,19 @@ $scriptPath = $MyInvocation.MyCommand.Path
 $repo = Split-Path -Parent (Split-Path -Parent $scriptPath)
 Set-Location $repo
 
-# Footer HTML for pages under src/view/pages (../../index.html etc.)
+function Ensure-HeadTags {
+  param([string]$content)
+  $c = $content
+  if ($c -notmatch '(?i)<meta[^>]+charset=') {
+    $c = $c -replace '(?is)</head>', "  <meta charset=`"UTF-8`">`r`n</head>"
+  }
+  if ($c -notmatch 'fonts\.googleapis\.com/icon\?family=Material\+Icons') {
+    $c = $c -replace '(?is)</head>', "  <link href=`"https://fonts.googleapis.com/icon?family=Material+Icons`" rel=`"stylesheet`">`r`n</head>"
+  }
+  return $c
+}
+
+# Footer for pages under src/view/pages
 $pageFooter = @'
 <footer class="footer">
   <div class="footer-content">
@@ -47,13 +59,13 @@ $pageFooter = @'
   </div>
 
   <div class="footer-bottom">
-    <p>Built with  by the Navigate team for accessible history education</p>
+    <p>Built with &#10084;&#65039; by the Navigate team for accessible history education</p>
     <p><span class="material-icons" style="vertical-align:middle;font-size:18px">copyright</span> 2025 Navigate. All rights reserved.</p>
   </div>
 </footer>
 '@
 
-# Footer HTML for src/index.html (root-level paths)
+# Footer for src/index.html (root paths)
 $rootFooter = @'
 <footer class="footer">
   <div class="footer-content">
@@ -94,26 +106,16 @@ $rootFooter = @'
   </div>
 
   <div class="footer-bottom">
-    <p>Built with  by the Navigate team for accessible history education</p>
+    <p>Built with &#10084;&#65039; by the Navigate team for accessible history education</p>
     <p><span class="material-icons" style="vertical-align:middle;font-size:18px">copyright</span> 2025 Navigate. All rights reserved.</p>
   </div>
 </footer>
 '@
 
-function Ensure-MaterialIconsTag {
-  param([string]$content)
-  if ($content -notmatch 'fonts\.googleapis\.com/icon\?family=Material\+Icons') {
-    return ($content -replace '(?is)</head>', "  <link href=`"https://fonts.googleapis.com/icon?family=Material+Icons`" rel=`"stylesheet`">`r`n</head>")
-  }
-  return $content
-}
-
 function Replace-Footer {
   param([string]$path, [string]$footerHtml)
-
   $text = Get-Content -LiteralPath $path -Raw
-  $text = Ensure-MaterialIconsTag -content $text
-
+  $text = Ensure-HeadTags -content $text
   if ($text -match '(?is)<footer[^>]*>.*?</footer>') {
     $text = [regex]::Replace($text, '(?is)<footer[^>]*>.*?</footer>', $footerHtml)
   } elseif ($text -match '(?is)</body>') {
@@ -121,11 +123,10 @@ function Replace-Footer {
   } else {
     $text += "`r`n$footerHtml`r`n"
   }
-
   Set-Content -LiteralPath $path -Value $text -Encoding UTF8
 }
 
-# Ensure footer icon CSS exists
+# Ensure footer icon CSS
 $cssPath = Join-Path $repo 'src\css\styles.css'
 $cssSnippet = @'
 /* Footer icon alignment */
@@ -141,19 +142,11 @@ if (Test-Path $cssPath) {
   }
 }
 
-# Update all pages (replace or insert)
+# Update all pages
 $pages = Get-ChildItem -LiteralPath "$repo\src\view\pages" -Filter *.html -File -Recurse
 $rootIndex = Join-Path $repo 'src\index.html'
 $updated = @()
+foreach ($file in $pages) { Replace-Footer -path $file.FullName -footerHtml $pageFooter; $updated += $file.FullName }
+if (Test-Path $rootIndex) { Replace-Footer -path $rootIndex -footerHtml $rootFooter; $updated += $rootIndex }
 
-foreach ($file in $pages) {
-  Replace-Footer -path $file.FullName -footerHtml $pageFooter
-  $updated += $file.FullName
-}
-if (Test-Path $rootIndex) {
-  Replace-Footer -path $rootIndex -footerHtml $rootFooter
-  $updated += $rootIndex
-}
-
-"Updated footers in:"
-$updated | ForEach-Object { " - $_" }
+"Updated footers in:"; $updated | ForEach-Object { " - $_" }
