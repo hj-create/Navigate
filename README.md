@@ -2,6 +2,12 @@
 
 Navigate is a comprehensive web-based history education platform providing structured learning through interactive lessons, video content, quizzes, live tutoring sessions, and personalized student progress tracking. Built as a 501(c)(3) nonprofit initiative to make quality history education accessible to all students.
 
+## 🌐 Live Website
+
+**[Visit Navigate →](https://hj-create.github.io/Navigate/src/)**
+
+Experience the full Navigate platform with interactive lessons, video content, quizzes, and personalized progress tracking.
+
 ## Features
 
 ### Core Learning Resources
