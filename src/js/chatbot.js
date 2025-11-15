@@ -78,6 +78,8 @@
 })();
 
 
+// ...existing code...
+
 // === Voice controls (mic + speaker) for Chatbot ===
 (() => {
   if (window.__chatbotVoiceInit) return; window.__chatbotVoiceInit = true;
@@ -86,11 +88,11 @@
   const canSTT = !!Recognition;
   const canTTS = !!window.speechSynthesis;
 
-  const qFirst = (sels) => sels.map(s => document.querySelector(s)).find(Boolean) || null;
+  const q = (sels) => sels.map(s => document.querySelector(s)).find(Boolean) || null;
 
-  const input = qFirst(['#chatbot-input', '#chat-input', '.chat-input', 'textarea.chat-input', '#message', 'input.chat-input']);
-  const messages = qFirst(['#chatbot-messages', '#chat-messages', '.chat-messages', '.messages', '#thread', '.conversation']);
-  const sendBtn = qFirst(['#chatbot-send', '#chat-send', '.chat-send', 'button[type="submit"]']);
+  const input = q(['#chatbot-input', '#chat-input', '.chat-input', 'textarea.chat-input', '#message', 'input.chat-input']);
+  const messages = q(['#chatbot-messages', '#chat-messages', '.chat-messages', '.messages', '#thread', '.conversation']);
+  const sendBtn = q(['#chatbot-send', '#chat-send', '.chat-send', 'button[type="submit"]']);
   if (!input) return;
 
   if (input.nextElementSibling?.classList?.contains('voice-toolbar')) return;
@@ -111,9 +113,9 @@
   const spk = document.createElement('button');
   spk.type = 'button';
   spk.className = 'icon-btn tts-btn';
-  spk.title = 'Toggle speech';
-  spk.ariaLabel = 'Toggle speech';
-  spk.innerHTML = '<span class="material-icons" aria-hidden="true">volume_up</span>';
+  spk.title = 'Speaker off';
+  spk.ariaLabel = 'Speaker off';
+  spk.innerHTML = '<span class="material-icons" aria-hidden="true">volume_off</span>';
   spk.disabled = !canTTS;
 
   input.insertAdjacentElement('afterend', bar);
@@ -124,14 +126,28 @@
   let ttsOn = false;
   const spokenSet = new WeakSet();
 
-  function speak(text) {
-    if (!canTTS || !ttsOn || !text) return;
+  function speakNow(text) {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = document.documentElement.lang || 'en-US';
+    // Optional: pick a preferred voice if available (Windows "Microsoft" voices, etc.)
+    const vs = window.speechSynthesis.getVoices();
+    const pref = vs.find(v => /en-/i.test(v.lang)) || vs[0];
+    if (pref) u.voice = pref;
     window.speechSynthesis.speak(u);
   }
-
+  function speak(text) {
+    if (!canTTS || !ttsOn || !text) return;
+    const vs = window.speechSynthesis.getVoices();
+    if (!vs || vs.length === 0) {
+      const once = () => { window.speechSynthesis.removeEventListener('voiceschanged', once); speakNow(text); };
+      window.speechSynthesis.addEventListener('voiceschanged', once);
+      // Fallback timer in case voiceschanged doesn’t fire
+      setTimeout(() => { speakNow(text); }, 700);
+      return;
+    }
+    speakNow(text);
+  }
   function textOf(node) {
     if (!node) return '';
     const botMsg = node.matches?.('.bot, .assistant, [data-from="bot"], [data-role="bot"]')
@@ -139,16 +155,24 @@
       : node.querySelector?.('.bot, .assistant, [data-from="bot"], [data-role="bot"]');
     return (botMsg || node).textContent.trim();
   }
+  function readLastBotMessage() {
+    if (!messages) return;
+    const nodes = messages.querySelectorAll('.bot, .assistant, [data-from="bot"], [data-role="bot"], .message, .msg');
+    const last = nodes[nodes.length - 1];
+    if (last) speak(textOf(last));
+  }
 
   if (messages && canTTS) {
     const obs = new MutationObserver((muts) => {
-      for (const m of muts) for (const n of m.addedNodes) {
-        if (!(n instanceof HTMLElement)) continue;
-        const isBot = n.matches?.('.bot, .assistant, [data-from="bot"], [data-role="bot"]') ||
-                      n.querySelector?.('.bot, .assistant, [data-from="bot"], [data-role="bot"]');
-        if (isBot && !spokenSet.has(n)) {
-          spokenSet.add(n);
-          speak(textOf(n));
+      for (const m of muts) {
+        for (const n of m.addedNodes) {
+          if (!(n instanceof HTMLElement)) continue;
+          const isBot = n.matches?.('.bot, .assistant, [data-from="bot"], [data-role="bot"]') ||
+                        n.querySelector?.('.bot, .assistant, [data-from="bot"], [data-role="bot"]');
+          if (isBot && !spokenSet.has(n)) {
+            spokenSet.add(n);
+            speak(textOf(n));
+          }
         }
       }
     });
@@ -173,13 +197,12 @@
         input.value = (input.value ? input.value + ' ' : '') + transcript;
         input.dispatchEvent(new Event('input', { bubbles: true }));
       }
-      // sendBtn?.click(); // optional auto-send
+      // sendBtn?.click();
     };
     recognition.onerror = () => stopListening();
     recognition.onend = () => stopListening();
     try { recognition.start(); } catch { stopListening(); }
   }
-
   function stopListening() {
     if (!listening) return;
     listening = false;
@@ -192,9 +215,17 @@
   spk.addEventListener('click', () => {
     if (!canTTS) return;
     ttsOn = !ttsOn;
-    if (!ttsOn) window.speechSynthesis.cancel();
-    spk.innerHTML = `<span class="material-icons" aria-hidden="true">${ttsOn ? 'volume_up' : 'volume_off'}</span>`;
-    spk.title = ttsOn ? 'Speaker on' : 'Speaker off';
-    spk.ariaLabel = spk.title;
+    if (!ttsOn) {
+      window.speechSynthesis.cancel();
+      spk.innerHTML = '<span class="material-icons" aria-hidden="true">volume_off</span>';
+      spk.title = 'Speaker off'; spk.ariaLabel = spk.title;
+    } else {
+      spk.innerHTML = '<span class="material-icons" aria-hidden="true">volume_up</span>';
+      spk.title = 'Speaker on'; spk.ariaLabel = spk.title;
+      // Read the last bot reply immediately
+      readLastBotMessage();
+    }
   });
 })();
+
+// ...existing code...
