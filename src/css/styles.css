@@ -463,3 +463,42 @@ body {
 .icon-btn .material-icons { font-size:18px; vertical-align:middle; }
 .icon-btn:disabled { opacity:.5; cursor:not-allowed; }
 .mic-btn.recording { border-color:#d32f2f; background:#ffebee; }
+
+// ...existing code...
+/* Subject selection anti-flicker */
+.subject-list, .subject-grid, .subjects { -webkit-font-smoothing: antialiased; backface-visibility: hidden; }
+.subject-item, .subject-option, .subject-button, .subject-select a, .subject-select button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateZ(0);
+}
+.subject-item:focus,
+.subject-option:focus,
+.subject-button:focus,
+.subject-select a:focus,
+.subject-select button:focus {
+  box-shadow: 0 0 0 2px rgba(25,118,210,.55);
+}
+.subject-item:active,
+.subject-option:active,
+.subject-button:active {
+  background: #f5fafd;
+}
+.subject-item .material-icons,
+.subject-option .material-icons,
+.subject-button .material-icons { user-select: none; }
+.subject-item::selection,
+.subject-option::selection,
+.subject-button::selection { background: #ffe082; color:#222; }
+/* Prevent underline / border repaint “scratch” */
+.subject-item, .subject-option, .subject-button { background-clip: padding-box; }
