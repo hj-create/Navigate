@@ -464,7 +464,6 @@ body {
 .icon-btn:disabled { opacity:.5; cursor:not-allowed; }
 .mic-btn.recording { border-color:#d32f2f; background:#ffebee; }
 
-// ...existing code...
 /* Subject selection anti-flicker */
 .subject-list, .subject-grid, .subjects { -webkit-font-smoothing: antialiased; backface-visibility: hidden; }
 .subject-item, .subject-option, .subject-button, .subject-select a, .subject-select button {
