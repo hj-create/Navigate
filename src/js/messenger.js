@@ -1,118 +1,105 @@
 (function() {
-    const STORAGE_KEY = 'navigate_tutor_messages';
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        const messagesEl = document.getElementById('tutor-messages');
-        const form = document.getElementById('messenger-form');
-        const input = document.getElementById('messenger-input');
-        const statusEl = document.getElementById('tutor-status');
-        const micBtn = form ? form.querySelector('.mic-btn') : null;
+  const STORAGE_KEY = 'navigate_tutor_messages';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const messagesEl = document.getElementById('tutor-messages');
+    const form = document.getElementById('messenger-form');
+    const input = document.getElementById('messenger-input');
+    const statusEl = document.getElementById('tutor-status');
+    const micBtn = form ? form.querySelector('.mic-btn') : null;
 
-        if (!messagesEl || !form || !input) return;
+    if (!messagesEl || !form || !input) return;
 
-        function formatTime(date) {
-            return new Intl.DateTimeFormat('en', {
-                hour: 'numeric',
-                minute: 'numeric'
-            }).format(date);
+    function formatTime(date) {
+      return new Intl.DateTimeFormat('en', {
+        hour: 'numeric',
+        minute: 'numeric'
+      }).format(date);
+    }
+
+    function appendMessage(text, sender, time = new Date()) {
+      const msg = document.createElement('div');
+      msg.className = 'messenger-message';
+      // Tag for TTS: user vs tutor/system
+      msg.dataset.from = sender === 'You' ? 'you' : (sender.toLowerCase());
+      msg.innerHTML = `
+        <div class="message-avatar">
+          <span class="material-icons">${sender === 'You' ? 'person' : (sender === 'Tutor' ? 'school' : 'info')}</span>
+        </div>
+        <div class="message-content">
+          <div class="message-sender">${sender}</div>
+          <div class="message-text">${text}</div>
+          <div class="message-time">${formatTime(time)}</div>
+        </div>
+      `;
+      messagesEl.appendChild(msg);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function updateTutorStatus() {
+      const hr = new Date().getHours();
+      const isAvailable = hr >= 9 && hr < 17;
+      statusEl.className = `tutor-status ${isAvailable ? '' : 'offline'}`;
+      return isAvailable;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+      appendMessage(text, 'You');
+      input.value = '';
+      setTimeout(() => {
+        if (!updateTutorStatus()) {
+          appendMessage("Our tutors are currently offline. They'll respond during business hours (9 AM - 5 PM).", 'System');
+          return;
         }
-
-        function appendMessage(text, sender, time = new Date()) {
-            const msg = document.createElement('div');
-            msg.className = 'messenger-message';
-            msg.innerHTML = `
-                <div class="message-avatar">
-                    <span class="material-icons">${sender === 'You' ? 'person' : 'school'}</span>
-                </div>
-                <div class="message-content">
-                    <div class="message-sender">${sender}</div>
-                    <div class="message-text">${text}</div>
-                    <div class="message-time">${formatTime(time)}</div>
-                </div>
-            `;
-            messagesEl.appendChild(msg);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-        }
-
-        // Simulate tutor availability
-        function updateTutorStatus() {
-            const isAvailable = new Date().getHours() >= 9 && new Date().getHours() < 17;
-            statusEl.className = `tutor-status ${isAvailable ? '' : 'offline'}`;
-            return isAvailable;
-        }
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const text = input.value.trim();
-            if (!text) return;
-            
-            appendMessage(text, 'You');
-            input.value = '';
-            
-            // Simulate tutor response
-            setTimeout(() => {
-                if (!updateTutorStatus()) {
-                    appendMessage("Our tutors are currently offline. They'll respond during business hours (9 AM - 5 PM).", 'System');
-                    return;
-                }
-                appendMessage("Thanks for your message. A tutor will respond shortly.", 'System');
-            }, 1000);
-        });
-
-        // Voice-to-text for mic button (Web Speech API)
-        if (micBtn && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            micBtn.addEventListener('click', function () {
-                recognition.start();
-                micBtn.classList.add('listening');
-            });
-
-            recognition.onresult = function (event) {
-                const transcript = event.results[0][0].transcript;
-                input.value += (input.value ? ' ' : '') + transcript;
-                input.focus();
-            };
-
-            recognition.onend = function () {
-                micBtn.classList.remove('listening');
-            };
-
-            recognition.onerror = function () {
-                micBtn.classList.remove('listening');
-            };
-        }
-
-        // Initial status
-        updateTutorStatus();
-        setInterval(updateTutorStatus, 60000);
-
-        // Welcome message
-        appendMessage("Welcome! Our tutors are here to help with your questions.", 'System');
+        appendMessage("Thanks for your message. A tutor will respond shortly.", 'System');
+      }, 800);
     });
+
+    // Voice-to-text (mic)
+    if (micBtn && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      micBtn.addEventListener('click', () => {
+        recognition.start();
+        micBtn.classList.add('listening');
+      });
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        input.value += (input.value ? ' ' : '') + transcript;
+        input.focus();
+      };
+      recognition.onend = () => micBtn.classList.remove('listening');
+      recognition.onerror = () => micBtn.classList.remove('listening');
+    }
+
+    updateTutorStatus();
+    setInterval(updateTutorStatus, 60000);
+    appendMessage("Welcome! Our tutors are here to help with your questions.", 'System');
+  });
 })();
 
-
-// ...existing code...
-
-// === Voice controls (mic + speaker) for Tutor Messenger ===
+// === Voice controls (mic + speaker) for Tutor Messenger (TTS auto-read) ===
 (() => {
-  if (window.__messengerVoiceInit) return; window.__messengerVoiceInit = true;
+  if (window.__messengerVoiceInit) return;
+  window.__messengerVoiceInit = true;
 
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const canSTT = !!Recognition;
   const canTTS = !!window.speechSynthesis;
 
-  const q = (sels) => sels.map(s => document.querySelector(s)).find(Boolean) || null;
+  const pick = (sels) => sels.map(s => document.querySelector(s)).find(Boolean) || null;
 
-  const input = q(['#messenger-input', '#message-input', '.messenger-input', '.chat-input', 'textarea.chat-input']);
-  const messages = q(['#messenger-thread', '#messages', '.messages', '.chat-messages', '#chat-messages']);
-  const sendBtn = q(['#messenger-send', '.messenger-send', '#send', '.chat-send', 'button[type="submit"]']);
-  if (!input) return;
+  const input = pick(['#messenger-input', '.messenger-input', '#message-input', '.chat-input', 'textarea.chat-input']);
+  const messages = pick(['#tutor-messages', '#messenger-thread', '.messages', '.chat-messages', '#messages', '#chat-messages']);
+  if (!input || !messages) return;
 
   if (input.nextElementSibling?.classList?.contains('voice-toolbar')) return;
 
@@ -125,7 +112,6 @@
   mic.type = 'button';
   mic.className = 'icon-btn mic-btn';
   mic.title = 'Voice input';
-  mic.ariaLabel = 'Voice input';
   mic.innerHTML = '<span class="material-icons" aria-hidden="true">mic</span>';
   mic.disabled = !canSTT;
 
@@ -133,7 +119,6 @@
   spk.type = 'button';
   spk.className = 'icon-btn tts-btn';
   spk.title = 'Speaker off';
-  spk.ariaLabel = 'Speaker off';
   spk.innerHTML = '<span class="material-icons" aria-hidden="true">volume_off</span>';
   spk.disabled = !canTTS;
 
@@ -149,46 +134,49 @@
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = document.documentElement.lang || 'en-US';
-    const vs = window.speechSynthesis.getVoices();
-    const pref = vs.find(v => /en-/i.test(v.lang)) || vs[0];
+    const voices = window.speechSynthesis.getVoices();
+    const pref = voices.find(v => /en-/i.test(v.lang)) || voices[0];
     if (pref) u.voice = pref;
     window.speechSynthesis.speak(u);
   }
+
   function speak(text) {
     if (!canTTS || !ttsOn || !text) return;
-    const vs = window.speechSynthesis.getVoices();
-    if (!vs || vs.length === 0) {
-      const once = () => { window.speechSynthesis.removeEventListener('voiceschanged', once); speakNow(text); };
+    const voices = window.speechSynthesis.getVoices();
+    if (!voices.length) {
+      const once = () => {
+        window.speechSynthesis.removeEventListener('voiceschanged', once);
+        speakNow(text);
+      };
       window.speechSynthesis.addEventListener('voiceschanged', once);
-      setTimeout(() => { speakNow(text); }, 700);
+      setTimeout(() => speakNow(text), 600);
       return;
     }
     speakNow(text);
   }
-  function textOf(node) {
+
+  function extractText(node) {
     if (!node) return '';
-    const tutorMsg = node.matches?.('.bot, .assistant, [data-from="tutor"], [data-role="tutor"]')
-      ? node
-      : node.querySelector?.('.bot, .assistant, [data-from="tutor"], [data-role="tutor"]');
-    return (tutorMsg || node).textContent.trim();
+    // Prefer inner .message-text
+    const txtEl = node.querySelector?.('.message-text');
+    return (txtEl ? txtEl.textContent : node.textContent || '').trim();
   }
+
   function readLastTutorMessage() {
-    if (!messages) return;
-    const nodes = messages.querySelectorAll('.bot, .assistant, [data-from="tutor"], [data-role="tutor"], .message, .msg');
-    const last = nodes[nodes.length - 1];
-    if (last) speak(textOf(last));
+    const tutorNodes = messages.querySelectorAll('.messenger-message[data-from="tutor"], .messenger-message[data-from="system"]');
+    const last = tutorNodes[tutorNodes.length - 1];
+    if (last) speak(extractText(last));
   }
 
   if (messages && canTTS) {
-    const obs = new MutationObserver((muts) => {
+    const obs = new MutationObserver(muts => {
       for (const m of muts) {
         for (const n of m.addedNodes) {
           if (!(n instanceof HTMLElement)) continue;
-          const isTutor = n.matches?.('.bot, .assistant, [data-from="tutor"], [data-role="tutor"]') ||
-                          n.querySelector?.('.bot, .assistant, [data-from="tutor"], [data-role="tutor"]');
+          const isTutor = n.matches('.messenger-message[data-from="tutor"], .messenger-message[data-from="system"]');
           if (isTutor && !spokenSet.has(n)) {
             spokenSet.add(n);
-            speak(textOf(n));
+            speak(extractText(n));
           }
         }
       }
@@ -214,12 +202,12 @@
         input.value = (input.value ? input.value + ' ' : '') + transcript;
         input.dispatchEvent(new Event('input', { bubbles: true }));
       }
-      // sendBtn?.click();
     };
-    recognition.onerror = () => stopListening();
-    recognition.onend = () => stopListening();
+    recognition.onerror = stopListening;
+    recognition.onend = stopListening;
     try { recognition.start(); } catch { stopListening(); }
   }
+
   function stopListening() {
     if (!listening) return;
     listening = false;
@@ -228,17 +216,18 @@
     mic.innerHTML = '<span class="material-icons" aria-hidden="true">mic</span>';
   }
 
-  mic.addEventListener('click', () => listening ? stopListening() : startListening());
+  mic.addEventListener('click', () => (listening ? stopListening() : startListening()));
+
   spk.addEventListener('click', () => {
     if (!canTTS) return;
     ttsOn = !ttsOn;
     if (!ttsOn) {
       window.speechSynthesis.cancel();
       spk.innerHTML = '<span class="material-icons" aria-hidden="true">volume_off</span>';
-      spk.title = 'Speaker off'; spk.ariaLabel = spk.title;
+      spk.title = 'Speaker off';
     } else {
       spk.innerHTML = '<span class="material-icons" aria-hidden="true">volume_up</span>';
-      spk.title = 'Speaker on'; spk.ariaLabel = spk.title;
+      spk.title = 'Speaker on';
       readLastTutorMessage();
     }
   });
