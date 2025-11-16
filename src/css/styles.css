@@ -642,26 +642,4 @@ body {
 .header-content .auth-buttons a::before,
 .header-content .auth-buttons a::after { content: none !important; display: none !important; }
 
-// ...existing code...
-/* Fix header ghost rectangle */
-.auth-buttons .auth-btn span {
-  border-bottom: none !important;
-  padding-bottom: 0 !important;
-}
-
-/* Stop repaint artifacts from subject buttons */
-.subject-item,
-.subject-option,
-.subject-button,
-.subject-select a,
-.subject-select button {
-  transform: none !important;
-  will-change: auto !important;
-}
-
-/* Isolate header painting */
-.header-content {
-  contain: paint;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
+.auth-buttons .auth-btn span { border-bottom: 3px solid rgba(255,255,255,.9); }
