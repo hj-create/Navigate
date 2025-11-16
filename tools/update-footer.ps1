@@ -28,7 +28,7 @@ $pageFooter = @'
       <p><span class="material-icons">call</span> Phone: (555) 123-4567</p>
     </div>
 
-    <div class="footer-section">
+    <div class="footer-section quick-links">
       <h3><span class="material-icons">link</span> Quick Links</h3>
       <ul>
         <li><a href="../../index.html"><span class="material-icons">home</span> Home</a></li>
@@ -37,8 +37,6 @@ $pageFooter = @'
         <li><a href="dashboard.html"><span class="material-icons">dashboard</span> Dashboard</a></li>
         <li><a href="resources.html"><span class="material-icons">library_books</span> Resources</a></li>
         <li><a href="about.html"><span class="material-icons">info</span> About</a></li>
-        <li><a href="signin.html"><span class="material-icons">person_outline</span> Sign In</a></li>
-        <li><a href="signup.html"><span class="material-icons">person_add</span> Sign Up</a></li>
       </ul>
     </div>
 
@@ -75,7 +73,7 @@ $rootFooter = @'
       <p><span class="material-icons">call</span> Phone: (555) 123-4567</p>
     </div>
 
-    <div class="footer-section">
+    <div class="footer-section quick-links">
       <h3><span class="material-icons">link</span> Quick Links</h3>
       <ul>
         <li><a href="index.html"><span class="material-icons">home</span> Home</a></li>
@@ -84,8 +82,6 @@ $rootFooter = @'
         <li><a href="view/pages/dashboard.html"><span class="material-icons">dashboard</span> Dashboard</a></li>
         <li><a href="view/pages/resources.html"><span class="material-icons">library_books</span> Resources</a></li>
         <li><a href="view/pages/about.html"><span class="material-icons">info</span> About</a></li>
-        <li><a href="view/pages/signin.html"><span class="material-icons">person_outline</span> Sign In</a></li>
-        <li><a href="view/pages/signup.html"><span class="material-icons">person_add</span> Sign Up</a></li>
       </ul>
     </div>
 
@@ -126,9 +122,9 @@ function Replace-Footer {
   Set-Content -LiteralPath $path -Value $text -Encoding UTF8
 }
 
-# Ensure footer icon CSS
+# Ensure CSS
 $cssPath = Join-Path $repo 'src\css\styles.css'
-$cssSnippet = @'
+$cssIcons = @'
 /* Footer icon alignment */
 .footer .material-icons { font-size: 18px; vertical-align: middle; margin-right: 6px; }
 .footer .footer-section h3 .material-icons { font-size: 20px; margin-right: 8px; }
@@ -136,9 +132,29 @@ $cssSnippet = @'
 .footer .social-links .social-link:hover { text-decoration: underline; }
 .footer .icon-svg { width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 6px; fill: currentColor; }
 '@
+$cssQuickLinks = @'
+/* Footer quick links: exactly two rows */
+.footer .quick-links ul {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;
+  gap: 6px 16px;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.footer .quick-links li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+'@
 if (Test-Path $cssPath) {
   if (-not (Select-String -Path $cssPath -Pattern 'Footer icon alignment' -Quiet)) {
-    Add-Content -Path $cssPath -Value "`r`n$cssSnippet`r`n"
+    Add-Content -Path $cssPath -Value "`r`n$cssIcons`r`n"
+  }
+  if (-not (Select-String -Path $cssPath -Pattern 'Footer quick links: exactly two rows' -Quiet)) {
+    Add-Content -Path $cssPath -Value "`r`n$cssQuickLinks`r`n"
   }
 }
 
