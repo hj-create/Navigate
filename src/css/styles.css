@@ -479,9 +479,8 @@ body {
   text-decoration: none;
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  /* CHANGED: remove 3D promotion that causes header scratch */
-  transform: none;
-  will-change: auto;
+  transform: none;           /* CHANGED: remove translateZ(0) */
+  will-change: auto;         /* CHANGED */
   user-select: none;
 }
 .subject-item:focus,
@@ -659,3 +658,7 @@ body {
   will-change: auto !important;
   pointer-events: none;
 }
+
+html { scroll-behavior: auto !important; }
+.header { isolation: isolate; contain: paint; backface-visibility: hidden; -webkit-backface-visibility: hidden; z-index: 1000; }
+.header-content { position: relative; overflow: hidden; }

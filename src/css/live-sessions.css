@@ -713,3 +713,48 @@
         transform: translateY(0);
     }
 }
+
+/* Prevent smooth-scroll and cross-layer repaints */
+html { scroll-behavior: auto !important; }
+
+/* Isolate the subjects container paint */
+.subject-selection,
+.subjects,
+.subject-grid { contain: paint; }
+
+/* Neutralize transforms on tiles */
+.subject-card,
+.subject-item,
+.subject-option,
+.subject-button,
+.subject-select a,
+.subject-select button {
+  transform: none !important;
+  will-change: auto !important;
+  transition: box-shadow .2s ease, background-color .2s ease, color .2s ease !important;
+}
+
+/* Keep hover/active without lift/scale */
+.subject-card:hover,
+.subject-item:hover,
+.subject-option:hover,
+.subject-button:hover,
+.subject-card:active,
+.subject-item:active,
+.subject-option:active,
+.subject-button:active {
+  transform: none !important;
+}
+
+/* Pseudo accent bars shouldn’t transform */
+.subject-card::before,
+.subject-item::before,
+.subject-option::before,
+.subject-button::before,
+.subject-card::after,
+.subject-item::after,
+.subject-option::after,
+.subject-button::after {
+  transform: none !important;
+  will-change: auto !important;
+}
