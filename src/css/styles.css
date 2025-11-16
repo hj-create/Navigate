@@ -479,7 +479,10 @@ body {
   text-decoration: none;
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  transform: translateZ(0);
+  /* CHANGED: remove 3D promotion that causes header scratch */
+  transform: none;
+  will-change: auto;
+  user-select: none;
 }
 .subject-item:focus,
 .subject-option:focus,
@@ -642,4 +645,17 @@ body {
 .header-content .auth-buttons a::before,
 .header-content .auth-buttons a::after { content: none !important; display: none !important; }
 
-.auth-buttons .auth-btn span { border-bottom: 3px solid rgba(255,255,255,.9); }
+.auth-buttons .auth-btn span { border: 0 !important; padding-bottom: 0 !important; }
+
+.header { isolation: isolate; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.header-content { position: relative; contain: paint; }
+
+.subject-list, .subject-grid, .subjects { contain: paint; }
+
+/* Ensure any subject pseudo accents don’t create their own GPU layer */
+.subject-item::before, .subject-option::before, .subject-button::before,
+.subject-item::after,  .subject-option::after,  .subject-button::after {
+  transform: none !important;
+  will-change: auto !important;
+  pointer-events: none;
+}
