@@ -36,6 +36,57 @@
         .chat-window, .messenger-window { transition: transform .12s ease, opacity .12s ease; }
         .toggle-section.visible .chat-window,
         .toggle-section.visible .messenger-window { transform: none; opacity: 1; }
+        
+        /* Image Grid Styles */
+        .services-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .services-image-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        /* Responsive Styles for Services Page */
+        @media screen and (max-width: 768px) {
+            .services-image-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+                padding: 0 0.75rem;
+                margin: 1.5rem auto;
+            }
+            
+            .services-image-grid img {
+                height: 150px;
+                border-radius: 6px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .services-image-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                padding: 0 0.5rem;
+                margin: 1rem auto;
+            }
+            
+            .services-image-grid img {
+                height: 180px;
+                border-radius: 6px;
+            }
+            
+            .main-content h1 {
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -67,11 +118,11 @@
         </nav>
 
         <h1>Our Services</h1>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; max-width: 900px; margin: 2rem auto; padding: 0 1rem;">
-            <img src="../../images/pantheon-paris-9065570_1280.jpg" alt="Historic building" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-            <img src="../../images/rome .jpg" alt="Roman architecture" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-            <img src="../../images/statue-4115144_1280.jpg" alt="Historic statue" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-            <img src="../../images/st-petersburg-6902540_1280.jpg" alt="Historic architecture" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        <div class="services-image-grid">
+            <img src="../../images/pantheon-paris-9065570_1280.jpg" alt="Historic building">
+            <img src="../../images/rome .jpg" alt="Roman architecture">
+            <img src="../../images/statue-4115144_1280.jpg" alt="Historic statue">
+            <img src="../../images/st-petersburg-6902540_1280.jpg" alt="Historic architecture">
         </div>
         <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 0.25rem; margin-bottom: 2rem;">Image(s) courtesy of Pexabay.</p>
         <div class="services-grid">
