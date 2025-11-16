@@ -608,3 +608,36 @@ body {
 
 /* Remove default outlines that may flash */
 .header-content a:focus { outline: none; box-shadow: none; }
+
+/* Header ghost-rectangle fix */
+.header-content {
+  position: relative;
+  contain: paint;              /* isolate painting to prevent ghost blocks */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Remove transform that can cause repaint artifacts after subject click */
+.subject-list, .subject-grid, .subjects { backface-visibility: hidden; }
+.subject-item, .subject-option, .subject-button, .subject-select a, .subject-select button {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* No tap highlight/focus flash on header links/buttons */
+.header a, .auth-btn {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Ensure no white underline block inside auth buttons */
+.auth-buttons .auth-btn span { border-bottom: 0 !important; }
+
+/* Kill any leftover pseudo blocks in header (belt-and-suspenders) */
+.header-content::before,
+.header-content::after,
+.header-content .menu-item a::before,
+.header-content .menu-item a::after,
+.header-content .auth-buttons a::before,
+.header-content .auth-buttons a::after { content: none !important; display: none !important; }
