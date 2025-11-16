@@ -674,3 +674,17 @@ html { scroll-behavior: auto !important; }
 /*
 .header { background: #ff9800 !important; }
 */
+
+/* Use sticky header to avoid repaint artifacts */
+.header {
+  position: -webkit-sticky !important; /* Safari */
+  position: sticky !important;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* No top offset needed with sticky header */
+.main-content {
+  margin-top: 0 !important;
+}
