@@ -587,3 +587,24 @@ body {
   height: 0 !important;
 }
 /* End header artifact cleanup */
+// ...existing code...
+/* Header scratch hotfix */
+.header-content { position: relative; overflow: hidden; }
+
+/* Kill stray pseudo elements in header */
+.header-content::before,
+.header-content::after,
+.header-content .menu-item a::before,
+.header-content .menu-item a::after,
+.header-content .auth-buttons a::before,
+.header-content .auth-buttons a::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Keep the visual underline without pseudos */
+.auth-buttons .auth-btn { display:inline-flex; align-items:center; gap:6px; }
+.auth-buttons .auth-btn span { border-bottom: 3px solid rgba(255,255,255,.9); line-height:1; padding-bottom: 2px; }
+
+/* Remove default outlines that may flash */
+.header-content a:focus { outline: none; box-shadow: none; }
