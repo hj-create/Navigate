@@ -537,3 +537,53 @@ body {
 .footer ul { margin: 0; padding-left: 0; list-style: none; }
 .footer .material-icons { font-size: 14px; }
 
+/* Header artifact cleanup */
+.header .menu-item a::before,
+.header .menu-item a::after,
+.horizontal-menu .menu-item a::before,
+.horizontal-menu .menu-item a::after {
+  content: none !important;
+  display: none !important;
+}
+
+.horizontal-menu .menu-item:empty,
+.horizontal-menu .menu-item a:empty {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.horizontal-menu .menu-item a,
+.subject-button,
+.subject-item {
+  background: transparent;
+  box-shadow: none;
+}
+
+.horizontal-menu .menu-item a:focus-visible,
+.subject-button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  background: none;
+}
+
+.material-icons {
+  font-family: 'Material Icons', 'MaterialIconsOutlined', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+.material-icons:before { content: none !important; }
+
+.header .floating-block,
+.horizontal-menu .floating-block {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+/* End header artifact cleanup */
