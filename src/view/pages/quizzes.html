@@ -28,41 +28,6 @@
         .menu-item a[href*="resources"] .material-icons {
             color: var(--accent-color);
         }
-
-        /* Hero Image Section Styles */
-        .hero-image-section {
-            margin: 2rem 0;
-            width: 100%;
-        }
-        
-        .hero-image-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-        
-        .hero-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            max-height: 500px;
-        }
-        
-        .hero-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
         
         /* Quiz container styles */
         .quiz-selection {
@@ -267,37 +232,28 @@
             </ul>
         </nav>
 
-        <!-- HERO IMAGE SECTION -->
-        <section class="hero-image-section">
-            <div class="hero-image-container">
-                <img src="../../images/hieroglyph-7883891_1280.jpg" alt="Ancient hieroglyphs" class="hero-image">
-                <div class="hero-overlay">
-                    <h2>Test Your Knowledge</h2>
-                    <p>Interactive quizzes covering World, US, and European History</p>
-                </div>
-            </div>
-            <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Image courtesy of Pexabay.</p>
-        </section>
-
         <h1>Quizzes</h1>
         <p>Test your knowledge with our interactive quizzes covering World History, US History, and European History.</p>
 
         <!-- Quiz Category Selection -->
         <div id="quizCategories" class="resources-grid">
-            <div class="resource-card" onclick="showQuiz('world')" style="cursor: pointer;">
+            <div class="resource-card">
                 <span class="material-icons">public</span>
                 <h3>World History</h3>
                 <p>Test your knowledge of ancient civilizations and world events.</p>
+                <button onclick="showQuiz('world')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
             </div>
-            <div class="resource-card" onclick="showQuiz('us')" style="cursor: pointer;">
+            <div class="resource-card">
                 <span class="material-icons">flag</span>
                 <h3>US History</h3>
                 <p>Explore American history from colonial times to present.</p>
+                <button onclick="showQuiz('us')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
             </div>
-            <div class="resource-card" onclick="showQuiz('european')" style="cursor: pointer;">
+            <div class="resource-card">
                 <span class="material-icons">account_balance</span>
                 <h3>European History</h3>
                 <p>Journey through European civilizations and empires.</p>
+                <button onclick="showQuiz('european')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
             </div>
         </div>
 

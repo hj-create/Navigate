@@ -398,3 +398,91 @@ body {
   white-space: nowrap;
   direction: ltr;
 }
+
+/* Additional responsive styles for very small phones */
+@media screen and (max-width: 480px) {
+  :root {
+    --header-height: 56px;
+  }
+
+  .header-content {
+    padding: 0 12px;
+  }
+
+  .logo .material-icons {
+    font-size: 24px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
+  .content-wrapper {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .horizontal-menu {
+    padding: 6px;
+  }
+
+  .menu-list {
+    gap: 6px;
+  }
+
+  .menu-item a {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .services-grid, .resources-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px 0;
+  }
+
+  .service-card, .resource-card, .dashboard-card {
+    padding: 16px;
+  }
+
+  .service-card .material-icons, .resource-card .material-icons {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .auth-btn {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablet optimization (769px - 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .services-grid, .resources-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-wrapper {
+    padding: 20px;
+  }
+
+  .service-card, .resource-card {
+    padding: 20px;
+  }
+}
