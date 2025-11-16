@@ -525,3 +525,15 @@ body {
   gap: 6px;
 }
 
+
+/* Footer typography normalization */
+.footer,
+.footer p,
+.footer li,
+.footer a,
+.footer h3,
+.footer .footer-bottom p { font-size: 14px; line-height: 1.6; }
+.footer h3 { font-weight: 600; margin: 0 0 8px; }
+.footer ul { margin: 0; padding-left: 0; list-style: none; }
+.footer .material-icons { font-size: 14px; }
+

@@ -18,7 +18,7 @@ function Ensure-HeadTags {
   return $c
 }
 
-# Footer for pages under src/view/pages
+# Footer for pages under src/view/pages (relative links)
 $pageFooter = @'
 <footer class="footer">
   <div class="footer-content">
@@ -46,7 +46,8 @@ $pageFooter = @'
         <a href="#" class="social-link"><span class="material-icons">public</span> Website</a>
         <a href="#" class="social-link"><span class="material-icons">forum</span> Blog</a>
         <a href="#" class="social-link"><span class="material-icons">mail</span> Newsletter</a>
-        <a href="https://facebook.com/Navigate" class="social-link" target="_blank" rel="noopener">
+        <!-- Facebook icon now links to site home -->
+        <a href="../../index.html" class="social-link">
           <svg class="icon-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
             <path d="M22 12.07C22 6.49 17.52 2 11.93 2 6.35 2 1.86 6.49 1.86 12.07c0 4.99 3.66 9.13 8.44 9.94v-7.03H7.9v-2.91h2.4V9.41c0-2.37 1.41-3.69 3.57-3.69 1.03 0 2.11.18 2.11.18v2.32h-1.19c-1.17 0-1.53.73-1.53 1.47v1.77h2.6l-.42 2.91h-2.18v7.03c4.78-.81 8.44-4.95 8.44-9.94z"/>
           </svg>
@@ -58,12 +59,12 @@ $pageFooter = @'
 
   <div class="footer-bottom">
     <p>Built with &#10084;&#65039; by the Navigate team for accessible history education</p>
-    <p><span class="material-icons" style="vertical-align:middle;font-size:18px">copyright</span> 2025 Navigate. All rights reserved.</p>
+    <p><span class="material-icons" style="vertical-align:middle;font-size:14px">copyright</span> 2025 Navigate. All rights reserved.</p>
   </div>
 </footer>
 '@
 
-# Footer for src/index.html (root paths)
+# Footer for src/index.html (root-level links)
 $rootFooter = @'
 <footer class="footer">
   <div class="footer-content">
@@ -91,7 +92,8 @@ $rootFooter = @'
         <a href="#" class="social-link"><span class="material-icons">public</span> Website</a>
         <a href="#" class="social-link"><span class="material-icons">forum</span> Blog</a>
         <a href="#" class="social-link"><span class="material-icons">mail</span> Newsletter</a>
-        <a href="https://facebook.com/Navigate" class="social-link" target="_blank" rel="noopener">
+        <!-- Facebook icon now links to site home -->
+        <a href="index.html" class="social-link">
           <svg class="icon-svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
             <path d="M22 12.07C22 6.49 17.52 2 11.93 2 6.35 2 1.86 6.49 1.86 12.07c0 4.99 3.66 9.13 8.44 9.94v-7.03H7.9v-2.91h2.4V9.41c0-2.37 1.41-3.69 3.57-3.69 1.03 0 2.11.18 2.11.18v2.32h-1.19c-1.17 0-1.53.73-1.53 1.47v1.77h2.6l-.42 2.91h-2.18v7.03c4.78-.81 8.44-4.95 8.44-9.94z"/>
           </svg>
@@ -103,7 +105,7 @@ $rootFooter = @'
 
   <div class="footer-bottom">
     <p>Built with &#10084;&#65039; by the Navigate team for accessible history education</p>
-    <p><span class="material-icons" style="vertical-align:middle;font-size:18px">copyright</span> 2025 Navigate. All rights reserved.</p>
+    <p><span class="material-icons" style="vertical-align:middle;font-size:14px">copyright</span> 2025 Navigate. All rights reserved.</p>
   </div>
 </footer>
 '@
@@ -122,17 +124,17 @@ function Replace-Footer {
   Set-Content -LiteralPath $path -Value $text -Encoding UTF8
 }
 
-# Ensure CSS
+# Ensure CSS snippets in src/css/styles.css
 $cssPath = Join-Path $repo 'src\css\styles.css'
-$cssIcons = @'
+$cssIcon = @'
 /* Footer icon alignment */
-.footer .material-icons { font-size: 18px; vertical-align: middle; margin-right: 6px; }
-.footer .footer-section h3 .material-icons { font-size: 20px; margin-right: 8px; }
+.footer .material-icons { vertical-align: middle; margin-right: 6px; }
+.footer .footer-section h3 .material-icons { margin-right: 8px; }
 .footer .social-links .social-link { display: inline-flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; }
 .footer .social-links .social-link:hover { text-decoration: underline; }
-.footer .icon-svg { width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 6px; fill: currentColor; }
+.footer .icon-svg { display: inline-block; vertical-align: middle; margin-right: 6px; fill: currentColor; width: 14px; height: 14px; }
 '@
-$cssQuickLinks = @'
+$cssQuick = @'
 /* Footer quick links: exactly two rows */
 .footer .quick-links ul {
   display: grid;
@@ -149,12 +151,28 @@ $cssQuickLinks = @'
   gap: 6px;
 }
 '@
+$cssType = @'
+/* Footer typography normalization */
+.footer,
+.footer p,
+.footer li,
+.footer a,
+.footer h3,
+.footer .footer-bottom p { font-size: 14px; line-height: 1.6; }
+.footer h3 { font-weight: 600; margin: 0 0 8px; }
+.footer ul { margin: 0; padding-left: 0; list-style: none; }
+.footer .material-icons { font-size: 14px; }
+'@
+
 if (Test-Path $cssPath) {
   if (-not (Select-String -Path $cssPath -Pattern 'Footer icon alignment' -Quiet)) {
-    Add-Content -Path $cssPath -Value "`r`n$cssIcons`r`n"
+    Add-Content -Path $cssPath -Value "`r`n$cssIcon`r`n"
   }
   if (-not (Select-String -Path $cssPath -Pattern 'Footer quick links: exactly two rows' -Quiet)) {
-    Add-Content -Path $cssPath -Value "`r`n$cssQuickLinks`r`n"
+    Add-Content -Path $cssPath -Value "`r`n$cssQuick`r`n"
+  }
+  if (-not (Select-String -Path $cssPath -Pattern 'Footer typography normalization' -Quiet)) {
+    Add-Content -Path $cssPath -Value "`r`n$cssType`r`n"
   }
 }
 
@@ -162,7 +180,15 @@ if (Test-Path $cssPath) {
 $pages = Get-ChildItem -LiteralPath "$repo\src\view\pages" -Filter *.html -File -Recurse
 $rootIndex = Join-Path $repo 'src\index.html'
 $updated = @()
-foreach ($file in $pages) { Replace-Footer -path $file.FullName -footerHtml $pageFooter; $updated += $file.FullName }
-if (Test-Path $rootIndex) { Replace-Footer -path $rootIndex -footerHtml $rootFooter; $updated += $rootIndex }
 
-"Updated footers in:"; $updated | ForEach-Object { " - $_" }
+foreach ($file in $pages) {
+  Replace-Footer -path $file.FullName -footerHtml $pageFooter
+  $updated += $file.FullName
+}
+if (Test-Path $rootIndex) {
+  Replace-Footer -path $rootIndex -footerHtml $rootFooter
+  $updated += $rootIndex
+}
+
+"Updated footers in:"
+$updated | ForEach-Object { " - $_" }
