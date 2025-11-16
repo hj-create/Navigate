@@ -245,6 +245,17 @@ Enhanced navigation menu with larger touch targets:
 - Consistent card layouts across all pages
 - Material Icons for consistent iconography
 
+### Responsive Design
+Navigate is fully responsive across all device sizes (mobile, tablet, desktop). Key features:
+- **Mobile-first approach**: Base styles optimized for mobile devices
+- **Breakpoints**: 320px, 480px, 768px, 1024px, 1440px+
+- **Touch-friendly**: Minimum 44x44px touch targets for all interactive elements
+- **Adaptive layouts**: Grid and flexbox layouts that reorganize based on screen size
+- **Optimized typography**: Font sizes scale appropriately for different devices
+- **Form inputs**: 16px font size on mobile to prevent iOS auto-zoom
+
+See [RESPONSIVE_DESIGN.md](RESPONSIVE_DESIGN.md) for comprehensive guidelines on maintaining and extending responsive features.
+
 ## Testing
 
 ### Manual Testing Checklist
