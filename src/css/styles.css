@@ -662,3 +662,28 @@ body {
 html { scroll-behavior: auto !important; }
 .header { isolation: isolate; contain: paint; backface-visibility: hidden; -webkit-backface-visibility: hidden; z-index: 1000; }
 .header-content { position: relative; overflow: hidden; }
+
+/* Common isolation */
+.header { isolation: isolate; contain: paint; z-index: 1000; }
+
+/* TEST A: remove box-shadow (common Chrome glitch with fixed+shadow) */
+.header { box-shadow: none !important; }
+.header::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: rgba(0,0,0,.12); pointer-events: none;
+}
+/* Disable A before trying B/C */
+
+
+/* TEST B: use sticky instead of fixed (comment out A when testing) */
+/*
+.header { position: sticky !important; top: 0 !important; box-shadow: none !important; }
+.main-content { margin-top: 0 !important; }
+*/
+
+
+/* TEST C: solid header background (rule out gradient compositing) */
+/*
+.header { background: #ff9800 !important; }
+*/
