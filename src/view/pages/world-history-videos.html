@@ -121,6 +121,68 @@
             color: #666;
             line-height: 1.6;
         }
+        
+        /* Responsive Video Card Styles */
+        @media screen and (max-width: 768px) {
+            .video-card {
+                border-radius: 8px;
+            }
+            
+            .video-content {
+                padding: 1rem;
+            }
+            
+            .video-content h3 {
+                font-size: 1.1rem;
+            }
+            
+            .video-content p {
+                font-size: 0.9rem;
+            }
+            
+            .play-button {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .play-button .material-icons {
+                font-size: 28px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .back-btn {
+                padding: 0.5rem 0.875rem;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+            
+            .video-card {
+                border-radius: 6px;
+            }
+            
+            .video-content {
+                padding: 0.875rem;
+            }
+            
+            .video-content h3 {
+                font-size: 1rem;
+                margin-bottom: 0.375rem;
+            }
+            
+            .video-content p {
+                font-size: 0.85rem;
+            }
+            
+            .play-button {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .play-button .material-icons {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>

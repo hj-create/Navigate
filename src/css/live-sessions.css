@@ -370,3 +370,139 @@
 
 /* Prefer instant scroll on this page */
 html { scroll-behavior: auto !important; }
+
+/* Additional Responsive Improvements for Live Sessions */
+@media screen and (max-width: 768px) {
+  .container, .session-container {
+    padding: 1.5rem;
+  }
+  
+  .section-header-content h2 {
+    font-size: 1.3rem;
+  }
+  
+  .session-card {
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .session-info {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .session-info h4 {
+    font-size: 1.1rem;
+  }
+  
+  .join-session-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .subject-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .calendar {
+    padding: 1.5rem;
+  }
+  
+  .time-slots {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .session-type-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container, .session-container {
+    padding: 1rem;
+  }
+  
+  .section-header-content h2 {
+    font-size: 1.15rem;
+  }
+  
+  .section-header-content p {
+    font-size: 0.9rem;
+  }
+  
+  .primary-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .session-card {
+    padding: 1rem;
+  }
+  
+  .session-info h4 {
+    font-size: 1rem;
+  }
+  
+  .session-date {
+    font-size: 0.85rem;
+  }
+  
+  .join-session-btn {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.9rem;
+  }
+  
+  .subject-item {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .calendar {
+    padding: 1rem;
+  }
+  
+  .calendar-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .calendar-day {
+    padding: 0.375rem;
+    font-size: 0.85rem;
+  }
+  
+  .time-slots {
+    grid-template-columns: 1fr;
+  }
+  
+  .time-slot {
+    padding: 0.875rem;
+    font-size: 0.9rem;
+  }
+  
+  .booking-summary h3 {
+    font-size: 1.3rem;
+  }
+  
+  .booking-summary p {
+    font-size: 0.9rem;
+  }
+  
+  .confirm-booking-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+    min-width: 180px;
+  }
+  
+  .session-type-option .option-content {
+    padding: 1.25rem;
+  }
+  
+  .session-type-option .option-text strong {
+    font-size: 1rem;
+  }
+  
+  .session-type-option .option-text small {
+    font-size: 0.8rem;
+  }
+}
