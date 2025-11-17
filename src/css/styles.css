@@ -7,8 +7,8 @@
   --background-color: #fafafa;
   --header-height: 64px;
   --footer-height: 250px;
-  --hover-color: #4dd0e1;
-  --accent-color: #00bcd4;
+  --hover-color:  #ffb74d;
+  --accent-color: #ff5722;
 }
 
 /* Reset and Base Styles */
@@ -484,5 +484,15 @@ body {
 
   .service-card, .resource-card {
     padding: 20px;
+    /* --- Add this at the VERY bottom of the file --- */
+
+/* Teal/Cyan hover text color for buttons */
+.auth-btn:hover,
+.menu-item a:hover,
+.service-card:hover .material-icons,
+.resource-card:hover .material-icons {
+  color: #00838f; /* teal/cyan hover color */
+}
+
   }
 }
