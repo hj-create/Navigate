@@ -124,24 +124,26 @@ body {
 }
 
 /* Auth buttons */
-button,
-.btn,
+auth-buttons { display: flex; gap: 16px; }
+
+
 .auth-btn {
-  background-color: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  color: var(--light-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 8px 16px;
+  border: 2px solid var(--light-text);
   border-radius: 4px;
+  background: transparent;
+  color: var(--light-text);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 
-button:hover,
-.btn:hover,
 .auth-btn:hover {
-  background-color: var(--accent-color); /* stays teal */
-  border-color: var(--accent-color);
-  color: var(--light-text);              /* stays white */
+  background-color: var(--light-text);
+  color: var(--primary-color);
+/* stays white */
 }
 
 
