@@ -108,18 +108,23 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-height: 44px;
+            touch-action: manipulation;
         }
 
         .submit-btn:hover {
             background: #e64a19;
-            transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn:active {
+            background: #d43f14;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .submit-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
-            transform: none;
         }
 
         .auth-footer {
