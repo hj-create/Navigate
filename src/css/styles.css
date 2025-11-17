@@ -124,23 +124,24 @@ body {
 }
 
 /* Auth buttons */
+button,
+.btn,
 .auth-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border: 2px solid var(--accent-color); /* teal border */
-  border-radius: 4px;
-  background: transparent;
+  background-color: var(--accent-color);
+  border: 2px solid var(--accent-color);
   color: var(--light-text);
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
+button:hover,
+.btn:hover,
 .auth-btn:hover {
-  border-color: var(--accent-color);     /* stays teal on hover */
-  background: transparent;
-  color: var(--light-text);
+  background-color: var(--accent-color); /* stays teal */
+  border-color: var(--accent-color);
+  color: var(--light-text);              /* stays white */
 }
 
 
