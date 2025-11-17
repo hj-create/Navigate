@@ -124,8 +124,7 @@ body {
 }
 
 /* Auth buttons */
-auth-buttons { display: flex; gap: 16px; }
-
+.auth-buttons { display: flex; gap: 16px; }
 
 .auth-btn {
   display: flex;
@@ -143,7 +142,6 @@ auth-buttons { display: flex; gap: 16px; }
 .auth-btn:hover {
   background-color: var(--light-text);
   color: var(--primary-color);
-/* stays white */
 }
 
 
