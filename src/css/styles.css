@@ -124,14 +124,12 @@ body {
 }
 
 /* Auth buttons */
-.auth-buttons { display: flex; gap: 16px; }
-
 .auth-btn {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  border: 2px solid var(--light-text);
+  border: 2px solid var(--accent-color); /* teal border */
   border-radius: 4px;
   background: transparent;
   color: var(--light-text);
@@ -140,10 +138,11 @@ body {
 }
 
 .auth-btn:hover {
-  background-color: var(--light-text);
-  color: var(--primary-color);
-;
+  border-color: var(--accent-color);     /* stays teal on hover */
+  background: transparent;
+  color: var(--light-text);
 }
+
 
 /* Main Content */
 .main-content {
