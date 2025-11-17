@@ -140,9 +140,9 @@ body {
 }
 
 .auth-btn:hover {
-  background-color:  var(--accent-color);
-;
+  background-color: var(--light-text);
   color: var(--primary-color);
+;
 }
 
 /* Main Content */
