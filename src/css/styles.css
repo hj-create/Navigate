@@ -8,7 +8,7 @@
   --header-height: 64px;
   --footer-height: 250px;
   --hover-color:  #ffb74d;
-  --accent-color: #ff5722;
+  --accent-color: teal;
 }
 
 /* Reset and Base Styles */
@@ -140,7 +140,8 @@ body {
 }
 
 .auth-btn:hover {
-  background-color: var(--light-text);
+  background-color:  var(--accent-color);
+;
   color: var(--primary-color);
 }
 
