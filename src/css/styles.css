@@ -486,12 +486,7 @@ body {
     padding: 20px;
     /* --- Add this at the VERY bottom of the file --- */
 
-/* Teal/Cyan hover text color for buttons */
-.auth-btn:hover,
-.menu-item a:hover,
-.service-card:hover .material-icons,
-.resource-card:hover .material-icons {
-  color: #00838f; /* teal/cyan hover color */
+
 }
 
   }
