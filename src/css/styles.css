@@ -485,10 +485,5 @@ body {
 
   .service-card, .resource-card {
     padding: 20px;
-    /* --- Add this at the VERY bottom of the file --- */
-
-
-}
-
   }
 }
