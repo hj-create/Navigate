@@ -85,6 +85,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -101,7 +102,7 @@
         </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item"><a href="services.html"><span class="material-icons">miscellaneous_services</span><span class="menu-text">Services</span></a></li>
@@ -151,7 +152,7 @@
                 <form id="chat-form" class="chat-form">
                     <input id="chat-input" class="chat-input" type="text" autocomplete="off"
                            placeholder="Ask about schedules, resources, joining sessions..." />
-                    <button id="chat-send" class="chat-send" type="submit">Send</button>
+                    <button id="chat-send" class="chat-send" type="submit" aria-label="Send message to chatbot">Send</button>
                 </form>
             </div>
         </section>
@@ -169,7 +170,7 @@
                 <div id="tutor-messages" class="messenger-messages" aria-live="polite"></div>
                 <form id="messenger-form" class="messenger-form">
                     <textarea id="messenger-input" class="messenger-input" placeholder="Type your message here..." rows="2"></textarea>
-                    <button type="submit" class="messenger-send"><span class="material-icons">send</span><span>Send</span></button>
+                    <button type="submit" class="messenger-send" aria-label="Send message to tutor"><span class="material-icons">send</span><span>Send</span></button>
                 </form>
             </div>
         </section>
@@ -192,6 +193,15 @@
         <li><a href="dashboard.html"><span class="material-icons">dashboard</span> Dashboard</a></li>
         <li><a href="resources.html"><span class="material-icons">library_books</span> Resources</a></li>
         <li><a href="about.html"><span class="material-icons">info</span> About</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3><span class="material-icons">gavel</span> Legal</h3>
+      <ul>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+        <li><a href="accessibility-statement.html">Accessibility Statement</a></li>
       </ul>
     </div>
 

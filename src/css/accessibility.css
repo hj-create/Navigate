@@ -9,6 +9,27 @@
  * - Focus indicators with multiple visual cues
  */
 
+/* Skip Link for Keyboard Navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: var(--light-text);
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    z-index: 10000;
+    border-radius: 0 0 6px 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid var(--focus-outline);
+    outline-offset: 2px;
+}
+
 /* Enhanced Color Variables for Better Contrast */
 :root {
     /* Maintain original colors but ensure proper usage */
