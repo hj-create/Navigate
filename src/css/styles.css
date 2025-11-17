@@ -7,7 +7,7 @@
   --background-color: #fafafa;
   --header-height: 64px;
   --footer-height: 250px;
-  --hover-color: #ffb74d;
+  --hover-color:  #ffb74d;
   --accent-color: #ff5722;
 }
 
@@ -143,6 +143,7 @@ body {
   background-color: var(--light-text);
   color: var(--primary-color);
 }
+
 
 /* Main Content */
 .main-content {
@@ -484,5 +485,10 @@ body {
 
   .service-card, .resource-card {
     padding: 20px;
+    /* --- Add this at the VERY bottom of the file --- */
+
+
+}
+
   }
 }
