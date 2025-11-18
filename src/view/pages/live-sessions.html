@@ -208,23 +208,23 @@
                 <div class="subject-selection">
                     <h3>Select Subject</h3>
                     <ul class="subject-list">
-                        <li class="subject-item" data-subject="World History">
+                        <li class="subject-item" data-subject="World History" tabindex="0">
                             <span class="material-icons">public</span>
                             World History
                         </li>
-                        <li class="subject-item" data-subject="European History">
+                        <li class="subject-item" data-subject="European History" tabindex="0">
                             <span class="material-icons">account_balance</span>
                             European History
                         </li>
-                        <li class="subject-item" data-subject="Ancient History">
+                        <li class="subject-item" data-subject="Ancient History" tabindex="0">
                             <span class="material-icons">emoji_people</span>
                             Ancient History
                         </li>
-                        <li class="subject-item" data-subject="Government & Politics">
+                        <li class="subject-item" data-subject="Government & Politics" tabindex="0">
                             <span class="material-icons">gavel</span>
                             Government & Politics
                         </li>
-                        <li class="subject-item" data-subject="US History">
+                        <li class="subject-item" data-subject="US History" tabindex="0">
                             <span class="material-icons">flag</span>
                             US History
                         </li>
@@ -270,23 +270,23 @@
 
                 <div class="time-slots" id="timeSlots" style="display: none;">
                     <h3>Available Time Slots</h3>
-                    <div class="time-slot">
+                    <div class="time-slot" tabindex="0">
                         <span class="material-icons">schedule</span>
                         9:00 AM - 10:00 AM
                     </div>
-                    <div class="time-slot">
+                    <div class="time-slot" tabindex="0">
                         <span class="material-icons">schedule</span>
                         10:30 AM - 11:30 AM
                     </div>
-                    <div class="time-slot">
+                    <div class="time-slot" tabindex="0">
                         <span class="material-icons">schedule</span>
                         1:00 PM - 2:00 PM
                     </div>
-                    <div class="time-slot">
+                    <div class="time-slot" tabindex="0">
                         <span class="material-icons">schedule</span>
                         2:30 PM - 3:30 PM
                     </div>
-                    <div class="time-slot">
+                    <div class="time-slot" tabindex="0">
                         <span class="material-icons">schedule</span>
                         4:00 PM - 5:00 PM
                     </div>
@@ -548,14 +548,26 @@
                 const dateToCheck = new Date(currentYear, currentMonth, i);
                 
                 if(dateToCheck >= currentDate) {
-                    dayElement.addEventListener('click', function() {
+                    dayElement.setAttribute('tabindex', '0');
+                    dayElement.setAttribute('role', 'button');
+                    dayElement.setAttribute('aria-label', `Select ${monthNames[currentMonth]} ${i}`);
+                    
+                    const handleDaySelection = function() {
                         document.querySelectorAll('.calendar-day').forEach(d => 
                             d.classList.remove('selected'));
-                        this.classList.add('selected');
+                        dayElement.classList.add('selected');
                         selectedDate = `${monthNames[currentMonth]} ${i}, ${currentYear}`;
                         timeSlots.style.display = 'block';
                         timeSlots.classList.add('active');
                         timeSlots.scrollIntoView({ behavior: 'smooth' });
+                    };
+                    
+                    dayElement.addEventListener('click', handleDaySelection);
+                    dayElement.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleDaySelection();
+                        }
                     });
                 } else {
                     dayElement.classList.add('disabled');
@@ -640,12 +652,12 @@
         });
 
         document.querySelectorAll('.time-slot').forEach(slot => {
-            slot.addEventListener('click', function() {
+            const handleTimeSlotSelection = function() {
                 if (!selectedSubject || !selectedDate) return;
                 
                 document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedTime = this.textContent.trim();
+                slot.classList.add('selected');
+                selectedTime = slot.textContent.trim();
 
                 const existingMsg = document.querySelector('.booking-message');
                 if (existingMsg) existingMsg.remove();
@@ -718,6 +730,14 @@
                     // Scroll to sessions section
                     upcomingSessionsContainer.scrollIntoView({ behavior: 'smooth' });
                 });
+            };
+            
+            slot.addEventListener('click', handleTimeSlotSelection);
+            slot.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTimeSlotSelection();
+                }
             });
         });
 

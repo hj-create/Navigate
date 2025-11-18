@@ -244,6 +244,11 @@
                     if (thisDate < today) {
                         dayElement.classList.add('past');
                         dayElement.tabIndex = -1;
+                    } else if (hasEvents) {
+                        // Make days with events keyboard accessible
+                        dayElement.setAttribute('tabindex', '0');
+                        dayElement.setAttribute('role', 'button');
+                        dayElement.setAttribute('aria-label', `Events on ${new Date(currentYear, currentMonth, day).toDateString()}. Press Enter to view.`);
                     }
 
                     dayElement.innerHTML = `
@@ -273,21 +278,29 @@
                     
                     // Add click handler to pin popup for days with events
                     if (hasEvents) {
-                        dayElement.addEventListener('click', function(e) {
+                        const handleDayToggle = function(e) {
                             // Don't toggle if clicking on a link
                             if (e.target.tagName === 'A') {
                                 return;
                             }
                             
                             // Toggle pinned state
-                            this.classList.toggle('popup-pinned');
+                            dayElement.classList.toggle('popup-pinned');
                             
                             // Remove pinned state from other calendar days
                             document.querySelectorAll('.calendar-day.popup-pinned').forEach(day => {
-                                if (day !== this) {
+                                if (day !== dayElement) {
                                     day.classList.remove('popup-pinned');
                                 }
                             });
+                        };
+                        
+                        dayElement.addEventListener('click', handleDayToggle);
+                        dayElement.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                handleDayToggle({target: dayElement});
+                            }
                         });
                     }
                 }

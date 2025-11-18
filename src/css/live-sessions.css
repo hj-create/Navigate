@@ -125,8 +125,10 @@
   transition: all .3s ease;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   font-size: 1rem;
+  outline: none;
 }
 .subject-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.subject-item:focus { outline: 3px solid var(--accent-color); outline-offset: 2px; }
 .subject-item.selected { background: var(--accent-color); color: #fff; }
 
 /* Calendar */
@@ -157,6 +159,7 @@
   cursor: pointer;
   border-radius: 4px;
   border: 0;
+  outline: none;
 }
 .calendar-day.header {
   cursor: default; font-weight: 600; background: transparent !important;
@@ -164,6 +167,7 @@
 }
 .calendar-day.header:hover { background: transparent !important; transform: none !important; box-shadow: none !important; }
 .calendar-day:hover { background: var(--hover-color); }
+.calendar-day:focus { outline: 3px solid var(--accent-color); outline-offset: 2px; }
 .calendar-day.selected { background: var(--accent-color); color: #fff; }
 .calendar-day.has-event { background: #f5f5f5; font-weight: 600; }
 .calendar-day.today { background: #fff9c4; box-shadow: none !important; }
@@ -188,8 +192,10 @@
   padding: 1rem; background: #fff; border-radius: 8px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: .5rem;
   transition: all .3s ease; border: 1px solid #eee;
+  outline: none;
 }
 .time-slot:hover { background: var(--hover-color); transform: translateY(-2px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.time-slot:focus { outline: 3px solid var(--accent-color); outline-offset: 2px; }
 .time-slot.selected { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
 .time-slot.selected .material-icons { animation: pulse 1s infinite; }
 
@@ -338,8 +344,17 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
-.session-type-option { cursor: pointer; display: block; }
-.session-type-option input[type="radio"] { display: none; }
+.session-type-option { cursor: pointer; display: block; position: relative; }
+.session-type-option input[type="radio"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
 
 .session-type-option .option-content {
   display: flex; align-items: center; gap: 1rem;
@@ -347,11 +362,16 @@
   border: 2px solid rgba(255,152,0,.3); /* fixed undefined --primary-color-rgb */
   border-radius: 8px; transition: all .3s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  pointer-events: none;
 }
 .session-type-option:hover .option-content {
   transform: translateY(-2px);
   border-color: var(--accent-color);
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.session-type-option input[type="radio"]:focus + .option-content {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
 }
 .session-type-option input[type="radio"]:checked + .option-content {
   background: var(--accent-color); color: #fff; border-color: var(--accent-color);
