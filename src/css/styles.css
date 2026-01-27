@@ -137,6 +137,7 @@ body {
   color: var(--light-text);
   cursor: pointer;
   transition: all 0.3s;
+  text-decoration: none;
 }
 
 .auth-btn:hover {
@@ -174,6 +175,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
+  justify-items: center;
 }
 
 .footer-section h3 { margin-bottom: 16px; }
