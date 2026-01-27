@@ -35,6 +35,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function handleBookNewSession() {
+    // Check if user is logged in
+    if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
+      alert('Please sign in to book a session.');
+      window.location.href = 'signin.html';
+      return;
+    }
+    
     upcomingSessionsContainer && (upcomingSessionsContainer.style.display = 'none');
     if (bookingContainer) { bookingContainer.style.display = 'block'; bookingContainer.classList.add('active'); }
     resetBookingForm();
