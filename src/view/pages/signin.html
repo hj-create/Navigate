@@ -32,6 +32,30 @@
         .auth-header {
             text-align: center;
             margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 152, 0, 0.1);
+        }
+
+        .back-button .material-icons {
+            font-size: 1.2rem;
         }
 
         .auth-header h1 {
@@ -182,6 +206,10 @@
     <main class="main-content" id="main-content">
         <div class="auth-container">
             <div class="auth-header">
+                <a href="../../index.html" class="back-button" aria-label="Go back to home page">
+                    <span class="material-icons">arrow_back</span>
+                    <span>Back</span>
+                </a>
                 <h1>Welcome Back</h1>
                 <p>Sign in to continue your learning journey</p>
             </div>
