@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-45DLQZN7DN"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-45DLQZN7DN');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.S. History Downloads - Navigate</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/accessibility.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .download-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .download-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .download-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .download-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .pdf-viewer-container {
+            width: 100%;
+            height: calc(100vh - 350px);
+            min-height: 700px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: #f5f5f5;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .pdf-viewer-container iframe,
+        .pdf-viewer-container embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .download-button-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+        }
+
+        .download-btn .material-icons {
+            font-size: 1.5rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .download-container {
+                padding: 1rem;
+            }
+            
+            .pdf-viewer-container {
+                height: calc(100vh - 300px);
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="material-icons">explore</span>
+                    <span class="logo-text">Navigate</span>
+                </a>
+            </div>
+            <h1 class="title">Navigate</h1>
+            <div class="auth-buttons">
+                <a href="signin.html" class="auth-btn">
+                    <span class="material-icons">person_outline</span>
+                    <span>Sign In</span>
+                </a>
+                <a href="signup.html" class="auth-btn">
+                    <span class="material-icons">person_add</span>
+                    <span>Sign Up</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content" id="main-content">
+        <div class="download-container">
+            <a href="resources.html?course=us-history" class="back-to-courses">
+                <span class="material-icons">arrow_back</span>
+                <span>Back to U.S. History Roadmap</span>
+            </a>
+
+            <div class="download-header">
+                <h1>U.S. History Study Materials</h1>
+                <p>Comprehensive notes and references for United States History</p>
+            </div>
+
+            <div class="pdf-viewer-container">
+                <embed src="../../downloads/US History Notes.docx.pdf" type="application/pdf" />
+            </div>
+
+            <div class="download-button-container">
+                <a href="../../downloads/US History Notes.docx.pdf" class="download-btn" download>
+                    <span class="material-icons">file_download</span>
+                    <span>Download PDF</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><span class="material-icons">contact_support</span> Contact Us</h3>
+                <p><span class="material-icons">email</span> Email: info@navigate.com</p>
+                <p><span class="material-icons">call</span> Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h3><span class="material-icons">link</span> Quick Links</h3>
+                <ul>
+                    <li><a href="../../index.html"><span class="material-icons">home</span> Home</a></li>
+                    <li><a href="services.html"><span class="material-icons">miscellaneous_services</span> Services</a></li>
+                    <li><a href="schedule.html"><span class="material-icons">calendar_today</span> Schedule</a></li>
+                    <li><a href="dashboard.html"><span class="material-icons">dashboard</span> Dashboard</a></li>
+                    <li><a href="resources.html"><span class="material-icons">library_books</span> Resources</a></li>
+                    <li><a href="about.html"><span class="material-icons">info</span> About</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3><span class="material-icons">gavel</span> Legal</h3>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    <li><a href="accessibility-statement.html">Accessibility Statement</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Built with &#10084;&#65039; by the Navigate team for accessible history education</p>
+            <p><span class="material-icons" style="vertical-align: middle; font-size: 14px;">copyright</span> 2025 Navigate. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

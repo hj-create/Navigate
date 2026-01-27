@@ -63,18 +63,295 @@
             text-align: center;
         }
         
-        .carousel-overlay h2 {
+        .hero-overlay h2 {
             margin: 0 0 0.5rem 0;
             font-size: 2.5rem;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        .carousel-overlay p {
+        .hero-overlay p {
             margin: 0;
             font-size: 1.2rem;
             font-weight: 300;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Course Selection Grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .course-box {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .course-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .course-box-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .course-box-header .material-icons {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-box-header h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .course-box-header p {
+            margin: 0;
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .course-box-content {
+            padding: 1.5rem;
+        }
+
+        .course-box-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .resource-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .resource-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.8rem;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .resource-badge .material-icons {
+            font-size: 1rem;
+        }
+
+        /* Roadmap Section (Hidden by default) */
+        .roadmap-section {
+            display: none;
+            margin: 3rem 0;
+        }
+
+        .roadmap-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-to-courses {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: #f0f0f0;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-courses:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .course-section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .course-header .material-icons {
+            font-size: 3rem;
+        }
+
+        .course-header h2 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .course-header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .roadmap-container {
+            padding: 2rem;
+        }
+
+        .roadmap-path {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: 25px;
+            top: 60px;
+            bottom: -25px;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent-color), #e0e0e0);
+        }
+
+        .roadmap-item:last-child::before {
+            display: none;
+        }
+
+        .roadmap-icon {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            z-index: 1;
+        }
+
+        .roadmap-content {
+            flex: 1;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .roadmap-content h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .roadmap-content p {
+            margin: 0 0 1rem 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .resource-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+        }
+
+        .resource-link .material-icons {
+            font-size: 1.1rem;
+        }
+
+        .course-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px dashed #e0e0e0;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .stat-item .material-icons {
+            font-size: 1.2rem;
+            color: var(--accent-color);
         }
         
         @media (max-width: 768px) {
@@ -92,6 +369,75 @@
             
             .hero-image {
                 max-height: 300px;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .course-box-header {
+                padding: 1.5rem;
+            }
+
+            .course-box-header .material-icons {
+                font-size: 3rem;
+            }
+
+            .course-box-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .course-header {
+                padding: 1.5rem;
+            }
+
+            .course-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .course-header .material-icons {
+                font-size: 2rem;
+            }
+
+            .roadmap-container {
+                padding: 1rem;
+            }
+
+            .roadmap-item {
+                gap: 1rem;
+            }
+
+            .roadmap-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .roadmap-item::before {
+                left: 19px;
+            }
+
+            .roadmap-content {
+                padding: 1rem;
+            }
+
+            .roadmap-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .resource-links {
+                gap: 0.5rem;
+            }
+
+            .resource-link {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .course-stats {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
     </style>
@@ -155,42 +501,534 @@
             </ul>
         </nav>
         
-        <!-- HERO IMAGE SECTION -->
-        <section class="hero-image-section">
-            <div class="hero-image-container">
-                <img src="../../images/ancientgreece.jpg" alt="Ancient Greece" class="hero-image" loading="lazy">
-                <div class="hero-overlay">
-                    <h2>Comprehensive Learning Resources</h2>
-                    <p>Access lessons, videos, quizzes, and downloads to excel in your studies</p>
+        <!-- COURSE SELECTION VIEW -->
+        <div id="courseSelection">
+            <!-- HERO IMAGE SECTION -->
+            <section class="hero-image-section">
+                <div class="hero-image-container">
+                    <img src="../../images/ancientgreece.jpg" alt="Ancient Greece" class="hero-image" loading="lazy">
+                    <div class="hero-overlay">
+                        <h2>Learning Roadmap</h2>
+                        <p>Follow structured paths through history with lessons, videos, quizzes, and textbooks</p>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Image courtesy of Pexabay.</p>
+            </section>
+            
+            <h1 style="text-align: center;">Choose Your Course</h1>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto; color: #666; font-size: 1.1rem;">
+                Select a history course to view its complete learning roadmap with lessons, videos, quizzes, and downloadable resources.
+            </p>
+
+            <div class="course-grid">
+                <!-- US HISTORY BOX -->
+                <div class="course-box" onclick="showRoadmap('us-history')">
+                    <div class="course-box-header">
+                        <span class="material-icons">flag</span>
+                        <h2>U.S. History</h2>
+                        <p>Colonial foundations to modern America</p>
+                    </div>
+                    <div class="course-box-content">
+                        <p>Explore American history from colonial times through the present day, covering key events, movements, and transformations.</p>
+                        <div class="resource-preview">
+                            <span class="resource-badge">
+                                <span class="material-icons">menu_book</span>
+                                3 Lessons
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">video_library</span>
+                                Videos
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">quiz</span>
+                                Quizzes
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">download</span>
+                                Downloads
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WORLD HISTORY BOX -->
+                <div class="course-box" onclick="showRoadmap('world-history')">
+                    <div class="course-box-header">
+                        <span class="material-icons">public</span>
+                        <h2>World History</h2>
+                        <p>Global civilizations and events</p>
+                    </div>
+                    <div class="course-box-content">
+                        <p>Journey through ancient civilizations, major empires, and transformative events that shaped our world.</p>
+                        <div class="resource-preview">
+                            <span class="resource-badge">
+                                <span class="material-icons">menu_book</span>
+                                3 Lessons
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">video_library</span>
+                                Videos
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">quiz</span>
+                                Quizzes
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">download</span>
+                                Downloads
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EUROPEAN HISTORY BOX -->
+                <div class="course-box" onclick="showRoadmap('european-history')">
+                    <div class="course-box-header">
+                        <span class="material-icons">account_balance</span>
+                        <h2>European History</h2>
+                        <p>From ancient Rome to modern Europe</p>
+                    </div>
+                    <div class="course-box-content">
+                        <p>Study European civilizations, empires, and transformative periods from antiquity through the modern era.</p>
+                        <div class="resource-preview">
+                            <span class="resource-badge">
+                                <span class="material-icons">menu_book</span>
+                                3 Lessons
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">video_library</span>
+                                Videos
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">quiz</span>
+                                Quizzes
+                            </span>
+                            <span class="resource-badge">
+                                <span class="material-icons">download</span>
+                                Downloads
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Image courtesy of Pexabay.</p>
-        </section>
-        
-        <h1>   </h1> 
-        <h1>Learning Resources</h1>
-        <div class="resources-grid">
-            <a href="lessons.html" class="resource-card">
-                <span class="material-icons">menu_book</span>
-                <h3>Lessons</h3>
-                <p>Interactive lesson modules to guide learning chapter-by-chapter.</p>
-            </a>
-            <a href="videos.html" class="resource-card">
-                <span class="material-icons">video_library</span>
-                <h3>Videos</h3>
-                <p>Recorded and topic-specific videos to supplement lessons and live sessions.</p>
-            </a>
-            <a href="quizzes.html" class="resource-card">
-                <span class="material-icons">quiz</span>
-                <h3>Quizzes</h3>
-                <p>Practice quizzes to test understanding and track progress.</p>
-            </a>
-            <a href="downloads.html" class="resource-card">
-                <span class="material-icons">download</span>
-                <h3>Downloads</h3>
-                <p>Downloadable materials for offline study (PDFs, slides, datasets).</p>
-            </a>
         </div>
+
+        <!-- US HISTORY ROADMAP (Hidden by default) -->
+        <div id="us-history-roadmap" class="roadmap-section">
+            <a href="#" class="back-to-courses" onclick="showCourseSelection(); return false;">
+                <span class="material-icons">arrow_back</span>
+                Back to Courses
+            </a>
+            
+            <div class="course-section">
+                <div class="course-header">
+                    <span class="material-icons">flag</span>
+                    <div>
+                        <h2>U.S. History Learning Roadmap</h2>
+                        <p>Follow this path to master American history</p>
+                    </div>
+                </div>
+                <div class="roadmap-container">
+                    <div class="roadmap-path">
+                        <!-- Lessons -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">menu_book</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_one</span>
+                                    Interactive Lessons
+                                </h3>
+                                <p>Start your journey with comprehensive lesson modules covering key topics in American history.</p>
+                                <div class="resource-links">
+                                    <a href="us-history-lessons.html" class="resource-link">
+                                        <span class="material-icons">arrow_forward</span>
+                                        View All Lessons
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">description</span>
+                                        <span>3 Lessons Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Videos -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">video_library</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_two</span>
+                                    Video Library
+                                </h3>
+                                <p>Reinforce your learning with curated video content and visual explanations.</p>
+                                <div class="resource-links">
+                                    <a href="us-history-videos.html" class="resource-link">
+                                        <span class="material-icons">play_circle</span>
+                                        Watch Videos
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">ondemand_video</span>
+                                        <span>Video Collection</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quizzes -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">quiz</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_3</span>
+                                    Practice Quizzes
+                                </h3>
+                                <p>Test your knowledge and track your progress with interactive quizzes.</p>
+                                <div class="resource-links">
+                                    <a href="quizzes.html?quiz=us" class="resource-link">
+                                        <span class="material-icons">assignment</span>
+                                        Take Quizzes
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">check_circle</span>
+                                        <span>Multiple Choice & Essay Questions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Textbooks -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">download</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_4</span>
+                                    Downloadable Textbooks
+                                </h3>
+                                <p>Access comprehensive textbooks and study materials for offline learning.</p>
+                                <div class="resource-links">
+                                    <a href="us-history-downloads.html" class="resource-link">
+                                        <span class="material-icons">file_download</span>
+                                        Download Materials
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">picture_as_pdf</span>
+                                        <span>PDFs, Slides & Study Guides</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WORLD HISTORY ROADMAP (Hidden by default) -->
+        <div id="world-history-roadmap" class="roadmap-section">
+            <a href="#" class="back-to-courses" onclick="showCourseSelection(); return false;">
+                <span class="material-icons">arrow_back</span>
+                Back to Courses
+            </a>
+            
+            <div class="course-section">
+                <div class="course-header">
+                    <span class="material-icons">public</span>
+                    <div>
+                        <h2>World History Learning Roadmap</h2>
+                        <p>Follow this path to master global history</p>
+                    </div>
+                </div>
+                <div class="roadmap-container">
+                    <div class="roadmap-path">
+                        <!-- Lessons -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">menu_book</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_one</span>
+                                    Interactive Lessons
+                                </h3>
+                                <p>Explore ancient civilizations, major empires, and pivotal moments in world history.</p>
+                                <div class="resource-links">
+                                    <a href="world-history-lessons.html" class="resource-link">
+                                        <span class="material-icons">arrow_forward</span>
+                                        View All Lessons
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">description</span>
+                                        <span>3 Lessons Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Videos -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">video_library</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_two</span>
+                                    Video Library
+                                </h3>
+                                <p>Visual content covering global historical events and cultural developments.</p>
+                                <div class="resource-links">
+                                    <a href="world-history-videos.html" class="resource-link">
+                                        <span class="material-icons">play_circle</span>
+                                        Watch Videos
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">ondemand_video</span>
+                                        <span>Video Collection</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quizzes -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">quiz</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_3</span>
+                                    Practice Quizzes
+                                </h3>
+                                <p>Assess your understanding of world history topics and concepts.</p>
+                                <div class="resource-links">
+                                    <a href="quizzes.html?quiz=world" class="resource-link">
+                                        <span class="material-icons">assignment</span>
+                                        Take Quizzes
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">check_circle</span>
+                                        <span>Multiple Choice & Essay Questions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Textbooks -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">download</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_4</span>
+                                    Downloadable Textbooks
+                                </h3>
+                                <p>Comprehensive study materials covering world history curricula.</p>
+                                <div class="resource-links">
+                                    <a href="world-history-downloads.html" class="resource-link">
+                                        <span class="material-icons">file_download</span>
+                                        Download Materials
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">picture_as_pdf</span>
+                                        <span>PDFs, Slides & Study Guides</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EUROPEAN HISTORY ROADMAP (Hidden by default) -->
+        <div id="european-history-roadmap" class="roadmap-section">
+            <a href="#" class="back-to-courses" onclick="showCourseSelection(); return false;">
+                <span class="material-icons">arrow_back</span>
+                Back to Courses
+            </a>
+            
+            <div class="course-section">
+                <div class="course-header">
+                    <span class="material-icons">account_balance</span>
+                    <div>
+                        <h2>European History Learning Roadmap</h2>
+                        <p>Follow this path to master European history</p>
+                    </div>
+                </div>
+                <div class="roadmap-container">
+                    <div class="roadmap-path">
+                        <!-- Lessons -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">menu_book</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_one</span>
+                                    Interactive Lessons
+                                </h3>
+                                <p>Delve into European history from ancient Rome through modern transformations.</p>
+                                <div class="resource-links">
+                                    <a href="european-history-lessons.html" class="resource-link">
+                                        <span class="material-icons">arrow_forward</span>
+                                        View All Lessons
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">description</span>
+                                        <span>3 Lessons Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Videos -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">video_library</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_two</span>
+                                    Video Library
+                                </h3>
+                                <p>Engaging videos on European empires, revolutions, and cultural movements.</p>
+                                <div class="resource-links">
+                                    <a href="european-history-videos.html" class="resource-link">
+                                        <span class="material-icons">play_circle</span>
+                                        Watch Videos
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">ondemand_video</span>
+                                        <span>Video Collection</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quizzes -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">quiz</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_3</span>
+                                    Practice Quizzes
+                                </h3>
+                                <p>Master European history with targeted practice questions and assessments.</p>
+                                <div class="resource-links">
+                                    <a href="quizzes.html?quiz=european" class="resource-link">
+                                        <span class="material-icons">assignment</span>
+                                        Take Quizzes
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">check_circle</span>
+                                        <span>Multiple Choice & Essay Questions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Textbooks -->
+                        <div class="roadmap-item">
+                            <div class="roadmap-icon">
+                                <span class="material-icons">download</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>
+                                    <span class="material-icons">looks_4</span>
+                                    Downloadable Textbooks
+                                </h3>
+                                <p>Complete textbooks and resources for in-depth European history study.</p>
+                                <div class="resource-links">
+                                    <a href="european-history-downloads.html" class="resource-link">
+                                        <span class="material-icons">file_download</span>
+                                        Download Materials
+                                    </a>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="stat-item">
+                                        <span class="material-icons">picture_as_pdf</span>
+                                        <span>PDFs, Slides & Study Guides</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function showRoadmap(courseId) {
+                // Hide course selection
+                document.getElementById('courseSelection').style.display = 'none';
+                
+                // Hide all roadmaps
+                document.querySelectorAll('.roadmap-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected roadmap
+                const roadmapId = courseId + '-roadmap';
+                document.getElementById(roadmapId).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function showCourseSelection() {
+                // Hide all roadmaps
+                document.querySelectorAll('.roadmap-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show course selection
+                document.getElementById('courseSelection').style.display = 'block';
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Check URL parameters on page load
+            window.addEventListener('DOMContentLoaded', function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const courseParam = urlParams.get('course');
+                
+                if (courseParam) {
+                    showRoadmap(courseParam);
+                }
+            });
+        </script>
     </main>
     
     <footer class="footer">

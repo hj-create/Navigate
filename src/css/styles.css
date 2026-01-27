@@ -489,3 +489,23 @@ body {
     padding: 20px;
   }
 }
+
+/* Back to Courses/Roadmap Button */
+.back-to-courses {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: #f0f0f0;
+  color: var(--primary-color);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.back-to-courses:hover {
+  background: var(--primary-color);
+  color: white;
+}

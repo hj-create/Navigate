@@ -259,10 +259,10 @@
 
         <!-- World History Quiz -->
         <div id="worldQuiz" class="quiz-selection">
-            <button class="back-btn" onclick="backToCategories()">
+            <a href="resources.html?course=world-history" class="back-to-courses">
                 <span class="material-icons">arrow_back</span>
-                Back to Categories
-            </button>
+                Back to World History Roadmap
+            </a>
             
             <div class="quiz-container">
                 <h2>Ancient Civilizations Quiz</h2>
@@ -528,10 +528,10 @@
 
         <!-- US History Quiz -->
         <div id="usQuiz" class="quiz-selection">
-            <button class="back-btn" onclick="backToCategories()">
+            <a href="resources.html?course=us-history" class="back-to-courses">
                 <span class="material-icons">arrow_back</span>
-                Back to Categories
-            </button>
+                Back to U.S. History Roadmap
+            </a>
             
             <div class="quiz-container">
                 <h2>Worlds Collide Quiz</h2>
@@ -809,10 +809,10 @@
 
         <!-- European History Quiz -->
         <div id="europeanQuiz" class="quiz-selection">
-            <button class="back-btn" onclick="backToCategories()">
+            <a href="resources.html?course=european-history" class="back-to-courses">
                 <span class="material-icons">arrow_back</span>
-                Back to Categories
-            </button>
+                Back to European History Roadmap
+            </a>
             
             <div class="quiz-container">
                 <h2>European History Quiz</h2>
@@ -1092,6 +1092,16 @@
         </div>
 
         <script>
+            // Check URL parameters on page load
+            window.addEventListener('DOMContentLoaded', function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const quizParam = urlParams.get('quiz');
+                
+                if (quizParam) {
+                    showQuiz(quizParam);
+                }
+            });
+
             function showQuiz(category) {
                 document.getElementById('quizCategories').style.display = 'none';
                 if (category === 'world') {
