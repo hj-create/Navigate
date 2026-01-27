@@ -28,6 +28,36 @@
         .content-title p {
             font-size: 1.25rem;
         }
+        
+        /* Book a Session button styling */
+        .book-session-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .book-session-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+        }
+        
+        .book-session-btn:active {
+            transform: translateY(0);
+        }
+        
+        .book-session-btn .material-icons {
+            font-size: 1.3rem;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +122,10 @@
             <div class="content-title">
                 <h1>Schedule</h1>
                 <p>View upcoming history sessions and your booked live sessions</p>
+                <a href="live-sessions.html" class="book-session-btn">
+                    <span class="material-icons">event_available</span>
+                    <span>Book a Session</span>
+                </a>
             </div>
         </div>
 

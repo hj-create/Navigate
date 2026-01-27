@@ -137,6 +137,7 @@ body {
   color: var(--light-text);
   cursor: pointer;
   transition: all 0.3s;
+  text-decoration: none;
 }
 
 .auth-btn:hover {
