@@ -218,10 +218,10 @@
             </table>
         </div>
 
-        <!-- Rewards & Levels (dynamic) -->
+        <!-- Rewards & Levels -->
       <section class="rewards-overview card">
-        <h2>Rewards & Levels</h2>
-        <p class="muted">Earn points by learning, level up as you progress, and redeem points for perks.</p>
+        <h2>Rewards</h2>
+        <p class="muted">Earn points by learning, level up, and redeem points for perks.</p>
 
         <div class="rewards-stats">
           <div class="stat">
@@ -265,9 +265,9 @@
           <div>
             <h3>Redeeming points</h3>
             <ol class="compact">
-              <li>Open Rewards and pick an available perk.</li>
-              <li>Click “Redeem” and confirm; points are deducted.</li>
-              <li>Some rewards require higher levels.</li>
+              <li>Open the list below and pick an available perk.</li>
+              <li>Click “Redeem” and confirm.</li>
+              <li>Points are deducted; some rewards require higher levels.</li>
             </ol>
           </div>
         </div>
@@ -275,11 +275,10 @@
         <div class="rewards-store">
           <h3>Available rewards</h3>
           <ul class="reward-items" id="reward-items">
-            <!-- Populated by rewards-overview.js -->
+            <!-- Populated by rewards-store.js -->
           </ul>
         </div>
       </section>
-
     </main>
     
     <footer class="footer">
@@ -323,8 +322,9 @@
     <script src="../../controller/auth-state.js"></script>
     <script src="../../controller/user-tracking.js"></script>
     <script src="../../controller/dashboard.js"></script>
-    <!-- Ensure rewards engine is loaded -->
+    <!-- Ensure rewards engine is loaded, then the store UI -->
     <script src="../../js/rewards.js"></script>
+    <script src="../../js/rewards-store.js"></script>
     <!-- Rewards overview renderer (no changes to engine) -->
     <script src="../../js/rewards-overview.js"></script>
     <script>
