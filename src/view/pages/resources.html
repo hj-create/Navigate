@@ -992,30 +992,28 @@
 <script src="../../js/rewards.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Daily login
+    // Daily login once per day
     document.dispatchEvent(new CustomEvent('user:login'));
 
-    // Helpers
+    // Safe hooks: award base points on click before navigation (no preventDefault)
     const markVideo  = (topic) => document.dispatchEvent(new CustomEvent('video:watched',  { detail: { topic, noSkip: true } }));
     const markLesson = (topic) => document.dispatchEvent(new CustomEvent('lesson:completed', { detail: { topic } }));
+    const markQuiz   = (topic, score = 80) => document.dispatchEvent(new CustomEvent('quiz:completed', { detail: { topic, score } }));
 
     // US
-    document.querySelector('a[href$="us-history-videos.html"]')
-      ?.addEventListener('click', () => markVideo('us'));
-    document.querySelector('a[href$="us-history-lessons.html"]')
-      ?.addEventListener('click', () => markLesson('us'));
+    document.querySelector('a[href$="us-history-videos.html"]')  ?.addEventListener('click', () => markVideo('us'));
+    document.querySelector('a[href$="us-history-lessons.html"]') ?.addEventListener('click', () => markLesson('us'));
+    document.querySelector('a[href*="quizzes.html?quiz=us"]')    ?.addEventListener('click', () => markQuiz('us', 80));
 
     // World
-    document.querySelector('a[href$="world-history-videos.html"]')
-      ?.addEventListener('click', () => markVideo('world'));
-    document.querySelector('a[href$="world-history-lessons.html"]')
-      ?.addEventListener('click', () => markLesson('world'));
+    document.querySelector('a[href$="world-history-videos.html"]')  ?.addEventListener('click', () => markVideo('world'));
+    document.querySelector('a[href$="world-history-lessons.html"]') ?.addEventListener('click', () => markLesson('world'));
+    document.querySelector('a[href*="quizzes.html?quiz=world"]')    ?.addEventListener('click', () => markQuiz('world', 80));
 
     // European
-    document.querySelector('a[href$="european-history-videos.html"]')
-      ?.addEventListener('click', () => markVideo('eu'));
-    document.querySelector('a[href$="european-history-lessons.html"]')
-      ?.addEventListener('click', () => markLesson('eu'));
+    document.querySelector('a[href$="european-history-videos.html"]')  ?.addEventListener('click', () => markVideo('eu'));
+    document.querySelector('a[href$="european-history-lessons.html"]') ?.addEventListener('click', () => markLesson('eu'));
+    document.querySelector('a[href*="quizzes.html?quiz=european"]')    ?.addEventListener('click', () => markQuiz('eu', 80));
   });
 </script>
 

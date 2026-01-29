@@ -328,7 +328,7 @@ body {
 
 /* Voice toolbar */
 .voice-toolbar { display: inline-flex; gap: 8px; margin-left: 8px; vertical-align: middle; }
-.icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 10px; border: 1px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center, gap: 6px; padding: 6px 10px; border: 1px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; }
 .icon-btn .material-icons { font-size: 18px; vertical-align: middle; }
 .icon-btn:disabled { opacity: .5; cursor: not-allowed; }
 .mic-btn.recording { border-color: #d32f2f; background: #ffebee; }
@@ -524,6 +524,3 @@ body {
 .store-item { display: grid; grid-template-columns: 1fr auto; gap: .75rem; align-items: center; padding: .75rem; border: 1px solid #eee; border-radius: 8px; background: #fff; }
 .store-item .cost { font-weight: 600; margin-right: .5rem; color: var(--accent-color); }
 .store-item .store-cta { display: inline-flex; align-items: center; gap: .5rem; }
-@media (max-width: 768px) {
-  .rewards-summary { grid-template-columns: 1fr; }
-}
