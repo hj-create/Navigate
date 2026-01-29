@@ -242,7 +242,22 @@
         </video>
         <script src="../../js/rewards.js"></script>
         <script>
-        // hook as in resources.html (optional to keep here instead)
+          document.addEventListener('DOMContentLoaded', () => {
+            // Daily login
+            document.dispatchEvent(new CustomEvent('user:login'));
+
+            // Award points when user clicks a video card (opens YouTube)
+            document.querySelectorAll('.video-card[data-video-id]').forEach(card => {
+              card.addEventListener('click', () => {
+                const videoId = card.dataset.videoId;
+                const topic = 'us';
+                // Award once per card click (per page load)
+                document.dispatchEvent(new CustomEvent('video:watched', {
+                  detail: { topic, noSkip: true, videoId }
+                }));
+              }, { once: true });
+            });
+          });
         </script>
     </main>
     
