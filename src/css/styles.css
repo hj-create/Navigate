@@ -334,7 +334,7 @@ body {
 .mic-btn.recording { border-color: #d32f2f; background: #ffebee; }
 
 /* Subject selection (no 3D transforms) */
-.subject-list, .subject-grid, .subjects { -webkit-font-smoothing: antialiased; }
+.subject-list, .subject-grid, .
 .subject-item, .subject-option, .subject-button, .subject-select a, .subject-select button {
   position: relative;
   display: inline-flex;
@@ -537,3 +537,42 @@ body {
   color: #555;
   background: #fafafa;
 }
+
+.rewards-overview.card {
+  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  background: #fff;
+}
+.rewards-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: .75rem;
+  margin: .75rem 0 1rem;
+}
+.rewards-stats .stat {
+  padding: .75rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #fafafa;
+}
+.stat-label { font-size: .8rem; color: #666; }
+.stat-value { font-size: 1.25rem; font-weight: 600; }
+.rewards-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.compact { margin: .5rem 0; }
+.compact li, .compact ol li { margin: .25rem 0; }
+.rewards-store { margin-top: 1rem; }
+.reward-items { list-style: none; padding: 0; margin: 0; }
+.reward-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .5rem .75rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: .5rem; background: #fcfcfc;
+}
+.reward-info .muted { color: #666; font-size: .85rem; }
+.btn { padding: .4rem .8rem; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; }
+.btn:hover { background: #f3f3f3; }
+.btn-disabled { opacity: .6; cursor: not-allowed; }
