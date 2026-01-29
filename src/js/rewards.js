@@ -79,7 +79,44 @@
       window.dispatchEvent(new CustomEvent('rewards:update'));
       return true;
     },
-  };  // Listen for login and apply profile progress once  document.addEventListener('DOMContentLoaded', () => {    window.addEventListener('auth:login', (e) => {      // Only update when logged-in      if (!window.NavigateAuth || !window.NavigateAuth.isLoggedIn()) return;      const detail = e?.detail || {};      const pct = Number(detail.profileProgress ?? detail.progress ?? 0);      window.NavigateRewards.syncPointsFromProfileProgress(pct, 'max');    });  });  const maybeUnlock = (s) => {    for (const a of achDefs) if (a.rule(s) && !s.unlockedAchievements.includes(a.id)) {      s.unlockedAchievements.push(a.id);      addActivity(s, `Achievement: ${a.name}`, 0);    }  };  const RewardsUI = {    els: null,    init() {      const panel = document.getElementById('rewardsPanel');      if (!panel) return;      this.els = {        panel,        points: panel.querySelector('[data-points]'),        progressBar: panel.querySelector('.rewards-progress-bar'),        progressText: panel.querySelector('[data-progress-text]'),        streakDays: panel.querySelector('[data-streak-days]'),        weeklyProgress: panel.querySelector('[data-weekly-progress]'),        achList: panel.querySelector('[data-achievements]'),        storeList: panel.querySelector('[data-store]'),        activityLog: panel.querySelector('[data-activity-log]')      };      panel.querySelector('#claimDaily')?.addEventListener('click', () => Rewards.dailyLogin());      this.render();    },    render() {      if (!this.els) return;      const s = Rewards.state;      const info = Rewards.getTierInfo();      this.els.points.textContent = s.points;      this.els.progressBar.style.width = `${info.progress}%`;      this.els.progressText.textContent = info.next        ? `${s.points}/${info.next.points} → ${info.next.name}`        : `${s.points} (Max tier reached)`;      this.els.streakDays.textContent = s.streakDays || 0;      this.els.weeklyProgress.textContent = `${s.weeklyProgress}/7`;      this.els.achList.innerHTML = [        ...achDefs.map(a => `          <li class="${s.unlockedAchievements.includes(a.id) ? 'unlocked' : ''}">            <span class="material-icons" aria-hidden="true">${s.unlockedAchievements.includes(a.id) ? 'emoji_events' : 'lock'}</span>            ${a.name}          </li>        `)      ].join('');      this.els.storeList.innerHTML = storeItems.map(item => {        const owned = s.unlockedItems.includes(item.id);        const afford = s.points >= item.cost;        const icon = item.type === 'badge' ? 'military_tech' : item.type === 'game' ? 'sports_esports' : item.type === 'content' ? 'ondemand_video' : 'style';
+  };  // Listen for login and apply profile progress once  document.addEventListener('DOMContentLoaded', () => {    window.addEventListener('auth:login', (e) => {      // Only update when logged-in      if (!window.NavigateAuth || !window.NavigateAuth.isLoggedIn()) return;      const detail = e?.detail || {};      const pct = Number(detail.profileProgress ?? detail.progress ?? 0);      window.NavigateRewards.syncPointsFromProfileProgress(pct, 'max');    });  });  const maybeUnlock = (s) => {    for (const a of achDefs) if (a.rule(s) && !s.unlockedAchievements.includes(a.id)) {      s.unlockedAchievements.push(a.id);      addActivity(s, `Achievement: ${a.name}`, 0);    }  };  const RewardsUI = {
+    els: null,
+    init() {
+      const panel = document.getElementById('rewardsPanel');
+      if (!panel) return;
+      this.els = {
+        panel,
+        points: panel.querySelector('[data-points]'),
+        progressBar: panel.querySelector('.rewards-progress-bar'),
+        progressText: panel.querySelector('[data-progress-text]'),
+        progressPercent: panel.querySelector('.progress-percent'),
+        progressRole: panel.querySelector('.progress-track'),
+        streakDays: panel.querySelector('[data-streak-days]'),
+        weeklyProgress: panel.querySelector('[data-weekly-progress]'),
+        achList: panel.querySelector('[data-achievements]'),
+        storeList: panel.querySelector('[data-store]'),
+        activityLog: panel.querySelector('[data-activity-log]')
+      };
+      panel.querySelector('#claimDaily')?.addEventListener('click', () => Rewards.dailyLogin());
+      this.render();
+    },
+    render() {
+      if (!this.els) return;
+      const s = Rewards.state;
+      const info = Rewards.getTierInfo();
+
+      this.els.points.textContent = s.points;
+
+      this.els.progressBar.style.width = `${info.progress}%`;
+      this.els.progressText.textContent = info.next
+        ? `${s.points}/${info.next.points} → ${info.next.name}`
+        : `${s.points} (Max tier reached)`;
+      if this.els.progressPercent) this.els.progressPercent.textContent = `${info.progress}%`;
+      if (this.els.progressRole) this.els.progressRole.setAttribute('aria-valuenow', String(info.progress));
+
+      this.els.streakDays.textContent = s.streakDays || 0;
+      this.els.weeklyProgress.textContent = `${s.weeklyProgress}/7`;
+      this.els.achList.innerHTML = [        ...achDefs.map(a => `          <li class="${s.unlockedAchievements.includes(a.id) ? 'unlocked' : ''}">            <span class="material-icons" aria-hidden="true">${s.unlockedAchievements.includes(a.id) ? 'emoji_events' : 'lock'}</span>            ${a.name}          </li>        `)      ].join('');      this.els.storeList.innerHTML = storeItems.map(item => {        const owned = s.unlockedItems.includes(item.id);        const afford = s.points >= item.cost;        const icon = item.type === 'badge' ? 'military_tech' : item.type === 'game' ? 'sports_esports' : item.type === 'content' ? 'ondemand_video' : 'style';
         return `
           <li class="store-item ${owned ? 'owned' : ''}">
             <div class="store-name"><span class="material-icons">${icon}</span>${item.name}</div>

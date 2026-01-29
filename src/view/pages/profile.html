@@ -1,46 +1,56 @@
-<!-- Ensure there is an element that represents profile progress -->
-<!-- Example: <div id="profileProgress" style="width: 67%"></div> or <div data-profile-progress="67"></div> -->
+<head>
+  <!-- Other head elements -->
+  <link rel="stylesheet" href="../../css/rewards.css">
+</head>
+<body>
+  <!-- Ensure there is an element that represents profile progress -->
+  <!-- Example: <div id="profileProgress" style="width: 67%"></div> or <div data-profile-progress="67"></div> -->
 
-<section id="rewardsPanel" class="rewards-panel" aria-label="Rewards">
-  <h2 class="rewards-title"><span class="material-icons" aria-hidden="true">emoji_events</span> Rewards</h2>
-  <div class="rewards-summary">
-    <div class="points-box" aria-live="polite">
-      <div class="points-label">Current Points</div>
-      <div class="points-value" data-points>0</div>
-    </div>
-    <div>
-      <div class="progress-label">Progress to next tier</div>
-      <div class="progress-track" aria-hidden="true">
-        <div class="rewards-progress-bar" style="width:0%"></div>
+  <section id="rewardsPanel" class="rewards-panel" aria-label="Rewards">
+    <h2 class="rewards-title"><span class="material-icons" aria-hidden="true">emoji_events</span> Rewards</h2>
+    <div class="rewards-summary">
+      <div class="points-box" aria-live="polite">
+        <div class="points-label">Current Points</div>
+        <div class="points-value" data-points>0</div>
       </div>
-      <div class="progress-text" data-progress-text>0/100 → Explorer</div>
-    </div>
-    <div class="streak-box">
-      <div class="progress-label">Streak</div>
-      <div><span data-streak-days>0</span> days • Weekly <span data-weekly-progress>0/7</span></div>
-    </div>
-    <button id="claimDaily" class="primary-btn" aria-label="Claim daily points">
-      <span class="material-icons" aria-hidden="true">calendar_today</span> Claim Daily +5
-    </button>
-  </div>
-  <div class="rewards-columns">
-    <div class="rewards-col">
-      <h3><span class="material-icons" aria-hidden="true">military_tech</span> Achievements</h3>
-      <ul class="achievements" data-achievements></ul>
-    </div>
-    <div class="rewards-col">
-      <h3><span class="material-icons" aria-hidden="true">store</span> Reward Store</h3>
-      <ul class="store-list" data-store></ul>
-    </div>
-    <div class="rewards-col">
-      <h3><span class="material-icons" aria-hidden="true">timeline</span> Recent activity</h3>
-      <ul class="activity-log" data-activity-log></ul>
-    </div>
-  </div>
-</section>
 
-<script src="../../js/rewards.js"></script>
-<script src="../../js/auth.js"></script>
-<script src="../../js/profile-history-sync.js"></script>
+      <div>
+        <div class="progress-label">Progress to next tier</div>
+        <div class="progress-track" aria-hidden="false" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="rewards-progress-bar" style="width:0%"></div>
+          <span class="progress-percent">0%</span>
+        </div>
+        <div class="progress-text" data-progress-text>0/100 → Explorer</div>
+      </div>
+
+      <div class="streak-box">
+        <div class="progress-label">Streak</div>
+        <div><span data-streak-days>0</span> days • Weekly <span data-weekly-progress>0/7</span></div>
+      </div>
+
+      <button id="claimDaily" class="primary-btn" aria-label="Claim daily points">
+        <span class="material-icons" aria-hidden="true">calendar_today</span> Claim Daily +5
+      </button>
+    </div>
+
+    <div class="rewards-columns">
+      <div class="rewards-col">
+        <h3><span class="material-icons" aria-hidden="true">military_tech</span> Achievements</h3>
+        <ul class="achievements" data-achievements></ul>
+      </div>
+      <div class="rewards-col">
+        <h3><span class="material-icons" aria-hidden="true">store</span> Reward Store</h3>
+        <ul class="store-list" data-store></ul>
+      </div>
+      <div class="rewards-col">
+        <h3><span class="material-icons" aria-hidden="true">timeline</span> Recent activity</h3>
+        <ul class="activity-log" data-activity-log></ul>
+      </div>
+    </div>
+  </section>
+
+  <script src="../../js/rewards.js"></script>
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/profile-history-sync.js"></script>
 </body>
 </html>
