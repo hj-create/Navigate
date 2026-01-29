@@ -295,7 +295,14 @@
     <script src="../../controller/auth-state.js"></script>
     <script src="../../controller/user-tracking.js"></script>
     <script src="../../controller/dashboard.js"></script>
-    <script src="../../js/rewards.js"></script>
+    <!-- Rewards engine -->
+<script src="../../js/rewards.js"></script>
+<script>
+  // Daily login (awarded once per day; rewards.js prevents duplicates)
+  document.addEventListener('DOMContentLoaded', () => {
+    document.dispatchEvent(new CustomEvent('user:login'));
+  });
+</script>
     <script>
         // Require authentication to view dashboard
         requireAuth('signin.html');

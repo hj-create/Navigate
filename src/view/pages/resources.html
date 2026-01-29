@@ -988,6 +988,26 @@
             </div>
         </div>
 
+        <!-- Optional: include rewards if not already on this page -->
+<script src="../../js/rewards.js"></script>
+<script>
+  // Award points when videos are watched; detect simple skipping
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('video[data-topic]').forEach(video => {
+      let skipped = false, lastTime = 0;
+      video.addEventListener('timeupdate', () => { lastTime = video.currentTime; });
+      video.addEventListener('seeking', () => {
+        const jump = Math.abs(video.currentTime - lastTime);
+        if (jump > 3) skipped = true; // mark skip if jump > 3s
+      });
+      video.addEventListener('ended', () => {
+        const topic = video.dataset.topic || 'world';
+        document.dispatchEvent(new CustomEvent('video:watched', { detail: { noSkip: !skipped, topic } }));
+      });
+    });
+  });
+</script>
+
         <script>
             function showRoadmap(courseId) {
                 // Hide course selection
