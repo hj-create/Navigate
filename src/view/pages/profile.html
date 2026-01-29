@@ -49,8 +49,49 @@
     </div>
   </section>
 
+  <section id="profileRewardsPanel" class="rewards-panel" aria-label="Profile Rewards">
+    <h2><span class="material-icons" aria-hidden="true">emoji_events</span> Profile Rewards</h2>
+    <div class="rewards-summary" style="display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+      <div class="points-box" style="background:#fafafa;border:1px solid #eee;border-radius:10px;padding:14px">
+        <div class="points-label" style="font-weight:600;color:#444;margin-bottom:6px">Current Points</div>
+        <div class="points-value" data-profile-points>0</div>
+        <div class="progress-text">Tier: <span data-profile-tier>New</span></div>
+      </div>
+      <div class="streak-box" style="background:#fafafa;border:1px solid #eee;border-radius:10px;padding:14px">
+        <div class="progress-label" style="font-weight:600;color:#444;margin-bottom:6px">Reward Store</div>
+        <ul class="store-list" data-profile-store style="list-style:none;padding:0;margin:0"></ul>
+      </div>
+    </div>
+  </section>
+
   <script src="../../js/rewards.js"></script>
   <script src="../../js/auth.js"></script>
   <script src="../../js/profile-history-sync.js"></script>
+  <script src="../../js/profile-status-rewards.js"></script>
+  <script>
+    // Simulate fetching user data and navigating
+    const userData = {
+      id: 'u1',
+      name: 'Test User',
+      loggedIn: true,
+      status: 'silver',           // new | bronze | silver | gold | platinum
+      profileProgress: 62,        // 0–100
+      streakDays: 9,              // 0–30 considered
+      achievementsCount: 4        // number of earned achievements
+    };
+
+    localStorage.setItem('navigate_user', JSON.stringify(userData));
+
+    // Redirect or update UI based on login status
+    if (userData.loggedIn) {
+      document.querySelector('.points-value[data-points]').textContent = userData.profileProgress;
+      document.querySelector('.points-value[data-profile-points]').textContent = userData.profileProgress;
+      document.querySelector('[data-profile-tier]').textContent = userData.status.charAt(0).toUpperCase() + userData.status.slice(1);
+      document.querySelector('[data-streak-days]').textContent = userData.streakDays;
+      // Update achievements and store UI
+    } else {
+      // Handle logged out state
+    }
+  </script>
 </body>
 </html>
