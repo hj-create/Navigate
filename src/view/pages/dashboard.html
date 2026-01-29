@@ -217,6 +217,41 @@
                 </tbody>
             </table>
         </div>
+
+        <section class="card rewards-card" id="rewards-panel">
+          <header class="card-header">
+            <h2><span class="material-icons">emoji_events</span> Rewards</h2>
+          </header>
+          <div class="card-body">
+            <div class="rewards-summary">
+              <div class="rewards-points">
+                <div class="points-line">
+                  <strong>Total Points:</strong> <span id="rewards-points">0</span>
+                </div>
+                <div class="points-line">
+                  <strong>Available:</strong> <span id="rewards-points-available">0</span>
+                </div>
+                <div class="points-line">
+                  <strong>Tier:</strong> <span id="rewards-tier">No Tier</span>
+                </div>
+              </div>
+              <div class="rewards-progress">
+                <div class="progress-bar"><div id="rewards-progress-fill"></div></div>
+                <small id="rewards-progress-text">0/100 to next tier</small>
+              </div>
+              <div class="rewards-streak">
+                <span class="material-icons">local_fire_department</span>
+                <strong id="rewards-streak-days">0 days</strong>
+              </div>
+            </div>
+
+            <h3 class="rewards-subtitle">Achievements</h3>
+            <ul id="rewards-badges-list" class="badges-list"></ul>
+
+            <h3 class="rewards-subtitle">Reward Store</h3>
+            <ul id="rewards-store-list" class="store-list"></ul>
+          </div>
+        </section>
     </main>
     
     <footer class="footer">
@@ -260,6 +295,7 @@
     <script src="../../controller/auth-state.js"></script>
     <script src="../../controller/user-tracking.js"></script>
     <script src="../../controller/dashboard.js"></script>
+    <script src="../../js/rewards.js"></script>
     <script>
         // Require authentication to view dashboard
         requireAuth('signin.html');
