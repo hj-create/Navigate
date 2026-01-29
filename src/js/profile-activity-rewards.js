@@ -80,4 +80,10 @@
   // Run on load and on explicit login events
   ready(applyAfterLogin);
   window.addEventListener('auth:login', applyAfterLogin);
+
+  // Test user data - REMOVE BEFORE PRODUCTION
+  localStorage.setItem('navigate_user', JSON.stringify({
+    id: 'u1', name: 'Test', loggedIn: true,
+    activity: { lessonsCompleted: 3, videosWatched: 2, videosWatchedNoSkip: 1, quizzesCompleted: 4, quizzesAbove80: 2 }
+  }));
 })();
