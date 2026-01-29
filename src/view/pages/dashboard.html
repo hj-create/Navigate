@@ -298,10 +298,10 @@
     <!-- Rewards engine -->
 <script src="../../js/rewards.js"></script>
 <script>
-  // Daily login (awarded once per day; rewards.js prevents duplicates)
-  document.addEventListener('DOMContentLoaded', () => {
-    document.dispatchEvent(new CustomEvent('user:login'));
-  });
+// award daily login once per day
+document.addEventListener('DOMContentLoaded', () => {
+  document.dispatchEvent(new CustomEvent('user:login'));
+});
 </script>
     <script>
         // Require authentication to view dashboard

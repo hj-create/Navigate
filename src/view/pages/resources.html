@@ -991,14 +991,17 @@
         <!-- Optional: include rewards if not already on this page -->
 <script src="../../js/rewards.js"></script>
 <script>
-  // Award points when videos are watched; detect simple skipping
   document.addEventListener('DOMContentLoaded', () => {
+    // Daily login
+    document.dispatchEvent(new CustomEvent('user:login'));
+
+    // Video pages only: this runs if <video data-topic> elements exist
     document.querySelectorAll('video[data-topic]').forEach(video => {
       let skipped = false, lastTime = 0;
       video.addEventListener('timeupdate', () => { lastTime = video.currentTime; });
       video.addEventListener('seeking', () => {
         const jump = Math.abs(video.currentTime - lastTime);
-        if (jump > 3) skipped = true; // mark skip if jump > 3s
+        if (jump > 3) skipped = true;
       });
       video.addEventListener('ended', () => {
         const topic = video.dataset.topic || 'world';
