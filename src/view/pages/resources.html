@@ -995,26 +995,76 @@
     // Daily login once per day
     document.dispatchEvent(new CustomEvent('user:login'));
 
-    // Safe hooks: award base points on click before navigation (no preventDefault)
+    // Award base points before navigation
     const markVideo  = (topic) => document.dispatchEvent(new CustomEvent('video:watched',  { detail: { topic, noSkip: true } }));
     const markLesson = (topic) => document.dispatchEvent(new CustomEvent('lesson:completed', { detail: { topic } }));
     const markQuiz   = (topic, score = 80) => document.dispatchEvent(new CustomEvent('quiz:completed', { detail: { topic, score } }));
 
-    // US
     document.querySelector('a[href$="us-history-videos.html"]')  ?.addEventListener('click', () => markVideo('us'));
     document.querySelector('a[href$="us-history-lessons.html"]') ?.addEventListener('click', () => markLesson('us'));
     document.querySelector('a[href*="quizzes.html?quiz=us"]')    ?.addEventListener('click', () => markQuiz('us', 80));
 
-    // World
     document.querySelector('a[href$="world-history-videos.html"]')  ?.addEventListener('click', () => markVideo('world'));
     document.querySelector('a[href$="world-history-lessons.html"]') ?.addEventListener('click', () => markLesson('world'));
     document.querySelector('a[href*="quizzes.html?quiz=world"]')    ?.addEventListener('click', () => markQuiz('world', 80));
 
-    // European
     document.querySelector('a[href$="european-history-videos.html"]')  ?.addEventListener('click', () => markVideo('eu'));
     document.querySelector('a[href$="european-history-lessons.html"]') ?.addEventListener('click', () => markLesson('eu'));
     document.querySelector('a[href*="quizzes.html?quiz=european"]')    ?.addEventListener('click', () => markQuiz('eu', 80));
   });
+
+  // Render per-topic counts next to each resource link
+  (function initCounts() {
+    function getCounts() {
+      const s = window.Rewards?.getState ? window.Rewards.getState() : null;
+      const out = { us: { lessons: 0, videos: 0, quizzes: 0 },
+                    world: { lessons: 0, videos: 0, quizzes: 0 },
+                    eu: { lessons: 0, videos: 0, quizzes: 0 } };
+      if (!s) return out;
+      for (const h of s.activityHistory || []) {
+        const t = h.meta?.topic;
+        if (!t || !out[t]) continue;
+        if (h.type === 'lesson') out[t].lessons++;
+        else if (h.type === 'video') out[t].videos++;
+        else if (h.type === 'quiz') out[t].quizzes++;
+      }
+      return out;
+    }
+    function pill(text) {
+      const span = document.createElement('span');
+      span.className = 'count-pill';
+      span.textContent = text;
+      return span;
+    }
+    function render() {
+      const c = getCounts();
+      // US
+      const usL = document.querySelector('a[href$="us-history-lessons.html"]');
+      const usV = document.querySelector('a[href$="us-history-videos.html"]');
+      const usQ = document.querySelector('a[href*="quizzes.html?quiz=us"]');
+      if (usL) { usL.nextElementSibling?.classList?.contains('count-pill') && usL.nextElementSibling.remove(); usL.insertAdjacentElement('afterend', pill(`${c.us.lessons} viewed`)); }
+      if (usV) { usV.nextElementSibling?.classList?.contains('count-pill') && usV.nextElementSibling.remove(); usV.insertAdjacentElement('afterend', pill(`${c.us.videos} watched`)); }
+      if (usQ) { usQ.nextElementSibling?.classList?.contains('count-pill') && usQ.nextElementSibling.remove(); usQ.insertAdjacentElement('afterend', pill(`${c.us.quizzes} taken`)); }
+      // World
+      const wL = document.querySelector('a[href$="world-history-lessons.html"]');
+      const wV = document.querySelector('a[href$="world-history-videos.html"]');
+      const wQ = document.querySelector('a[href*="quizzes.html?quiz=world"]');
+      if (wL) { wL.nextElementSibling?.classList?.contains('count-pill') && wL.nextElementSibling.remove(); wL.insertAdjacentElement('afterend', pill(`${c.world.lessons} viewed`)); }
+      if (wV) { wV.nextElementSibling?.classList?.contains('count-pill') && wV.nextElementSibling.remove(); wV.insertAdjacentElement('afterend', pill(`${c.world.videos} watched`)); }
+      if (wQ) { wQ.nextElementSibling?.classList?.contains('count-pill') && wQ.nextElementSibling.remove(); wQ.insertAdjacentElement('afterend', pill(`${c.world.quizzes} taken`)); }
+      // European
+      const eL = document.querySelector('a[href$="european-history-lessons.html"]');
+      const eV = document.querySelector('a[href$="european-history-videos.html"]');
+      const eQ = document.querySelector('a[href*="quizzes.html?quiz=european"]');
+      if (eL) { eL.nextElementSibling?.classList?.contains('count-pill') && eL.nextElementSibling.remove(); eL.insertAdjacentElement('afterend', pill(`${c.eu.lessons} viewed`)); }
+      if (eV) { eV.nextElementSibling?.classList?.contains('count-pill') && eV.nextElementSibling.remove(); eV.insertAdjacentElement('afterend', pill(`${c.eu.videos} watched`)); }
+      if (eQ) { eQ.nextElementSibling?.classList?.contains('count-pill') && eQ.nextElementSibling.remove(); eQ.insertAdjacentElement('afterend', pill(`${c.eu.quizzes} taken`)); }
+    }
+    document.addEventListener('DOMContentLoaded', render);
+    document.addEventListener('lesson:completed', render);
+    document.addEventListener('video:watched', render);
+    document.addEventListener('quiz:completed', render);
+  })();
 </script>
 
         <script>
