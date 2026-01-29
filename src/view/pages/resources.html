@@ -995,19 +995,27 @@
     // Daily login
     document.dispatchEvent(new CustomEvent('user:login'));
 
-    // Video pages only: this runs if <video data-topic> elements exist
-    document.querySelectorAll('video[data-topic]').forEach(video => {
-      let skipped = false, lastTime = 0;
-      video.addEventListener('timeupdate', () => { lastTime = video.currentTime; });
-      video.addEventListener('seeking', () => {
-        const jump = Math.abs(video.currentTime - lastTime);
-        if (jump > 3) skipped = true;
-      });
-      video.addEventListener('ended', () => {
-        const topic = video.dataset.topic || 'world';
-        document.dispatchEvent(new CustomEvent('video:watched', { detail: { noSkip: !skipped, topic } }));
-      });
-    });
+    // Helpers
+    const markVideo  = (topic) => document.dispatchEvent(new CustomEvent('video:watched',  { detail: { topic, noSkip: true } }));
+    const markLesson = (topic) => document.dispatchEvent(new CustomEvent('lesson:completed', { detail: { topic } }));
+
+    // US
+    document.querySelector('a[href$="us-history-videos.html"]')
+      ?.addEventListener('click', () => markVideo('us'));
+    document.querySelector('a[href$="us-history-lessons.html"]')
+      ?.addEventListener('click', () => markLesson('us'));
+
+    // World
+    document.querySelector('a[href$="world-history-videos.html"]')
+      ?.addEventListener('click', () => markVideo('world'));
+    document.querySelector('a[href$="world-history-lessons.html"]')
+      ?.addEventListener('click', () => markLesson('world'));
+
+    // European
+    document.querySelector('a[href$="european-history-videos.html"]')
+      ?.addEventListener('click', () => markVideo('eu'));
+    document.querySelector('a[href$="european-history-lessons.html"]')
+      ?.addEventListener('click', () => markLesson('eu'));
   });
 </script>
 
