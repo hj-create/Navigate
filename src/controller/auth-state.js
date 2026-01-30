@@ -92,11 +92,16 @@ function requireAuth(redirectPage = 'signin.html') {
     const currentPage = window.location.pathname;
     const isDashboard = currentPage.includes('dashboard.html');
     
-    if (!currentUser && isDashboard) {
-        // Guest or no user trying to access dashboard - show student-centric popup
+    if (!currentUser && isDashboard && guestUser) {
+        // Guest trying to access dashboard - show student-centric popup
         showDashboardAccessModal();
-        // Prevent further execution to stop redirect
-        throw new Error('Dashboard access requires account');
+        return;
+    }
+    
+    if (!currentUser && isDashboard && !guestUser) {
+        // No user trying to access dashboard
+        showDashboardAccessModal();
+        return;
     }
     
     if (!currentUser && !guestUser && !isDashboard) {
