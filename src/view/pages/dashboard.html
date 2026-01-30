@@ -217,6 +217,68 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Rewards & Levels -->
+      <section class="rewards-overview card">
+        <h2>Rewards</h2>
+        <p class="muted">Earn points by learning, level up, and redeem points for perks.</p>
+
+        <div class="rewards-stats">
+          <div class="stat">
+            <div class="stat-label">Current Points</div>
+            <div class="stat-value" id="rewards-points">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Level</div>
+            <div class="stat-value" id="rewards-level">Bronze</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Streak</div>
+            <div class="stat-value" id="rewards-streak">0 days</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Next Level</div>
+            <div class="stat-value" id="rewards-next-level">100 pts to Silver</div>
+          </div>
+        </div>
+
+        <div class="rewards-columns">
+          <div>
+            <h3>How to earn points</h3>
+            <ul class="compact">
+              <li>Daily login: +10 pts (once per day)</li>
+              <li>Read a lesson: +20 pts</li>
+              <li>Watch a topic video: +15 pts</li>
+              <li>Complete a quiz: +30 pts</li>
+              <li>Streak bonus: +5 pts extra per consecutive day</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Levels</h3>
+            <ul class="compact">
+              <li>Bronze: 0–99 pts</li>
+              <li>Silver: 100–299 pts</li>
+              <li>Gold: 300–599 pts</li>
+              <li>Platinum: 600+ pts</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Redeeming points</h3>
+            <ol class="compact">
+              <li>Open the list below and pick an available perk.</li>
+              <li>Click “Redeem” and confirm.</li>
+              <li>Points are deducted; some rewards require higher levels.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="rewards-store">
+          <h3>Available rewards</h3>
+          <ul class="reward-items" id="reward-items">
+            <!-- Populated by rewards-store.js -->
+          </ul>
+        </div>
+      </section>
     </main>
     
     <footer class="footer">
@@ -260,6 +322,17 @@
     <script src="../../controller/auth-state.js"></script>
     <script src="../../controller/user-tracking.js"></script>
     <script src="../../controller/dashboard.js"></script>
+    <!-- Ensure rewards engine is loaded, then the store UI -->
+    <script src="../../js/rewards.js"></script>
+    <script src="../../js/rewards-store.js"></script>
+    <!-- Rewards overview renderer (no changes to engine) -->
+    <script src="../../js/rewards-overview.js"></script>
+    <script>
+// award daily login once per day
+document.addEventListener('DOMContentLoaded', () => {
+  document.dispatchEvent(new CustomEvent('user:login'));
+});
+</script>
     <script>
         // Require authentication to view dashboard
         requireAuth('signin.html');

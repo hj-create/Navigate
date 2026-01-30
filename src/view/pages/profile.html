@@ -1,0 +1,93 @@
+<head>
+  <!-- Other head elements -->
+  <link rel="stylesheet" href="../../css/rewards.css">
+</head>
+<body>
+  <!-- Ensure there is an element that represents profile progress -->
+  <!-- Example: <div id="profileProgress" style="width: 67%"></div> or <div data-profile-progress="67"></div> -->
+
+  <section id="rewardsPanel" class="rewards-panel" aria-label="Rewards">
+    <h2 class="rewards-title"><span class="material-icons" aria-hidden="true">emoji_events</span> Rewards</h2>
+    <div class="rewards-summary">
+      <div class="points-box" aria-live="polite">
+        <div class="points-label">Current Points</div>
+        <div class="points-value" data-points>0</div>
+      </div>
+
+      <div class="streak-box">
+        <div class="progress-label">Streak</div>
+        <div><span data-streak-days>0</span> days • Weekly <span data-weekly-progress>0/7</span></div>
+      </div>
+
+      <button id="claimDaily" class="primary-btn" aria-label="Claim daily points">
+        <span class="material-icons" aria-hidden="true">calendar_today</span> Claim Daily +5
+      </button>
+    </div>
+
+    <div class="rewards-columns">
+      <div class="rewards-col">
+        <h3><span class="material-icons" aria-hidden="true">military_tech</span> Achievements</h3>
+        <ul class="achievements" data-achievements></ul>
+      </div>
+      <div class="rewards-col">
+        <h3><span class="material-icons" aria-hidden="true">store</span> Reward Store</h3>
+        <ul class="store-list" data-store></ul>
+      </div>
+      <div class="rewards-col">
+        <h3><span class="material-icons" aria-hidden="true">timeline</span> Recent activity</h3>
+        <ul class="activity-log" data-activity-log></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="profileRewardsPanel" class="rewards-panel" aria-label="Profile Rewards">
+    <h2><span class="material-icons" aria-hidden="true">emoji_events</span> Profile Rewards</h2>
+
+    <div class="points-box" aria-live="polite" style="background:#fafafa;border:1px solid #eee;border-radius:10px;padding:14px;margin-bottom:12px">
+      <div class="points-label" style="font-weight:600;color:#444;margin-bottom:6px">Current Points</div>
+      <div class="points-value" data-profile-points>0</div>
+    </div>
+
+    <h3 style="margin:12px 0 6px">Activity breakdown</h3>
+    <ul data-activity-breakdown style="list-style:none;padding:0;margin:0;line-height:1.8"></ul>
+
+    <h3 style="margin:16px 0 6px">Reward Store</h3>
+    <ul data-profile-store style="list-style:none;padding:0;margin:0"></ul>
+  </section>
+
+  <script src="/src/js/rewards.js"></script>
+  <script src="/src/js/auth.js"></script>
+  <script src="/src/js/profile-rewards-dashboard.js"></script>
+  <script>
+    // Simulate fetching user data and navigating
+    const userData = {
+      id: 'u1',
+      name: 'Test User',
+      loggedIn: true,
+      status: 'silver',           // new | bronze | silver | gold | platinum
+      profileProgress: 62,        // 0–100
+      streakDays: 9,              // 0–30 considered
+      achievementsCount: 4        // number of earned achievements
+    };
+
+    localStorage.setItem('navigate_user', JSON.stringify({
+      id: 'u1',
+      name: 'Test',
+      loggedIn: true,
+      activity: { lessonsCompleted: 3, videosWatched: 2, videosWatchedNoSkip: 1, quizzesCompleted: 4, quizzesAbove80: 2 }
+    }));
+    window.dispatchEvent(new CustomEvent('auth:login'));
+
+    // Redirect or update UI based on login status
+    if (userData.loggedIn) {
+      document.querySelector('.points-value[data-points]').textContent = userData.profileProgress;
+      document.querySelector('.points-value[data-profile-points]').textContent = userData.profileProgress;
+      document.querySelector('[data-profile-tier]').textContent = userData.status.charAt(0).toUpperCase() + userData.status.slice(1);
+      document.querySelector('[data-streak-days]').textContent = userData.streakDays;
+      // Update achievements and store UI
+    } else {
+      // Handle logged out state
+    }
+  </script>
+</body>
+</html>
