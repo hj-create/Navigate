@@ -1,43 +1,38 @@
-// Auth State Manager
-// Include this script on pages that need to show different UI based on login state
+// Authentication State Management
+// Manages UI state based on user authentication status
 
-document.addEventListener('DOMContentLoaded', function() {
-    checkAuthState();
-});
-
-function checkAuthState() {
+/**
+ * Update authentication UI based on login status
+ * Shows user info if logged in, shows auth buttons if logged out
+ */
+function updateAuthUI() {
     const currentUser = getCurrentUser();
     const authButtons = document.querySelector('.auth-buttons');
     
     if (!authButtons) return;
     
     if (currentUser) {
-        // User is logged in - show username and logout button
+        // User is logged in - show user info and logout button
         authButtons.innerHTML = `
-            <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
-                <span style="color: var(--text-color); font-weight: 500;">
-                    <span class="material-icons" style="vertical-align: middle; font-size: 20px;">account_circle</span>
+            <div class="user-info" style="display: flex; align-items: center; gap: 1rem; border: none; padding: 0;">
+                <span style="color: var(--text-color); font-size: 0.95rem;">
+                    <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">person</span>
                     ${currentUser.username}
                 </span>
-                <button class="auth-btn" onclick="handleLogout()" style="background: #f44336;">
+                <button onclick="handleLogout()" class="auth-btn" style="background-color: #dc3545; color: white; border: none; cursor: pointer; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem;">
                     <span class="material-icons">logout</span>
                     <span>Logout</span>
                 </button>
             </div>
         `;
     } else {
-        // User is not logged in - show sign in/up buttons
-        // Check if we're on a page that needs relative paths
-        const isSubPage = window.location.pathname.includes('/pages/');
-        const signinPath = isSubPage ? 'signin.html' : 'view/pages/signin.html';
-        const signupPath = isSubPage ? 'signup.html' : 'view/pages/signup.html';
-        
+        // User is logged out - show sign in/sign up buttons
         authButtons.innerHTML = `
-            <a href="${signinPath}" class="auth-btn">
+            <a href="signin.html" class="auth-btn">
                 <span class="material-icons">person_outline</span>
                 <span>Sign In</span>
             </a>
-            <a href="${signupPath}" class="auth-btn">
+            <a href="signup.html" class="auth-btn">
                 <span class="material-icons">person_add</span>
                 <span>Sign Up</span>
             </a>
@@ -45,50 +40,47 @@ function checkAuthState() {
     }
 }
 
+/**
+ * Handle logout action
+ */
 function handleLogout() {
-    if (confirm('Are you sure you want to log out?')) {
+    if (confirm('Are you sure you want to logout?')) {
         logout();
-        // Redirect to home page
-        window.location.href = window.location.pathname.includes('/pages/') 
-            ? '../../index.html' 
-            : 'index.html';
+        window.location.href = '../../index.html';
     }
 }
 
-// Function to require authentication for certain pages
-function requireAuth(redirectPath = 'signin.html') {
-    if (!isLoggedIn()) {
-        alert('Please sign in to access this page.');
-        window.location.href = redirectPath;
+/**
+ * Require authentication to access a page
+ * Redirects to signin page if not logged in
+ * @param {string} redirectPage - Page to redirect to if not authenticated (default: signin.html)
+ */
+function requireAuth(redirectPage = 'signin.html') {
+    const currentUser = getCurrentUser();
+    
+    if (!currentUser) {
+        // Store the current page to redirect back after login
+        sessionStorage.setItem('navigate_redirect_after_login', window.location.href);
+        window.location.href = redirectPage;
     }
 }
 
-// Display user progress on dashboard
-function displayUserProgress() {
-    const progress = getUserProgress();
-    if (!progress) return;
+/**
+ * Check if user should be redirected after successful login
+ */
+function checkRedirectAfterLogin() {
+    const redirectUrl = sessionStorage.getItem('navigate_redirect_after_login');
     
-    // Update dashboard elements if they exist
-    const completedLessonsEl = document.getElementById('completedLessons');
-    if (completedLessonsEl) {
-        completedLessonsEl.textContent = progress.completedLessons.length;
+    if (redirectUrl) {
+        sessionStorage.removeItem('navigate_redirect_after_login');
+        window.location.href = redirectUrl;
+        return true;
     }
     
-    const quizScoresEl = document.getElementById('quizScores');
-    if (quizScoresEl && progress.quizScores.length > 0) {
-        const avgScore = progress.quizScores.reduce((sum, quiz) => sum + quiz.score, 0) / progress.quizScores.length;
-        quizScoresEl.textContent = Math.round(avgScore) + '%';
-    }
-    
-    const studyTimeEl = document.getElementById('studyTime');
-    if (studyTimeEl) {
-        const hours = Math.floor(progress.totalStudyTime / 60);
-        const minutes = progress.totalStudyTime % 60;
-        studyTimeEl.textContent = `${hours}h ${minutes}m`;
-    }
-    
-    const sessionsEl = document.getElementById('sessionsAttended');
-    if (sessionsEl) {
-        sessionsEl.textContent = progress.sessionsAttended.length;
-    }
+    return false;
 }
+
+// Update auth UI when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateAuthUI();
+});

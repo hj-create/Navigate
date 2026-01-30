@@ -520,6 +520,8 @@
         document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            console.log('Signup form submitted');
+            
             // Clear previous errors
             document.querySelectorAll('.error-message').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
@@ -528,6 +530,8 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            console.log('Form values:', { username, email, passwordLength: password.length });
             
             let hasError = false;
             
@@ -569,27 +573,42 @@
                 hasError = true;
             }
             
-            if (hasError) return;
+            if (hasError) {
+                console.log('Validation errors found');
+                return;
+            }
+            
+            console.log('Validation passed, attempting signup...');
             
             // Attempt signup
-            const result = signup(username, email, password);
-            
-            if (result.success) {
-                document.getElementById('successMessage').classList.add('active');
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-            } else {
-                // Show error
-                if (result.error === 'USER_EXISTS') {
-                    document.getElementById('usernameError').textContent = 'Username already exists';
-                    document.getElementById('usernameError').classList.add('active');
-                    document.getElementById('username').classList.add('error');
-                } else if (result.error === 'EMAIL_EXISTS') {
-                    document.getElementById('emailError').textContent = 'Email already registered';
-                    document.getElementById('emailError').classList.add('active');
-                    document.getElementById('email').classList.add('error');
+            try {
+                const result = signup(username, email, password);
+                console.log('Signup result:', result);
+                
+                if (result.success) {
+                    console.log('Signup successful! User created:', result.user.username);
+                    console.log('Current user set in localStorage:', getCurrentUser());
+                    document.getElementById('successMessage').classList.add('active');
+                    setTimeout(() => {
+                        console.log('Redirecting to dashboard...');
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    console.log('Signup failed:', result.error);
+                    // Show error
+                    if (result.error === 'USER_EXISTS') {
+                        document.getElementById('usernameError').textContent = 'Username already exists';
+                        document.getElementById('usernameError').classList.add('active');
+                        document.getElementById('username').classList.add('error');
+                    } else if (result.error === 'EMAIL_EXISTS') {
+                        document.getElementById('emailError').textContent = 'Email already registered';
+                        document.getElementById('emailError').classList.add('active');
+                        document.getElementById('email').classList.add('error');
+                    }
                 }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                alert('An error occurred during signup. Please try again.');
             }
         });
     </script>
