@@ -191,13 +191,13 @@ function showDashboardAccessModal() {
                 <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: #e3f2fd; border-radius: 0.5rem;">
                     <p style="margin: 0; color: #1976d2; font-size: 0.95rem;">
                         <span class="material-icons" style="vertical-align: middle; font-size: 1.125rem;">celebration</span>
-                        <strong>100% Free Forever</strong> • Ready in 30 Seconds
+                        <strong>100% Free Forever</strong> • No Credit Card • Ready in 30 Seconds
                     </p>
                 </div>
             </div>
             
             <div class="navigate-modal-footer center">
-                <button type="button" class="navigate-btn navigate-btn-secondary" onclick="closeNavigateModal(); window.location.href='../../index.html';">
+                <button type="button" class="navigate-btn navigate-btn-secondary" onclick="closeNavigateModal()">
                     <span class="material-icons">arrow_back</span>
                     Go Back
                 </button>
