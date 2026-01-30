@@ -335,10 +335,18 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
     <script>
         // Require authentication to view dashboard
-        requireAuth('signin.html');
+        try {
+            requireAuth('signin.html');
+        } catch (e) {
+            // Modal was shown, stop page execution
+            console.log('Dashboard access restricted:', e.message);
+        }
         
-        // Display user progress
-        displayUserProgress();
+        // Display user progress (only runs if user is authenticated)
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            displayUserProgress();
+        }
     </script>
 </body>
 </html>

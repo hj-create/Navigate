@@ -35,13 +35,32 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function handleBookNewSession() {
-    // Check if user is logged in
-    if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
-      alert('Please sign in to book a session.');
-      window.location.href = 'signin.html';
+    const user = getCurrentUser();
+    const guest = getGuestUser();
+    
+    // If not logged in and not a guest, show guest booking modal
+    if (!user && !guest) {
+      if (typeof showGuestBookingModal === 'function') {
+        showGuestBookingModal(
+          function(guestUser) {
+            // Guest created successfully, show booking form
+            upcomingSessionsContainer && (upcomingSessionsContainer.style.display = 'none');
+            if (bookingContainer) { bookingContainer.style.display = 'block'; bookingContainer.classList.add('active'); }
+            resetBookingForm();
+            document.querySelector('.subject-selection')?.setAttribute('style', 'display:block');
+            calendar && (calendar.style.display = 'none');
+            timeSlots && (timeSlots.style.display = 'none');
+          },
+          function() {
+            // User chose to sign up
+            window.location.href = 'signup.html';
+          }
+        );
+      }
       return;
     }
     
+    // User or guest is already logged in
     upcomingSessionsContainer && (upcomingSessionsContainer.style.display = 'none');
     if (bookingContainer) { bookingContainer.style.display = 'block'; bookingContainer.classList.add('active'); }
     resetBookingForm();

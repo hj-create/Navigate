@@ -104,77 +104,139 @@
     if (!ul) return;
     const points = pointsFromEngineOrEstimate();
     const levelName = currentLevel(points);
+    const state = getState();
+    const inventory = state.inventory || [];
 
     ul.innerHTML = '';
     CATALOG.forEach(item => {
       const li = document.createElement('li');
       li.className = 'reward-item';
+      const owned = inventory.includes(item.id);
+      
       li.innerHTML = `
         <div class="reward-info">
           <strong>${item.title}</strong>
           <div class="muted">Cost: ${item.cost} pts · Requires: ${item.minLevel}+</div>
+          ${owned ? '<div class="owned-badge"><span class="material-icons">check_circle</span> Owned</div>' : ''}
         </div>
-        <button class="btn redeem-btn" data-id="${item.id}">Redeem</button>
+        <button class="btn redeem-btn" data-id="${item.id}">${owned ? 'Owned' : 'Redeem'}</button>
       `;
       const btn = li.querySelector('.redeem-btn');
-      const enabled = canRedeem(item, points, levelName);
+      const enabled = canRedeem(item, points, levelName) && !owned;
       if (!enabled) {
         btn.setAttribute('disabled', 'true');
         btn.classList.add('btn-disabled');
       }
-      btn.addEventListener('click', () => confirmRedeem(item));
+      if (!owned) {
+        btn.addEventListener('click', () => confirmRedeem(item));
+      }
       ul.appendChild(li);
     });
   }
 
+  function toast(msg) {
+    // Simple toast notification
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => toast.classList.add('show'), 100);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
   function confirmRedeem(item) {
-    const ok = window.confirm(`Redeem "${item.title}" for ${item.cost} points?`);
+    const points = pointsFromEngineOrEstimate();
+    const levelName = currentLevel(points);
+    
+    // Check if user can redeem
+    if (!canRedeem(item, points, levelName)) {
+      toast('You do not have enough points or the required level for this reward.');
+      return;
+    }
+
+    const ok = window.confirm(`Redeem "${item.title}" for ${item.cost} points?\n\nYour current balance: ${points} points`);
     if (!ok) return;
 
-    // Prefer engine API if available
+    // Actually deduct points and add to inventory
     try {
-      const res = window.Rewards?.redeem
-        ? window.Rewards.redeem({ id: item.id, cost: item.cost })
-        : null;
-
-      // Handle promise or sync return
-      if (res && typeof res.then === 'function') {
-        res.then(() => onRedeemed(item)).catch(onRedeemFailed);
-      } else if (res) {
-        onRedeemed(item);
-      } else {
-        // Fallback: queue request for the engine to process
-        queueRedemption(item);
-        onRedeemed(item);
+      const state = getState();
+      
+      // Deduct points
+      state.spentPoints = (state.spentPoints || 0) + item.cost;
+      
+      // Add to inventory if not already there
+      if (!state.inventory) state.inventory = [];
+      if (!state.inventory.includes(item.id)) {
+        state.inventory.push(item.id);
       }
+      
+      // Save updated state
+      localStorage.setItem('navigate_rewards_v1', JSON.stringify(state));
+      
+      // Show celebration
+      showCelebration(item);
+      
+      // Update UI after celebration starts
+      setTimeout(() => {
+        renderStats();
+        renderStore();
+      }, 100);
+      
     } catch (e) {
-      queueRedemption(item);
-      onRedeemed(item);
+      console.error('Redemption error:', e);
+      toast('Redemption failed. Please try again.');
     }
   }
 
-  function queueRedemption(item) {
-    try {
-      const key = 'navigate_rewards_redeem_queue';
-      const q = JSON.parse(localStorage.getItem(key) || '[]');
-      q.push({ id: item.id, cost: item.cost, at: new Date().toISOString() });
-      localStorage.setItem(key, JSON.stringify(q));
-      document.dispatchEvent(new CustomEvent('rewards:redeem', { detail: item }));
-    } catch {}
+  function showCelebration(item) {
+    // Create celebration overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'celebration-overlay';
+    overlay.innerHTML = `
+      <div class="celebration-content">
+        <div class="celebration-icon">
+          <span class="material-icons">card_giftcard</span>
+        </div>
+        <h2 class="celebration-title">Congratulations! 🎉</h2>
+        <p class="celebration-message">You've successfully redeemed:</p>
+        <p class="celebration-item">${item.title}</p>
+        <p class="celebration-cost">-${item.cost} points</p>
+        <button class="celebration-close" onclick="this.closest('.celebration-overlay').remove()">Awesome!</button>
+      </div>
+      <div class="confetti-container"></div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    // Create confetti
+    createConfetti(overlay.querySelector('.confetti-container'));
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+      if (overlay.parentNode) {
+        overlay.classList.add('fade-out');
+        setTimeout(() => overlay.remove(), 500);
+      }
+    }, 5000);
   }
 
-  function onRedeemed(item) {
-    // Let engine update points; we just refresh UI
-    document.dispatchEvent(new Event('rewards:updated'));
-    renderStats();
-    renderStore();
-    toast(`Redeemed: ${item.title}`);
-  }
-  function onRedeemFailed() {
-    toast('Redemption failed. Please try again.');
-  }
-  function toast(msg) {
-    try { alert(msg); } catch {}
+  function createConfetti(container) {
+    const colors = ['#ff9800', '#f57c00', '#ff5722', '#ffc107', '#ffb74d'];
+    const confettiCount = 50;
+    
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + '%';
+      confetti.style.animationDelay = Math.random() * 3 + 's';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      container.appendChild(confetti);
+    }
   }
 
   function render() { renderStats(); renderStore(); }

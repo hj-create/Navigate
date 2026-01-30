@@ -200,6 +200,94 @@ function getUserProgress() {
 }
 
 /**
+ * Create guest user session
+ * @param {string} name - Guest's name
+ * @param {string} email - Guest's email
+ * @returns {Object} Guest user object
+ */
+function createGuestUser(name, email) {
+    const guestUser = {
+        id: 'guest_' + Date.now().toString(),
+        username: name || 'Guest',
+        email: email,
+        isGuest: true,
+        createdAt: new Date().toISOString(),
+        sessions: []
+    };
+    
+    localStorage.setItem('navigate_guest_user', JSON.stringify(guestUser));
+    return guestUser;
+}
+
+/**
+ * Get current guest user
+ * @returns {Object|null} Guest user object or null
+ */
+function getGuestUser() {
+    const guestUser = localStorage.getItem('navigate_guest_user');
+    return guestUser ? JSON.parse(guestUser) : null;
+}
+
+/**
+ * Check if current user is a guest
+ * @returns {boolean} True if user is a guest
+ */
+function isGuestUser() {
+    const user = getCurrentUser();
+    const guest = getGuestUser();
+    return guest !== null || (user && user.isGuest);
+}
+
+/**
+ * Get current user or guest
+ * @returns {Object|null} Current user, guest, or null
+ */
+function getCurrentUserOrGuest() {
+    return getCurrentUser() || getGuestUser();
+}
+
+/**
+ * Book session for guest
+ * @param {Object} sessionData - Session booking data
+ * @returns {boolean} True if booking successful
+ */
+function bookGuestSession(sessionData) {
+    const guest = getGuestUser();
+    if (!guest) return false;
+    
+    // Guests can only book sessions for today
+    const today = new Date().toDateString();
+    const sessionDate = new Date(sessionData.date).toDateString();
+    
+    if (today !== sessionDate) {
+        return false;
+    }
+    
+    guest.sessions.push({
+        ...sessionData,
+        bookedAt: new Date().toISOString()
+    });
+    
+    localStorage.setItem('navigate_guest_user', JSON.stringify(guest));
+    return true;
+}
+
+/**
+ * Clear guest session
+ */
+function clearGuestSession() {
+    localStorage.removeItem('navigate_guest_user');
+}
+
+/**
+ * Logout user or guest
+ */
+function logoutAll() {
+    logout();
+    clearGuestSession();
+}
+
+/**
  * Update user profile
  * @param {Object} updates - Object containing fields to update
  * @returns {boolean} True if update successful
