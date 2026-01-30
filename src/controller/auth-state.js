@@ -14,12 +14,12 @@ function updateAuthUI() {
     if (currentUser) {
         // User is logged in - show user info and logout button
         authButtons.innerHTML = `
-            <div class="user-info" style="display: flex; align-items: center; gap: 1rem; border: none; padding: 0;">
-                <span style="color: var(--text-color); font-size: 0.95rem;">
+            <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
+                <span style="color: white; font-size: 0.95rem; font-family: 'Roboto', sans-serif; font-weight: 400; display: flex; align-items: center; gap: 0.5rem;">
                     <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">person</span>
                     ${currentUser.username}
                 </span>
-                <button onclick="handleLogout()" class="auth-btn" style="background-color: #dc3545; color: white; border: none; cursor: pointer; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem;">
+                <button onclick="handleLogout()" class="auth-btn" style="background-color: #dc3545; color: white; border: none !important; cursor: pointer; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem; font-family: 'Roboto', sans-serif; font-weight: 500;">
                     <span class="material-icons">logout</span>
                     <span>Logout</span>
                 </button>
