@@ -2,6 +2,20 @@
 // Manages UI state based on user authentication status
 
 /**
+ * Helper function to get correct path to auth pages
+ * Handles both index.html (in src/) and pages in src/view/pages/
+ */
+function getAuthPagePath(page) {
+    const path = window.location.pathname;
+    // Check if we're on index.html (in src/) or in root
+    if (path.endsWith('index.html') || path.endsWith('/Navigate/') || path.endsWith('/Navigate/src/') || path.endsWith('/src/')) {
+        return `view/pages/${page}`;
+    }
+    // Otherwise we're in a subdirectory (like src/view/pages/)
+    return page;
+}
+
+/**
  * Update authentication UI based on login status
  * Shows user info if logged in, shows auth buttons if logged out
  */
@@ -34,7 +48,7 @@ function updateAuthUI() {
                     <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">person_outline</span>
                     ${guestUser.username} (Guest)
                 </span>
-                <a href="signup.html" class="auth-btn" style="background-color: #4caf50; color: white; border: none !important; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem; font-family: 'Roboto', sans-serif; font-weight: 500;">
+                <a href="${getAuthPagePath('signup.html')}" class="auth-btn" style="background-color: #4caf50; color: white; border: none !important; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem; font-family: 'Roboto', sans-serif; font-weight: 500;">
                     <span class="material-icons">how_to_reg</span>
                     <span>Sign Up</span>
                 </a>
@@ -47,11 +61,11 @@ function updateAuthUI() {
     } else {
         // User is logged out - show sign in/sign up buttons
         authButtons.innerHTML = `
-            <a href="signin.html" class="auth-btn">
+            <a href="${getAuthPagePath('signin.html')}" class="auth-btn">
                 <span class="material-icons">person_outline</span>
                 <span>Sign In</span>
             </a>
-            <a href="signup.html" class="auth-btn">
+            <a href="${getAuthPagePath('signup.html')}" class="auth-btn">
                 <span class="material-icons">person_add</span>
                 <span>Sign Up</span>
             </a>
@@ -88,39 +102,63 @@ function requireAuth(redirectPage = 'signin.html') {
     const currentUser = getCurrentUser();
     const guestUser = getGuestUser();
     
+    console.log('requireAuth called - currentUser:', currentUser, 'guestUser:', guestUser);
+    
     // Allow guests for certain pages, but not for dashboard
     const currentPage = window.location.pathname;
     const isDashboard = currentPage.includes('dashboard.html');
     
+    console.log('isDashboard:', isDashboard, 'currentPage:', currentPage);
+    
     if (!currentUser && isDashboard && guestUser) {
         // Guest trying to access dashboard - show student-centric popup
+        console.log('Guest trying to access dashboard - showing modal');
+        // Hide the dashboard content
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+            mainContent.style.display = 'none';
+        }
         showDashboardAccessModal();
-        return;
+        return false;
     }
     
     if (!currentUser && isDashboard && !guestUser) {
-        // No user trying to access dashboard
+        // No user trying to access dashboard - show modal
+        console.log('No user/guest trying to access dashboard - showing modal');
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+            mainContent.style.display = 'none';
+        }
         showDashboardAccessModal();
-        return;
+        return false;
     }
     
     if (!currentUser && !guestUser && !isDashboard) {
         // No user or guest on other pages - store the current page to redirect back after login
+        console.log('Redirecting to signin page');
         sessionStorage.setItem('navigate_redirect_after_login', window.location.href);
         window.location.href = redirectPage;
+        return false;
     }
+    
+    console.log('Auth check passed - user has access');
+    return true;
 }
 
 /**
  * Show dashboard access modal for non-registered users
  */
 function showDashboardAccessModal() {
+    console.log('showDashboardAccessModal called');
+    
     // Remove any existing modal first
     const existingModal = document.querySelector('.navigate-modal-overlay');
     if (existingModal) {
+        console.log('Removing existing modal');
         existingModal.remove();
     }
     
+    console.log('Creating new modal');
     const modal = document.createElement('div');
     modal.className = 'navigate-modal-overlay';
     modal.innerHTML = `
@@ -202,11 +240,11 @@ function showDashboardAccessModal() {
             </div>
             
             <div class="navigate-modal-footer center">
-                <button type="button" class="navigate-btn navigate-btn-secondary" onclick="closeNavigateModal()">
-                    <span class="material-icons">arrow_back</span>
-                    Go Back
+                <button type="button" class="navigate-btn navigate-btn-secondary" id="dashboardModalGoBackBtn">
+                    <span class="material-icons">home</span>
+                    Go to Home Page
                 </button>
-                <button type="button" class="navigate-btn navigate-btn-primary" onclick="closeNavigateModal(); window.location.href='signup.html';">
+                <button type="button" class="navigate-btn navigate-btn-primary" id="dashboardModalSignupBtn">
                     <span class="material-icons">rocket_launch</span>
                     Create Free Account
                 </button>
@@ -214,8 +252,27 @@ function showDashboardAccessModal() {
         </div>
     `;
     
+    console.log('Appending modal to body');
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
+    
+    console.log('Modal appended, adding event listeners');
+    
+    // Add click handler for go back button - redirect to home page
+    document.getElementById('dashboardModalGoBackBtn').addEventListener('click', function() {
+        console.log('Go back button clicked');
+        closeNavigateModal();
+        window.location.href = '../../index.html';
+    });
+    
+    // Add click handler for signup button with proper path
+    document.getElementById('dashboardModalSignupBtn').addEventListener('click', function() {
+        console.log('Signup button clicked');
+        closeNavigateModal();
+        window.location.href = getAuthPagePath('signup.html');
+    });
+    
+    console.log('Modal should now be visible');
 }
 
 /**

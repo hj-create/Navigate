@@ -327,18 +327,25 @@
     <script src="../../js/rewards-store.js"></script>
     <!-- Rewards overview renderer (no changes to engine) -->
     <script src="../../js/rewards-overview.js"></script>
+    
     <script>
-// award daily login once per day
-document.addEventListener('DOMContentLoaded', () => {
-  document.dispatchEvent(new CustomEvent('user:login'));
-});
-</script>
-    <script>
-        // Require authentication to view dashboard
-        requireAuth('signin.html');
-        
-        // Display user progress
-        displayUserProgress();
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking auth...');
+            
+            // Require authentication to view dashboard
+            const hasAccess = requireAuth('signin.html');
+            
+            if (hasAccess) {
+                console.log('User has access, displaying dashboard');
+                // Display user progress
+                displayUserProgress();
+                
+                // Award daily login once per day
+                document.dispatchEvent(new CustomEvent('user:login'));
+            } else {
+                console.log('User does not have access, modal should be shown');
+            }
+        });
     </script>
 </body>
 </html>
