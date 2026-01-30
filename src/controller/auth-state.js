@@ -97,7 +97,18 @@ function updateAuthUI() {
 function handleLogout() {
     if (confirm('Are you sure you want to logout?')) {
         logout();
-        window.location.href = '../../index.html';
+        // Redirect to home page - works for both local and GitHub Pages
+        const currentPath = window.location.pathname;
+        if (window.location.href.includes('github.io')) {
+            // GitHub Pages - use absolute path
+            window.location.href = '/Navigate/src/index.html';
+        } else if (currentPath.includes('/view/pages/')) {
+            // Local - use relative path from pages directory
+            window.location.href = '../../index.html';
+        } else {
+            // Fallback - try to go to index
+            window.location.href = 'index.html';
+        }
     }
 }
 
@@ -107,7 +118,18 @@ function handleLogout() {
 function handleGuestLogout() {
     if (confirm('Are you sure you want to end your guest session?')) {
         clearGuestSession();
-        window.location.href = '../../index.html';
+        // Redirect to home page - works for both local and GitHub Pages
+        const currentPath = window.location.pathname;
+        if (window.location.href.includes('github.io')) {
+            // GitHub Pages - use absolute path
+            window.location.href = '/Navigate/src/index.html';
+        } else if (currentPath.includes('/view/pages/')) {
+            // Local - use relative path from pages directory
+            window.location.href = '../../index.html';
+        } else {
+            // Fallback - try to go to index
+            window.location.href = 'index.html';
+        }
     }
 }
 
