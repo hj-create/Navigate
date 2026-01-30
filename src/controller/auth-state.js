@@ -3,16 +3,34 @@
 
 /**
  * Helper function to get correct path to auth pages
- * Handles both index.html (in src/) and pages in src/view/pages/
+ * Handles both local file system and GitHub Pages deployments
  */
 function getAuthPagePath(page) {
     const path = window.location.pathname;
-    // Check if we're on index.html (in src/) or in root
-    if (path.endsWith('index.html') || path.endsWith('/Navigate/') || path.endsWith('/Navigate/src/') || path.endsWith('/src/')) {
+    const href = window.location.href;
+    console.log('getAuthPagePath called - current path:', path, 'href:', href, 'page:', page);
+    
+    // If we're in the pages directory already (src/view/pages/), use relative path
+    if (path.includes('/view/pages/')) {
+        console.log('In pages directory, returning relative path:', page);
+        return page;
+    }
+    
+    // If we're at index.html in src/ directory (local file:// or deployed)
+    if (path.includes('/src/index.html') || (href.includes('file://') && path.includes('/src/'))) {
+        console.log('At src/index.html, returning:', `view/pages/${page}`);
         return `view/pages/${page}`;
     }
-    // Otherwise we're in a subdirectory (like src/view/pages/)
-    return page;
+    
+    // For GitHub Pages, use absolute path from repository root
+    if (href.includes('github.io')) {
+        console.log('On GitHub Pages, returning absolute path:', `/Navigate/src/view/pages/${page}`);
+        return `/Navigate/src/view/pages/${page}`;
+    }
+    
+    // Default: use full path from repository root (with leading slash for absolute path)
+    console.log('Default case - using absolute path:', `/Navigate/src/view/pages/${page}`);
+    return `/Navigate/src/view/pages/${page}`;
 }
 
 /**
