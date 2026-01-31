@@ -34,6 +34,38 @@ function getAuthPagePath(page) {
 }
 
 /**
+ * Helper function to get correct path to main index page
+ * Handles both local file system and GitHub Pages deployments
+ */
+function getMainPagePath() {
+    const path = window.location.pathname;
+    const href = window.location.href;
+    console.log('getMainPagePath called - current path:', path, 'href:', href);
+    
+    // If we're in the pages directory (src/view/pages/), use relative path
+    if (path.includes('/view/pages/')) {
+        console.log('In pages directory, returning relative path to index');
+        return '../../index.html';
+    }
+    
+    // For GitHub Pages, use absolute path from repository root
+    if (href.includes('github.io')) {
+        console.log('On GitHub Pages, returning absolute path to index');
+        return '/Navigate/src/index.html';
+    }
+    
+    // If we're already at src/index.html or in src/ directory (local)
+    if (path.includes('/src/index.html') || path.includes('/src/')) {
+        console.log('Already at src level, returning index.html');
+        return 'index.html';
+    }
+    
+    // Default: use absolute path
+    console.log('Default case - using absolute path to index');
+    return '/Navigate/src/index.html';
+}
+
+/**
  * Update authentication UI based on login status
  * Shows user info if logged in, shows auth buttons if logged out
  */
@@ -97,7 +129,8 @@ function updateAuthUI() {
 function handleLogout() {
     if (confirm('Are you sure you want to logout?')) {
         logout();
-        window.location.href = '../../index.html';
+        // Use helper function to get correct path for all environments
+        window.location.href = getMainPagePath();
     }
 }
 
@@ -107,7 +140,8 @@ function handleLogout() {
 function handleGuestLogout() {
     if (confirm('Are you sure you want to end your guest session?')) {
         clearGuestSession();
-        window.location.href = '../../index.html';
+        // Use helper function to get correct path for all environments
+        window.location.href = getMainPagePath();
     }
 }
 
