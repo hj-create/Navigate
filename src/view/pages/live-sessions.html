@@ -370,6 +370,15 @@
 
         // Helper Functions
         function loadZoomSessions() {
+            // Only show sessions if user is logged in or is a guest
+            const currentUser = getCurrentUser();
+            const guestUser = getGuestUser();
+            
+            if (!currentUser && !guestUser) {
+                // Not logged in - return empty array
+                return [];
+            }
+            
             const all = JSON.parse(localStorage.getItem('sessions') || '[]');
             return all.filter(s => s.meetLink === ZOOM_LINK);
         }
@@ -488,7 +497,15 @@
             upcomingSessionsEl.innerHTML = '';
 
             if (sessions.length === 0) {
-                upcomingSessionsEl.innerHTML = '<p class="empty-state">No scheduled sessions. Book a session to see it here.</p>';
+                // Check if user is logged in
+                const currentUser = getCurrentUser();
+                const guestUser = getGuestUser();
+                
+                if (!currentUser && !guestUser) {
+                    upcomingSessionsEl.innerHTML = '<p class="empty-state">Sign in or create an account to view and book sessions.</p>';
+                } else {
+                    upcomingSessionsEl.innerHTML = '<p class="empty-state">No scheduled sessions. Book a session to see it here.</p>';
+                }
                 return;
             }
 

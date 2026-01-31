@@ -65,6 +65,7 @@ function signup(username, email, password) {
         email: email,
         password: password, // In production, this should be hashed
         createdAt: new Date().toISOString(),
+        sessions: [], // Initialize empty sessions array
         progress: {
             completedLessons: [],
             quizScores: [],
@@ -112,6 +113,14 @@ function signin(usernameOrEmail, password, rememberMe = false) {
     users[userIndex] = user;
     saveUsers(users);
     
+    // Restore user's sessions if they have any
+    if (user.sessions && user.sessions.length > 0) {
+        localStorage.setItem('sessions', JSON.stringify(user.sessions));
+    } else {
+        // Clear any existing sessions from localStorage
+        localStorage.removeItem('sessions');
+    }
+    
     // Set as current user
     setCurrentUser(user);
     
@@ -128,7 +137,32 @@ function signin(usernameOrEmail, password, rememberMe = false) {
 /**
  * Log out current user
  */
+/**
+ * Logout current user
+ * Saves their sessions to their account before clearing current session
+ */
 function logout() {
+    const currentUser = getCurrentUser();
+    
+    if (currentUser) {
+        // Get current sessions from localStorage
+        const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+        
+        // Save sessions to user's account data
+        const users = getAllUsers();
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        
+        if (userIndex !== -1) {
+            // Store sessions in user's account
+            users[userIndex].sessions = sessions;
+            saveUsers(users);
+        }
+        
+        // Clear sessions from general localStorage
+        localStorage.removeItem('sessions');
+    }
+    
+    // Remove current user and remember me flag
     localStorage.removeItem('navigate_current_user');
     localStorage.removeItem('navigate_remember_me');
 }
