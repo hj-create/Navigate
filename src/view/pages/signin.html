@@ -177,6 +177,71 @@
         .remember-me input[type="checkbox"] {
             width: auto;
         }
+
+        /* Password Toggle Button */
+        .password-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-input-wrapper input {
+            padding-right: 3rem;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 0.5rem;
+            background: transparent;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            min-width: 44px;
+            min-height: 44px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .toggle-password:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--primary-color);
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .toggle-password:focus {
+            outline: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            background: rgba(0, 0, 0, 0.08);
+            color: var(--primary-color);
+        }
+
+        .toggle-password:active {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .toggle-password:focus-visible {
+            outline: none !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .toggle-password .material-icons {
+            font-size: 1.25rem;
+        }
     </style>
 </head>
 <body>
@@ -227,7 +292,12 @@
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="password" name="password" required>
+                        <button type="button" class="toggle-password" aria-label="Show password" data-target="password">
+                            <span class="material-icons">visibility</span>
+                        </button>
+                    </div>
                     <div class="error-message" id="passwordError">Please enter your password</div>
                 </div>
 
@@ -284,6 +354,25 @@
 
     <script src="../../controller/auth.js"></script>
     <script>
+        // Password toggle functionality
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector('.material-icons');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.textContent = 'visibility_off';
+                    this.setAttribute('aria-label', 'Hide password');
+                } else {
+                    input.type = 'password';
+                    icon.textContent = 'visibility';
+                    this.setAttribute('aria-label', 'Show password');
+                }
+            });
+        });
+
         document.getElementById('signinForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
