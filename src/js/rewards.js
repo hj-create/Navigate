@@ -15,13 +15,11 @@
   };
 
   const TIERS = [
-    { id: 'tier1', points: 100, label: 'Explorer' },
-    { id: 'tier2', points: 250, label: 'Apprentice Historian' },
-    { id: 'tier3', points: 500, label: 'Scholar' },
-    { id: 'tier4', points: 750, label: 'Strategist' },
-    { id: 'tier5', points: 1000, label: 'Master Historian' },
-    { id: 'tier6', points: 1500, label: 'Historian of Distinction' },
-    { id: 'tier7', points: 2000, label: 'Grand Historian' }
+    { id: 'tier1', points: 100, label: 'History Starter' },
+    { id: 'tier2', points: 300, label: 'Foundations Scholar' },
+    { id: 'tier3', points: 700, label: 'Advanced Learner' },
+    { id: 'tier4', points: 1200, label: 'Certified Historian' },
+    { id: 'tier5', points: 2000, label: 'Academic Excellence' }
   ];
 
   const STORE = [
@@ -33,19 +31,37 @@
   ];
 
   const ACHIEVEMENTS = [
-    { id: 'starter_100', name: 'History Starter Certificate', desc: 'Earn first 100 points', rule: s => s.totalPoints >= 100 },
+    // 100-300 points tier
+    { id: 'starter_100', name: 'History Starter Certificate', desc: 'Earning the first 100 points', rule: s => s.totalPoints >= 100 },
     { id: 'lesson_explorer', name: 'Lesson Explorer', desc: 'Complete 5 lessons or videos', rule: s => (s.counts.lessons + s.counts.videos) >= 5 },
-    { id: 'quiz_conqueror', name: 'Quiz Conqueror', desc: 'Pass 3 quizzes (70%+)', rule: s => s.counts.quizzesPassed70 >= 3 },
-    { id: 'rising_historian_250', name: 'Rising Historian', desc: 'Reach 250 points', rule: s => s.totalPoints >= 250 },
-    { id: 'critical_thinker', name: 'Critical Thinker', desc: 'Score 80%+ on 5 quizzes', rule: s => s.counts.quizzes80 >= 5 },
-    { id: 'consistency_champion', name: 'Consistency Champion', desc: 'Maintain a 7‑day streak', rule: s => s.streak.current >= 7 },
-    { id: 'certified_historian', name: 'Certified Historian', desc: '1,500 total points', rule: s => s.totalPoints >= 1500 }
+    { id: 'quiz_conqueror', name: 'Quiz Conqueror', desc: 'Pass 3 quizzes with 70%+', rule: s => s.counts.quizzesPassed70 >= 3 },
+    { id: 'rising_historian_250', name: 'Rising Historian', desc: '250 points earned', rule: s => s.totalPoints >= 250 },
+    
+    // 300-700 points tier
+    { id: 'us_history_foundations', name: 'US History Foundations', desc: 'Earn 500 points in U.S. History content', rule: s => (s.categoryPoints?.usHistory || 0) >= 500 },
+    { id: 'world_history_foundations', name: 'World History Foundations Certificate', desc: 'Complete early civilizations & ancient history content', rule: s => (s.categoryCompletion?.worldHistory?.ancientCivilizations || 0) >= 3 && (s.categoryCompletion?.worldHistory?.ancientHistory || 0) >= 3 },
+    { id: 'european_history_foundations', name: 'European History Foundations Certificate', desc: 'Master Medieval & early European topics', rule: s => (s.categoryCompletion?.europeanHistory?.medieval || 0) >= 3 && (s.categoryCompletion?.europeanHistory?.earlyEuropean || 0) >= 3 },
+    
+    // 700-1200 points tier
+    { id: 'critical_thinker', name: 'Critical Thinker Certificate', desc: 'Score 80%+ on 5 quizzes', rule: s => s.counts.quizzes80 >= 5 },
+    { id: 'consistency_champion', name: 'Consistency Champion', desc: 'Maintain a 7‑day learning streak', rule: s => s.streak.current >= 7 },
+    
+    // 1200-2000 points tier
+    { id: 'certified_historian', name: 'Certified Historian', desc: '1,500 total points earned', rule: s => s.totalPoints >= 1500 },
+    { id: 'history_honors', name: 'History Honors', desc: 'High quiz scores + lesson completion across topics', rule: s => s.counts.quizzes80 >= 8 && s.counts.lessons >= 15 },
+    { id: 'academic_excellence', name: 'Academic Excellence in History', desc: 'Consistent high performance across units', rule: s => s.totalPoints >= 1800 && s.counts.quizzes80 >= 10 && s.streak.current >= 14 }
   ];
 
   const initial = () => ({
     totalPoints: 0,
     spentPoints: 0,
     counts: { lessons: 0, quizzes: 0, quizzes80: 0, quizzesPassed70: 0, videos: 0 },
+    categoryPoints: { usHistory: 0, worldHistory: 0, europeanHistory: 0 },
+    categoryCompletion: {
+      usHistory: { total: 0 },
+      worldHistory: { ancientCivilizations: 0, ancientHistory: 0, total: 0 },
+      europeanHistory: { medieval: 0, earlyEuropean: 0, total: 0 }
+    },
     streak: { current: 0, lastActiveDate: null, lastWeeklyBonusDate: null },
     lastLessonDate: null,
     activityHistory: [],    // [{type,date,points,meta}]
@@ -82,10 +98,33 @@
 
     let points = basePts;
 
+    // Initialize category tracking if missing (for legacy users)
+    if (!core.categoryPoints) core.categoryPoints = { usHistory: 0, worldHistory: 0, europeanHistory: 0 };
+    if (!core.categoryCompletion) {
+      core.categoryCompletion = {
+        usHistory: { total: 0 },
+        worldHistory: { ancientCivilizations: 0, ancientHistory: 0, total: 0 },
+        europeanHistory: { medieval: 0, earlyEuropean: 0, total: 0 }
+      };
+    }
+
+    // Track category-specific activity
+    const category = meta.category; // 'usHistory', 'worldHistory', 'europeanHistory'
+    const subcategory = meta.subcategory; // e.g., 'ancientCivilizations', 'medieval', etc.
+
     if (type === 'lesson') {
       if (core.lastLessonDate === date) points += POINTS.lesson_streak_bonus;
       core.lastLessonDate = date;
       core.counts.lessons += 1;
+      
+      // Track category completion
+      if (category && core.categoryPoints[category] !== undefined) {
+        core.categoryPoints[category] += points;
+        core.categoryCompletion[category].total += 1;
+        if (subcategory && core.categoryCompletion[category][subcategory] !== undefined) {
+          core.categoryCompletion[category][subcategory] += 1;
+        }
+      }
     }
 
     if (type === 'quiz') {
@@ -93,11 +132,25 @@
       const score = Number(meta.score || 0);
       if (score >= 70) core.counts.quizzesPassed70 += 1;
       if (score >= 80) { core.counts.quizzes80 += 1; points += POINTS.quiz_bonus_highscore; }
+      
+      // Track category points for quizzes
+      if (category && core.categoryPoints[category] !== undefined) {
+        core.categoryPoints[category] += points;
+      }
     }
 
     if (type === 'video') {
       core.counts.videos += 1;
       if (meta.noSkip) points += POINTS.video_noskip_bonus;
+      
+      // Track category completion for videos
+      if (category && core.categoryPoints[category] !== undefined) {
+        core.categoryPoints[category] += points;
+        core.categoryCompletion[category].total += 1;
+        if (subcategory && core.categoryCompletion[category][subcategory] !== undefined) {
+          core.categoryCompletion[category][subcategory] += 1;
+        }
+      }
     }
 
     if (type === 'challenge') {

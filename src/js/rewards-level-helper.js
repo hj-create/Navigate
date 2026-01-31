@@ -3,7 +3,8 @@
     { name: 'Bronze', min: 0 },
     { name: 'Silver', min: 100 },
     { name: 'Gold', min: 300 },
-    { name: 'Platinum', min: 600 },
+    { name: 'Platinum', min: 700 },
+    { name: 'Diamond', min: 1200 },
   ];
   function currentLevel(points) {
     let lvl = LEVELS[0];
@@ -24,7 +25,7 @@
       lvlEl.textContent = currentLevel(pts);
     }
     // Always set a helpful tooltip
-    lvlEl.title = 'Bronze (0+), Silver (100+), Gold (300+), Platinum (600+)';
+    lvlEl.title = 'Bronze (0+), Silver (100+), Gold (300+), Platinum (700+), Diamond (1200+)';
   }
   document.addEventListener('DOMContentLoaded', update);
   ['rewards:updated','user:login','lesson:completed','video:watched','quiz:completed','live:attended']

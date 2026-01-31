@@ -220,8 +220,8 @@
 
         <!-- Rewards & Levels -->
       <section class="rewards-overview card">
-        <h2>Rewards</h2>
-        <p class="muted">Earn points by learning, level up, and redeem points for perks.</p>
+        <h2>Achievements & Rewards</h2>
+        <p class="muted">Earn points through learning activities, unlock certificates, and redeem rewards.</p>
 
         <div class="rewards-stats">
           <div class="stat">
@@ -233,7 +233,7 @@
             <div class="stat-value" id="rewards-level">Bronze</div>
           </div>
           <div class="stat">
-            <div class="stat-label">Streak</div>
+            <div class="stat-label">Learning Streak</div>
             <div class="stat-value" id="rewards-streak">0 days</div>
           </div>
           <div class="stat">
@@ -244,31 +244,36 @@
 
         <div class="rewards-columns">
           <div>
-            <h3>How to earn points</h3>
+            <h3>How to Earn Points</h3>
             <ul class="compact">
-              <li>Daily login: +10 pts (once per day)</li>
-              <li>Read a lesson: +20 pts</li>
-              <li>Watch a topic video: +15 pts</li>
-              <li>Complete a quiz: +30 pts</li>
-              <li>Streak bonus: +5 pts extra per consecutive day</li>
+              <li>Complete a lesson: +50 pts</li>
+              <li>Watch a video: +20 pts</li>
+              <li>Pass a quiz: +30 pts</li>
+              <li>Score 80%+ on quiz: +10 bonus pts</li>
+              <li>Daily login: +5 pts</li>
+              <li>7-day streak bonus: +50 pts</li>
             </ul>
           </div>
           <div>
-            <h3>Levels</h3>
+            <h3>Achievement Levels</h3>
             <ul class="compact">
-              <li>Bronze: 0–99 pts</li>
-              <li>Silver: 100–299 pts</li>
-              <li>Gold: 300–599 pts</li>
-              <li>Platinum: 600+ pts</li>
+              <li>Bronze: 0 pts (beginner level)</li>
+              <li>Silver: 100 pts (foundations scholar)</li>
+              <li>Gold: 300 pts (advanced learner)</li>
+              <li>Platinum: 700 pts (certified historian)</li>
+              <li>Diamond: 1,200 pts (academic excellence)</li>
             </ul>
           </div>
           <div>
-            <h3>Redeeming points</h3>
-            <ol class="compact">
-              <li>Open the list below and pick an available perk.</li>
-              <li>Click “Redeem” and confirm.</li>
-              <li>Points are deducted; some rewards require higher levels.</li>
-            </ol>
+            <h3>Certificates to Earn</h3>
+            <ul class="compact">
+              <li>History Starter Certificate (100 pts)</li>
+              <li>US/World/European History Foundations (300 pts each)</li>
+              <li>Critical Thinker Award (700 pts)</li>
+              <li>Consistency Champion (1,200 pts)</li>
+              <li>Certified Historian (1,200 pts)</li>
+              <li>Academic Excellence Award (2,000 pts)</li>
+            </ul>
           </div>
         </div>
 
@@ -325,6 +330,7 @@
     <script src="../../controller/dashboard.js"></script>
     <!-- Ensure rewards engine is loaded, then the store UI -->
     <script src="../../js/rewards.js"></script>
+    <script src="../../js/rewards-integration.js"></script>
     <script src="../../js/rewards-store.js"></script>
     <!-- Rewards overview renderer (no changes to engine) -->
     <script src="../../js/rewards-overview.js"></script>
