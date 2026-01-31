@@ -1,16 +1,22 @@
 (function () {
   // Levels and catalog (adjust as needed)
   const LEVELS = [
-    { name: 'Bronze', min: 0 },
-    { name: 'Silver', min: 100 },
-    { name: 'Gold', min: 300 },
-    { name: 'Platinum', min: 600 },
+    { name: 'Stone Tablet Starter', min: 0 },
+    { name: 'Ancient Archivist', min: 200 },
+    { name: 'Medieval Mastermind', min: 500 },
+    { name: 'Age of Exploration Expert', min: 900 },
+    { name: 'Revolutionary Scholar', min: 1400 },
+    { name: 'Historian Supreme 👑', min: 2000 },
   ];
   const CATALOG = [
-    { id: 'badge-bronze',  title: 'Bronze Study Badge',   cost: 50,  minLevel: 'Bronze' },
-    { id: 'pack-silver',   title: 'Silver Study Pack',    cost: 150, minLevel: 'Silver' },
-    { id: 'pass-gold',     title: 'Gold Event Pass',      cost: 350, minLevel: 'Gold' },
-    { id: 'perk-platinum', title: 'Platinum Perk Bundle', cost: 700, minLevel: 'Platinum' },
+    { id: 'hist-timeline-100', title: 'Interactive History Timeline', cost: 100, minLevel: 'Stone Tablet Starter', url: 'https://www.worldhistory.org/timeline/' },
+    { id: 'primary-sources-150', title: 'Primary Source Document Collection', cost: 150, minLevel: 'Stone Tablet Starter' },
+    { id: 'documentary-250', title: 'Premium History Documentary Access', cost: 250, minLevel: 'Ancient Archivist', url: 'https://www.youtube.com/watch?v=Yocja_N5s1I' },
+    { id: 'virtual-museum-400', title: 'Virtual Museum Tour Pass', cost: 400, minLevel: 'Ancient Archivist', url: 'https://artsandculture.google.com/' },
+    { id: 'study-guide-500', title: 'Comprehensive Exam Study Guide', cost: 500, minLevel: 'Medieval Mastermind' },
+    { id: 'expert-session-700', title: '1-on-1 History Expert Session', cost: 700, minLevel: 'Medieval Mastermind' },
+    { id: 'artifact-analysis-800', title: 'Historical Artifact Analysis Kit', cost: 800, minLevel: 'Age of Exploration Expert' },
+    { id: 'research-access-1000', title: 'Academic Research Database Access', cost: 1000, minLevel: 'Revolutionary Scholar' }
   ];
 
   function getState() {
@@ -84,8 +90,11 @@
   }
 
   function renderStats() {
-    const points = pointsFromEngineOrEstimate();
-    const levelName = currentLevel(points);
+    const state = getState();
+    const totalPoints = pointsFromEngineOrEstimate();
+    const spentPoints = state.spentPoints || 0;
+    const availablePoints = Math.max(0, totalPoints - spentPoints);
+    const levelName = currentLevel(totalPoints); // Level based on total earned, not available
     const streak = getStreak();
 
     const $pts   = document.getElementById('rewards-points');
@@ -93,18 +102,20 @@
     const $streak= document.getElementById('rewards-streak');
     const $next  = document.getElementById('rewards-next-level');
 
-    if ($pts)   $pts.textContent = String(points);
+    if ($pts)   $pts.textContent = String(availablePoints);
     if ($lvl)   $lvl.textContent = levelName;
     if ($streak)$streak.textContent = `${streak} day${streak === 1 ? '' : 's'}`;
-    if ($next)  $next.textContent = nextLevelLabel(points);
+    if ($next)  $next.textContent = nextLevelLabel(totalPoints);
   }
 
   function renderStore() {
     const ul = document.getElementById('reward-items');
     if (!ul) return;
-    const points = pointsFromEngineOrEstimate();
-    const levelName = currentLevel(points);
     const state = getState();
+    const totalPoints = pointsFromEngineOrEstimate();
+    const spentPoints = state.spentPoints || 0;
+    const availablePoints = Math.max(0, totalPoints - spentPoints);
+    const levelName = currentLevel(totalPoints);
     const inventory = state.inventory || [];
 
     ul.innerHTML = '';
@@ -122,7 +133,7 @@
         <button class="btn redeem-btn" data-id="${item.id}">${owned ? 'Owned' : 'Redeem'}</button>
       `;
       const btn = li.querySelector('.redeem-btn');
-      const enabled = canRedeem(item, points, levelName) && !owned;
+      const enabled = canRedeem(item, availablePoints, levelName) && !owned;
       if (!enabled) {
         btn.setAttribute('disabled', 'true');
         btn.classList.add('btn-disabled');
@@ -149,16 +160,19 @@
   }
 
   function confirmRedeem(item) {
-    const points = pointsFromEngineOrEstimate();
-    const levelName = currentLevel(points);
+    const state = getState();
+    const totalPoints = pointsFromEngineOrEstimate();
+    const spentPoints = state.spentPoints || 0;
+    const availablePoints = Math.max(0, totalPoints - spentPoints);
+    const levelName = currentLevel(totalPoints);
     
     // Check if user can redeem
-    if (!canRedeem(item, points, levelName)) {
+    if (!canRedeem(item, availablePoints, levelName)) {
       toast('You do not have enough points or the required level for this reward.');
       return;
     }
 
-    const ok = window.confirm(`Redeem "${item.title}" for ${item.cost} points?\n\nYour current balance: ${points} points`);
+    const ok = window.confirm(`Redeem "${item.title}" for ${item.cost} points?\n\nYour current balance: ${availablePoints} points`);
     if (!ok) return;
 
     // Actually deduct points and add to inventory
@@ -176,6 +190,9 @@
       
       // Save updated state
       localStorage.setItem('navigate_rewards_v1', JSON.stringify(state));
+      
+      // Dispatch event to update other parts of the UI
+      document.dispatchEvent(new CustomEvent('rewards:updated', { detail: { item, cost: item.cost } }));
       
       // Show celebration
       showCelebration(item);

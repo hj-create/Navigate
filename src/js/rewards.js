@@ -15,41 +15,33 @@
   };
 
   const TIERS = [
-    { id: 'tier1', points: 100, label: 'History Starter' },
-    { id: 'tier2', points: 300, label: 'Foundations Scholar' },
-    { id: 'tier3', points: 700, label: 'Advanced Learner' },
-    { id: 'tier4', points: 1200, label: 'Certified Historian' },
-    { id: 'tier5', points: 2000, label: 'Academic Excellence' }
+    { id: 'tier1', points: 0, label: 'Stone Tablet Starter' },
+    { id: 'tier2', points: 200, label: 'Ancient Archivist' },
+    { id: 'tier3', points: 500, label: 'Medieval Mastermind' },
+    { id: 'tier4', points: 900, label: 'Age of Exploration Expert' },
+    { id: 'tier5', points: 1400, label: 'Revolutionary Scholar' },
+    { id: 'tier6', points: 2000, label: 'Historian Supreme 👑' }
   ];
 
   const STORE = [
-    { id: 'badge_custom_100', type: 'badge', cost: 100, name: 'Custom Avatar Badge' },
-    { id: 'bonus_video_250', type: 'video', cost: 250, name: 'Bonus Video (Unit 1)', url: 'https://www.youtube.com/watch?v=Yocja_N5s1I' },
-    { id: 'profile_theme_500', type: 'theme', cost: 500, name: 'Special Profile Theme' },
-    { id: 'minigame_1000', type: 'game', cost: 1000, name: 'Mini‑Game Unlock', url: 'https://www.mission-us.org/games/spirit-of-a-nation/' },
-    { id: 'exclusive_pack_2000', type: 'pack', cost: 2000, name: 'Exclusive Content Pack' }
+    { id: 'hist_timeline_100', type: 'resource', cost: 100, name: 'Interactive History Timeline', url: 'https://www.worldhistory.org/timeline/' },
+    { id: 'primary_sources_150', type: 'resource', cost: 150, name: 'Primary Source Document Collection' },
+    { id: 'documentary_250', type: 'video', cost: 250, name: 'Premium History Documentary Access', url: 'https://www.youtube.com/watch?v=Yocja_N5s1I' },
+    { id: 'virtual_museum_400', type: 'experience', cost: 400, name: 'Virtual Museum Tour Pass', url: 'https://artsandculture.google.com/' },
+    { id: 'study_guide_500', type: 'resource', cost: 500, name: 'Comprehensive Exam Study Guide' },
+    { id: 'expert_session_700', type: 'session', cost: 700, name: '1-on-1 History Expert Session' },
+    { id: 'artifact_analysis_800', type: 'resource', cost: 800, name: 'Historical Artifact Analysis Kit' },
+    { id: 'research_access_1000', type: 'resource', cost: 1000, name: 'Academic Research Database Access' }
   ];
 
   const ACHIEVEMENTS = [
-    // 100-300 points tier
-    { id: 'starter_100', name: 'History Starter Certificate', desc: 'Earning the first 100 points', rule: s => s.totalPoints >= 100 },
-    { id: 'lesson_explorer', name: 'Lesson Explorer', desc: 'Complete 5 lessons or videos', rule: s => (s.counts.lessons + s.counts.videos) >= 5 },
-    { id: 'quiz_conqueror', name: 'Quiz Conqueror', desc: 'Pass 3 quizzes with 70%+', rule: s => s.counts.quizzesPassed70 >= 3 },
-    { id: 'rising_historian_250', name: 'Rising Historian', desc: '250 points earned', rule: s => s.totalPoints >= 250 },
-    
-    // 300-700 points tier
-    { id: 'us_history_foundations', name: 'US History Foundations', desc: 'Earn 500 points in U.S. History content', rule: s => (s.categoryPoints?.usHistory || 0) >= 500 },
-    { id: 'world_history_foundations', name: 'World History Foundations Certificate', desc: 'Complete early civilizations & ancient history content', rule: s => (s.categoryCompletion?.worldHistory?.ancientCivilizations || 0) >= 3 && (s.categoryCompletion?.worldHistory?.ancientHistory || 0) >= 3 },
-    { id: 'european_history_foundations', name: 'European History Foundations Certificate', desc: 'Master Medieval & early European topics', rule: s => (s.categoryCompletion?.europeanHistory?.medieval || 0) >= 3 && (s.categoryCompletion?.europeanHistory?.earlyEuropean || 0) >= 3 },
-    
-    // 700-1200 points tier
-    { id: 'critical_thinker', name: 'Critical Thinker Certificate', desc: 'Score 80%+ on 5 quizzes', rule: s => s.counts.quizzes80 >= 5 },
-    { id: 'consistency_champion', name: 'Consistency Champion', desc: 'Maintain a 7‑day learning streak', rule: s => s.streak.current >= 7 },
-    
-    // 1200-2000 points tier
-    { id: 'certified_historian', name: 'Certified Historian', desc: '1,500 total points earned', rule: s => s.totalPoints >= 1500 },
-    { id: 'history_honors', name: 'History Honors', desc: 'High quiz scores + lesson completion across topics', rule: s => s.counts.quizzes80 >= 8 && s.counts.lessons >= 15 },
-    { id: 'academic_excellence', name: 'Academic Excellence in History', desc: 'Consistent high performance across units', rule: s => s.totalPoints >= 1800 && s.counts.quizzes80 >= 10 && s.streak.current >= 14 }
+    // Level-based certificates - one for each achievement level
+    { id: 'stone_tablet_starter', name: 'Stone Tablet Starter', desc: 'Reaching 0 points - Beginning your history journey', rule: s => s.totalPoints >= 0 },
+    { id: 'ancient_archivist', name: 'Ancient Archivist', desc: 'Reaching 200 points - Mastering ancient history', rule: s => s.totalPoints >= 200 },
+    { id: 'medieval_mastermind', name: 'Medieval Mastermind', desc: 'Reaching 500 points - Conquering the Middle Ages', rule: s => s.totalPoints >= 500 },
+    { id: 'age_exploration_expert', name: 'Age of Exploration Expert', desc: 'Reaching 900 points - Discovering new worlds', rule: s => s.totalPoints >= 900 },
+    { id: 'revolutionary_scholar', name: 'Revolutionary Scholar', desc: 'Reaching 1,400 points - Leading historical change', rule: s => s.totalPoints >= 1400 },
+    { id: 'historian_supreme', name: 'Historian Supreme', desc: 'Reaching 2,000 points - Achieving the highest honor', rule: s => s.totalPoints >= 2000 }
   ];
 
   const initial = () => ({
@@ -173,9 +165,13 @@
     core.totalPoints += points;
     core.activityHistory.push({ type, date, points, meta });
 
-    // Achievements
+    // Check and award certificates based on total points earned
+    // Certificates are awarded when user reaches each level's point threshold
     for (const a of ACHIEVEMENTS) {
-      if (!core.achievements.includes(a.id) && a.rule(core)) core.achievements.push(a.id);
+      if (!core.achievements.includes(a.id) && a.rule(core)) {
+        core.achievements.push(a.id);
+        console.log(`🎉 Certificate earned: ${a.name}`);
+      }
     }
 
     save(core);

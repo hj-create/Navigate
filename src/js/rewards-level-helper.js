@@ -1,10 +1,11 @@
 (function () {
   const LEVELS = [
-    { name: 'Bronze', min: 0 },
-    { name: 'Silver', min: 100 },
-    { name: 'Gold', min: 300 },
-    { name: 'Platinum', min: 700 },
-    { name: 'Diamond', min: 1200 },
+    { name: 'Stone Tablet Starter', min: 0 },
+    { name: 'Ancient Archivist', min: 200 },
+    { name: 'Medieval Mastermind', min: 500 },
+    { name: 'Age of Exploration Expert', min: 900 },
+    { name: 'Revolutionary Scholar', min: 1400 },
+    { name: 'Historian Supreme 👑', min: 2000 },
   ];
   function currentLevel(points) {
     let lvl = LEVELS[0];
@@ -25,7 +26,7 @@
       lvlEl.textContent = currentLevel(pts);
     }
     // Always set a helpful tooltip
-    lvlEl.title = 'Bronze (0+), Silver (100+), Gold (300+), Platinum (700+), Diamond (1200+)';
+    lvlEl.title = 'Stone Tablet Starter (0+), Ancient Archivist (200+), Medieval Mastermind (500+), Age of Exploration Expert (900+), Revolutionary Scholar (1400+), Historian Supreme (2000+)';
   }
   document.addEventListener('DOMContentLoaded', update);
   ['rewards:updated','user:login','lesson:completed','video:watched','quiz:completed','live:attended']
