@@ -1,7 +1,19 @@
 (function () {
+  // Get user-specific downloads key
+  function getDownloadsKey() {
+    const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    if (!currentUser || !currentUser.id) {
+      return 'navigate_downloads_v1_guest';
+    }
+    return 'navigate_downloads_v1_user_' + currentUser.id;
+  }
+  
   // Update Downloads summary count and render table when "Downloads" tab is active
   function getDownloads() {
-    try { return JSON.parse(localStorage.getItem('navigate_downloads_v1') || '[]'); }
+    try { 
+      const key = getDownloadsKey();
+      return JSON.parse(localStorage.getItem(key) || '[]'); 
+    }
     catch { return []; }
   }
   function fmtDate(iso) {

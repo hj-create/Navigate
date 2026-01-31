@@ -31,6 +31,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -50,10 +51,10 @@
                     <span>Sign Up</span>
                 </a>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
@@ -234,16 +235,16 @@
           </div>
         </div>
 
-        <div class="rewards-levels-section">
-          <h3>Achievement Levels</h3>
-          <div class="levels-grid" id="levels-grid">
+        <div class="rewards-levels-section" role="region" aria-labelledby="achievement-levels-heading">
+          <h3 id="achievement-levels-heading">Achievement Levels</h3>
+          <div class="levels-grid" id="levels-grid" role="list" aria-label="Available achievement levels">
             <!-- Populated by rewards-overview.js -->
           </div>
         </div>
 
-        <div class="earned-certificates">
-          <h3>Your Certificates</h3>
-          <div class="certificates-grid" id="certificates-grid">
+        <div class="earned-certificates" role="region" aria-labelledby="certificates-heading">
+          <h3 id="certificates-heading">Your Certificates</h3>
+          <div class="certificates-grid" id="certificates-grid" role="list" aria-label="Earned certificates with special rewards">
             <!-- Populated by rewards-overview.js -->
           </div>
         </div>

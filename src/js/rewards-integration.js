@@ -163,12 +163,13 @@
     const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
     if (!currentUser) return;
 
-    // Check if we've already awarded today's login
+    // Check if we've already awarded today's login (user-specific)
     const today = new Date().toISOString().split('T')[0];
-    const lastLogin = localStorage.getItem('navigate_last_login_reward');
+    const loginKey = 'navigate_last_login_reward_user_' + currentUser.id;
+    const lastLogin = localStorage.getItem(loginKey);
     
     if (lastLogin !== today) {
-      localStorage.setItem('navigate_last_login_reward', today);
+      localStorage.setItem(loginKey, today);
       
       document.dispatchEvent(new CustomEvent('user:login', { 
         detail: { date: today, userId: currentUser.id } 

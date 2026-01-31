@@ -188,8 +188,15 @@
         state.inventory.push(item.id);
       }
       
-      // Save updated state
-      localStorage.setItem('navigate_rewards_v1', JSON.stringify(state));
+      // Save updated state using Rewards API if available
+      if (window.Rewards && typeof window.Rewards.getState === 'function') {
+        // The rewards system will handle saving with the correct user-specific key
+        // We need to trigger a save through the rewards system
+        // For now, we'll dispatch an event and let the rewards system handle it
+        document.dispatchEvent(new CustomEvent('rewards:item-redeemed', { 
+          detail: { item, cost: item.cost, spentPoints: state.spentPoints, inventory: state.inventory } 
+        }));
+      }
       
       // Dispatch event to update other parts of the UI
       document.dispatchEvent(new CustomEvent('rewards:updated', { detail: { item, cost: item.cost } }));

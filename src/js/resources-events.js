@@ -1,12 +1,32 @@
 (function () {
-  const LS_COUNTS = 'navigate_counts_v1';
-  const LS_DOWNLOADS = 'navigate_downloads_v1';
+  // Get user-specific storage keys
+  function getDownloadsKey() {
+    const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    if (!currentUser || !currentUser.id) {
+      return 'navigate_downloads_v1_guest';
+    }
+    return 'navigate_downloads_v1_user_' + currentUser.id;
+  }
+  
+  function getCountsKey() {
+    const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    if (!currentUser || !currentUser.id) {
+      return 'navigate_counts_v1_guest';
+    }
+    return 'navigate_counts_v1_user_' + currentUser.id;
+  }
 
   function getCounts() {
-    try { return JSON.parse(localStorage.getItem(LS_COUNTS) || '{}'); } catch { return {}; }
+    try { 
+      const key = getCountsKey();
+      return JSON.parse(localStorage.getItem(key) || '{}'); 
+    } catch { return {}; }
   }
   function setCounts(obj) {
-    try { localStorage.setItem(LS_COUNTS, JSON.stringify(obj)); } catch {}
+    try { 
+      const key = getCountsKey();
+      localStorage.setItem(key, JSON.stringify(obj)); 
+    } catch {}
   }
   function bump(topicKey, kind) {
     const counts = getCounts();
@@ -18,13 +38,14 @@
 
   function addDownloadLog(topicKey, filename) {
     try {
-      const log = JSON.parse(localStorage.getItem(LS_DOWNLOADS) || '[]');
+      const key = getDownloadsKey();
+      const log = JSON.parse(localStorage.getItem(key) || '[]');
       log.push({
         type: 'download',
         date: new Date().toISOString().split('T')[0],
         meta: { topic: topicKey, filename, duration: '—' }
       });
-      localStorage.setItem(LS_DOWNLOADS, JSON.stringify(log));
+      localStorage.setItem(key, JSON.stringify(log));
     } catch {}
   }
 

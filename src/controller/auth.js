@@ -81,6 +81,11 @@ function signup(username, email, password) {
     // Set as current user
     setCurrentUser(newUser);
     
+    // Initialize rewards data for new user
+    if (typeof window.Rewards !== 'undefined' && window.Rewards.reload) {
+        window.Rewards.reload();
+    }
+    
     return { success: true, user: newUser };
 }
 
@@ -131,6 +136,11 @@ function signin(usernameOrEmail, password, rememberMe = false) {
         localStorage.removeItem('navigate_remember_me');
     }
     
+    // Reload rewards data for this user
+    if (typeof window.Rewards !== 'undefined' && window.Rewards.reload) {
+        window.Rewards.reload();
+    }
+    
     return { success: true, user: user };
 }
 
@@ -165,6 +175,11 @@ function logout() {
     // Remove current user and remember me flag
     localStorage.removeItem('navigate_current_user');
     localStorage.removeItem('navigate_remember_me');
+    
+    // Clear/reload rewards data (will switch to guest mode)
+    if (typeof window.Rewards !== 'undefined' && window.Rewards.clear) {
+        window.Rewards.clear();
+    }
 }
 
 /**

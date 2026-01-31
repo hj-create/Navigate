@@ -40,12 +40,14 @@ function renderAchievementLevels() {
         
         const levelModule = document.createElement('div');
         levelModule.className = `level-module ${isEarned ? 'earned' : ''}`;
+        levelModule.setAttribute('role', 'listitem');
+        levelModule.setAttribute('aria-label', `Achievement level: ${level.name}, requires ${level.points.toLocaleString()} points${isEarned ? ', Earned' : ', Not yet earned'}`);
         
         levelModule.innerHTML = `
-            <div class="level-icon">${level.icon}</div>
+            <div class="level-icon" aria-hidden="true">${level.icon}</div>
             <div class="level-name">${level.name}</div>
             <div class="level-points">${level.points.toLocaleString()} pts</div>
-            ${isEarned ? '<div class="level-earned-badge">✓ Earned</div>' : ''}
+            ${isEarned ? '<div class="level-earned-badge" role="status" aria-label="Achievement earned">✓ Earned</div>' : ''}
         `;
         
         levelsGrid.appendChild(levelModule);
@@ -171,6 +173,9 @@ function renderCertificates() {
     certificates.forEach(cert => {
         const certCard = document.createElement('div');
         certCard.className = 'certificate-card';
+        certCard.setAttribute('role', 'listitem');
+        certCard.setAttribute('tabindex', '0');
+        certCard.setAttribute('aria-label', `Certificate for ${cert.name}. Press Enter or Space to reveal reward.`);
         
         // Get user's name from auth system
         let userName = 'Student';
@@ -186,13 +191,13 @@ function renderCertificates() {
         });
         
         certCard.innerHTML = `
-            <div class="certificate-flip-container">
+            <div class="certificate-flip-container" role="button" aria-live="polite" tabindex="-1">
                 <div class="certificate-flipper">
                     <!-- Front of Certificate -->
-                    <div class="certificate-front">
+                    <div class="certificate-front" aria-hidden="false">
                         <div class="certificate-border">
                             <div class="certificate-header">
-                                <span class="material-icons certificate-icon">workspace_premium</span>
+                                <span class="material-icons certificate-icon" aria-hidden="true">workspace_premium</span>
                                 <h4>Certificate of Achievement</h4>
                             </div>
                             <div class="certificate-body">
@@ -204,35 +209,40 @@ function renderCertificates() {
                             </div>
                             <div class="certificate-footer">
                                 <p class="certificate-date">Awarded: ${earnedDate}</p>
-                                <div class="certificate-seal">
+                                <div class="certificate-seal" aria-hidden="true">
                                     <span class="material-icons">verified</span>
                                 </div>
                             </div>
-                            <div class="flip-hint">
+                            <div class="flip-hint" aria-hidden="true">
                                 <span class="material-icons">touch_app</span>
-                                <span>Click to reveal your reward</span>
+                                <span>Click or press Enter to reveal your reward</span>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Back of Certificate -->
-                    <div class="certificate-back">
+                    <div class="certificate-back" aria-hidden="true">
                         <div class="certificate-border">
                             <div class="reward-header">
-                                <div class="reward-icon-large">${cert.reward.icon}</div>
+                                <div class="reward-icon-large" aria-hidden="true">${cert.reward.icon}</div>
                                 <h4>Special Reward Unlocked!</h4>
                             </div>
                             <div class="reward-body">
                                 <h3 class="reward-title">${cert.reward.title}</h3>
                                 <p class="reward-description">${cert.reward.description}</p>
-                                <a href="${cert.reward.link}" target="_blank" class="reward-button">
-                                    <span class="material-icons">launch</span>
+                                <a href="${cert.reward.link}" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   class="reward-button"
+                                   tabindex="0"
+                                   aria-label="Access reward: ${cert.reward.title}. Opens in new window.">
+                                    <span class="material-icons" aria-hidden="true">launch</span>
                                     Access Reward
                                 </a>
                             </div>
-                            <div class="flip-hint">
+                            <div class="flip-hint" aria-hidden="true">
                                 <span class="material-icons">touch_app</span>
-                                <span>Click to return to certificate</span>
+                                <span>Click or press Enter to return to certificate</span>
                             </div>
                         </div>
                     </div>
@@ -240,9 +250,41 @@ function renderCertificates() {
             </div>
         `;
         
-        // Add click event to flip the card
-        certCard.addEventListener('click', function() {
-            this.classList.toggle('flipped');
+        // Add click and keyboard event handlers
+        const flipCard = function(event) {
+            // Prevent flip when clicking on the reward link
+            if (event.target.closest('.reward-button')) {
+                return;
+            }
+            
+            const isFlipped = certCard.classList.contains('flipped');
+            certCard.classList.toggle('flipped');
+            
+            // Update ARIA attributes for screen readers
+            const front = certCard.querySelector('.certificate-front');
+            const back = certCard.querySelector('.certificate-back');
+            
+            if (!isFlipped) {
+                // Now showing back
+                front.setAttribute('aria-hidden', 'true');
+                back.setAttribute('aria-hidden', 'false');
+                certCard.setAttribute('aria-label', `Viewing reward for ${cert.name}: ${cert.reward.title}. Press Enter or Space to return to certificate.`);
+            } else {
+                // Now showing front
+                front.setAttribute('aria-hidden', 'false');
+                back.setAttribute('aria-hidden', 'true');
+                certCard.setAttribute('aria-label', `Certificate for ${cert.name}. Press Enter or Space to reveal reward.`);
+            }
+        };
+        
+        certCard.addEventListener('click', flipCard);
+        
+        // Keyboard support (Enter or Space)
+        certCard.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                flipCard(event);
+            }
         });
         
         certificatesGrid.appendChild(certCard);

@@ -1,6 +1,16 @@
 // Smart Rewards Engine: points, streaks, achievements, tiers, store, rendering.
 (() => {
-  const LS_KEY = 'navigate_rewards_v1';
+  const LS_KEY_PREFIX = 'navigate_rewards_v1_user_';
+
+  // Get user-specific localStorage key
+  function getUserStorageKey() {
+    const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    if (!currentUser || !currentUser.id) {
+      // Fallback for guests or if auth not loaded yet
+      return 'navigate_rewards_v1_guest';
+    }
+    return LS_KEY_PREFIX + currentUser.id;
+  }
 
   const POINTS = {
     lesson: 50,
@@ -62,10 +72,16 @@
   });
 
   function load() {
-    try { return JSON.parse(localStorage.getItem(LS_KEY)) || initial(); }
+    try { 
+      const key = getUserStorageKey();
+      return JSON.parse(localStorage.getItem(key)) || initial(); 
+    }
     catch { return initial(); }
   }
-  function save(s) { localStorage.setItem(LS_KEY, JSON.stringify(s)); }
+  function save(s) { 
+    const key = getUserStorageKey();
+    localStorage.setItem(key, JSON.stringify(s)); 
+  }
 
   function todayStr(d = new Date()) {
     const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), dd = String(d.getDate()).padStart(2, '0');
@@ -287,6 +303,21 @@
         case 'challenge_completed': return award(s, 'challenge', POINTS.challenge_default, meta);
         default: return 0;
       }
+    },
+    // Reload rewards data for current user (called when user changes)
+    reload() {
+      const state = load();
+      // Dispatch event to update UI
+      const event = new CustomEvent('rewards:updated', { detail: state });
+      document.dispatchEvent(event);
+      return state;
+    },
+    // Clear rewards data (for logout)
+    clear() {
+      // This will be handled automatically by getUserStorageKey()
+      // Each user has their own storage key
+      const event = new CustomEvent('rewards:updated', { detail: initial() });
+      document.dispatchEvent(event);
     }
   };
   window.Rewards = Rewards;
@@ -297,6 +328,15 @@
   document.addEventListener('video:watched', e => Rewards.record('video_watched', e.detail || {}));
   document.addEventListener('user:login', e => Rewards.record('daily_login', e.detail || {}));
   document.addEventListener('challenge:completed', e => Rewards.record('challenge_completed', e.detail || {}));
+  
+  // Handle item redemption from rewards store
+  document.addEventListener('rewards:item-redeemed', e => {
+    const { spentPoints, inventory } = e.detail || {};
+    const state = load();
+    if (spentPoints !== undefined) state.spentPoints = spentPoints;
+    if (inventory !== undefined) state.inventory = inventory;
+    save(state);
+  });
 
   document.addEventListener('DOMContentLoaded', () => render(load()));
 })();

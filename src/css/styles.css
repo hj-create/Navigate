@@ -640,23 +640,38 @@ body {
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   border-color: var(--accent-color);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  position: relative;
+}
+
+.level-module.earned::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  border: 2px solid var(--accent-color);
+  pointer-events: none;
 }
 
 .level-module.earned .level-name {
   color: var(--accent-color);
+  font-weight: 700;
 }
 
 .level-earned-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
   color: white;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 0.75rem;
-  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
   animation: fadeInScale 0.5s ease;
+  border: 1px solid #047857;
 }
 
 @keyframes fadeInScale {
@@ -729,6 +744,19 @@ body {
   cursor: pointer;
   height: 100%;
   min-height: 400px;
+  position: relative;
+}
+
+/* Enhanced focus indicator for keyboard navigation */
+.certificate-card:focus {
+  outline: 3px solid var(--focus-outline, #4a148c) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px rgba(74, 20, 140, 0.2) !important;
+}
+
+.certificate-card:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
 }
 
 .certificate-flip-container {
@@ -744,6 +772,21 @@ body {
   height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .certificate-flipper {
+    transition: transform 0.2s;
+  }
+  
+  .flip-hint {
+    animation: none !important;
+  }
+  
+  .reward-icon-large {
+    animation: none !important;
+  }
 }
 
 .certificate-card.flipped .certificate-flipper {
@@ -975,16 +1018,55 @@ body {
   font-size: 0.95rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  border: 2px solid transparent;
 }
 
 .reward-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
   background: linear-gradient(135deg, #1976d2, var(--accent-color));
+  text-decoration: none;
+}
+
+.reward-button:focus {
+  outline: 3px solid var(--focus-outline, #4a148c) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 5px rgba(74, 20, 140, 0.2), 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+  border-color: var(--focus-outline, #4a148c);
 }
 
 .reward-button .material-icons {
   font-size: 20px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .certificate-card:focus {
+    outline-width: 4px !important;
+  }
+  
+  .certificate-border {
+    border-width: 4px !important;
+  }
+  
+  .reward-button {
+    border: 3px solid white !important;
+  }
+  
+  .level-module.earned {
+    border: 4px solid var(--accent-color) !important;
+  }
+}
+
+/* Windows High Contrast Mode */
+@media screen and (-ms-high-contrast: active) {
+  .certificate-card:focus {
+    outline: 4px solid windowText !important;
+  }
+  
+  .reward-button {
+    border: 3px solid buttonText !important;
+  }
 }
 
 @media screen and (max-width: 768px) {
