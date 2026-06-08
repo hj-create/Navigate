@@ -12,12 +12,27 @@ document.addEventListener('DOMContentLoaded', function () {
   function blurActiveSoon() {
     requestAnimationFrame(() => document.activeElement?.blur?.());
   }
-  function scrollNoSmooth(el, offsetExtra = 8) {
+  // gentle animated scroll helper to reduce jarring jumps
+  function gentleAnimateScrollTo(startY, endY, duration = 560) {
+    const startTime = performance.now();
+    const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    function step(now) {
+      const t = Math.min(1, (now - startTime) / duration);
+      const eased = easeInOutCubic(t);
+      const current = Math.round(startY + (endY - startY) * eased);
+      window.scrollTo(0, current);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function gentleScrollToElement(el, offsetExtra = 8, duration = 560) {
     if (!el) return;
     const header = document.querySelector('.header');
     const offset = header ? header.offsetHeight : 64;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset - offsetExtra;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    const targetY = el.getBoundingClientRect().top + window.pageYOffset - offset - offsetExtra;
+    const startY = window.scrollY || window.pageYOffset;
+    gentleAnimateScrollTo(startY, Math.max(0, targetY), duration);
   }
 
   function handleSubjectSelection(e) {
@@ -30,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (timeSlots) { timeSlots.style.display = 'none'; timeSlots.classList.remove('active'); }
 
     if (typeof generateCalendar === 'function') { try { generateCalendar(); } catch {} }
-    scrollNoSmooth(calendar, 8);
+  gentleScrollToElement(calendar, 12, 520);
     blurActiveSoon();
   }
 

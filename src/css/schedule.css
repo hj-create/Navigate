@@ -40,16 +40,22 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0.5rem;
+    /* Ensure each row has a consistent height so entire month displays */
+    grid-auto-rows: minmax(80px, auto);
 }
 
 .calendar-day {
-    aspect-ratio: 1;
+    /* allow flexible height while keeping content readable */
+    min-height: 80px;
     padding: 0.5rem;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .calendar-day:hover {
@@ -92,6 +98,49 @@
     transform: translateX(-50%);
     animation: fadeInUp 0.3s ease;
 }
+
+/* Booked event item styling (matches screenshot) */
+.event-popup .event-item.booked {
+    padding: 0.5rem 0;
+}
+.event-popup .event-item.booked .event-title {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+}
+.event-popup .event-item.booked .event-time {
+    color: #666;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+.event-popup .event-item.booked .event-topic {
+    margin-top: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+.event-popup .event-item.booked a {
+    color: #1e88e5;
+    text-decoration: underline;
+}
+.event-popup .event-item.booked a:focus,
+.event-popup .event-item.booked a:hover {
+    text-decoration: none;
+}
+.event-popup .event-item.booked .material-icons {
+    color: var(--accent-color);
+}
+
+/* Inline SVG icon styling inside popups */
+.event-popup svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--accent-color);
+    display: inline-block;
+    vertical-align: middle;
+}
+.event-popup svg path { fill: currentColor; }
 
 .event-popup::after {
     content: '';

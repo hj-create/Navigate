@@ -77,6 +77,23 @@
 /* Upcoming sessions */
 .upcoming-sessions { display: grid; gap: 1rem; margin-top: 1.5rem; }
 
+/* Space the Upcoming Sessions container down a bit to reduce clutter */
+#upcomingSessionsContainer {
+  margin-top: 1rem; /* small default push */
+}
+
+@media screen and (min-width: 900px) {
+  #upcomingSessionsContainer {
+    margin-top: 2.5rem; /* more breathing room on wider screens */
+  }
+}
+
+@media screen and (max-width: 460px) {
+  #upcomingSessionsContainer {
+    margin-top: 0.5rem; /* tighter on very small screens */
+  }
+}
+
 .session-card {
   background: #fff;
   border-radius: 8px;
@@ -109,22 +126,27 @@
 /* Subject selection */
 .subject-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  /* Ensure each subject button is wide enough to show full label on desktop */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
   list-style: none;
   padding: 0;
 }
-
 .subject-item {
   background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
+  padding: 1rem 1.25rem; /* larger, more comfortable tap target */
+  border-radius: 10px;
   cursor: pointer;
   display: flex; align-items: center; gap: .75rem;
-  transition: all .3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  font-size: 1rem;
+  transition: all .2s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  font-size: 1.05rem;
+  min-height: 64px; /* enforce consistent height */
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  white-space: nowrap; /* keep label on one line */
 }
 .subject-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 .subject-item.selected { background: var(--accent-color); color: #fff; }
@@ -200,6 +222,12 @@
 .time-slot:hover { background: var(--hover-color); transform: translateY(-2px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 .time-slot.selected { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
 .time-slot.selected .material-icons { animation: pulse 1s infinite; }
+
+/* Responsive: allow more compact subjects on narrow viewports */
+@media screen and (max-width: 880px) {
+  .subject-list { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .5rem; }
+  .subject-item { padding: .8rem 1rem; font-size: .95rem; min-height: 52px; }
+}
 
 @keyframes pulse {
   0% { transform: scale(1); }
@@ -291,7 +319,7 @@
   font-weight: 500; transition: all .3s ease; width: 100%; max-width: 300px;
 }
 .book-new-btn, .book-another-btn { background: var(--accent-color); }
-.back-btn { background: #666; }
+.back-btn { background: var(--accent-color); }
 .book-new-btn:hover, .back-btn:hover, .book-another-btn:hover { transform: translateY(-2px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
 /* Booking container visibility */

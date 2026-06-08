@@ -9,13 +9,6 @@
   --footer-height: 250px;
   --hover-color:  #ffb74d;
   --accent-color: #ff5722;
-  /* spacing scale for consistent vertical rhythm */
-  --space-xxs: 0.25rem; /* 4px */
-  --space-xs: 0.5rem;   /* 8px */
-  --space-sm: 0.75rem;  /* 12px */
-  --space-md: 1rem;     /* 16px */
-  --space-lg: 1.5rem;   /* 24px */
-  --space-xl: 2rem;     /* 32px */
 }
 
 /* Reset and Base Styles */
@@ -71,43 +64,9 @@ body {
 .content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl); /* increased gap for more breathing room */
-  padding: calc(var(--space-lg)) 24px;
+  gap: 24px;
+  padding: 24px;
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
-}
-
-/* Global typography spacing rules: ensure consistent vertical rhythm across headings and text blocks */
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: var(--space-lg);
-  line-height: 1.2;
-  -webkit-font-smoothing: antialiased;
-}
-
-p, ul, ol, dl, blockquote, pre, figure, .content-area, .lead {
-  margin-top: 0;
-  margin-bottom: var(--space-md);
-}
-
-/* Tighten lists slightly but keep breathing room */
-ul, ol { padding-left: 1.25rem; }
-
-/* Small helper for section spacing */
-section { margin-bottom: var(--space-xl); }
-
-/* Page title spacing: push the first page-level heading further below the navigation bar */
-.horizontal-menu + h1,
-.horizontal-menu + h2,
-.content-wrapper > h1,
-.content-wrapper h1:first-of-type,
-.main-content h1:first-of-type,
-.content-area h1:first-of-type {
-  margin-top: var(--space-xl);
-}
-
-/* Ensure H2s that appear directly after the horizontal menu also receive extra spacing */
-.horizontal-menu + h2 {
-  margin-top: calc(var(--space-lg) + var(--space-md));
 }
 
 .horizontal-menu {
@@ -196,6 +155,20 @@ section { margin-bottom: var(--space-xl); }
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+}
+
+/* Page heading spacing: keep titles comfortably below the sticky nav
+   Use a responsive clamp so spacing adapts to header height and viewport
+   Targets common title/header containers used across pages. */
+.content-header,
+.content-title,
+.lesson-header,
+.download-header,
+.auth-header,
+.section-header,
+.hero {
+  /* At narrow screens this will be ~0.75rem, at larger screens up to 2rem */
+  margin-top: clamp(0.75rem, calc(var(--header-height) * 0.25), 2rem);
 }
 
 .hero { text-align: center; padding: 60px 0; }

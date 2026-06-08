@@ -45,15 +45,20 @@
         align-items: center;
     }
 
-    .reschedule-btn, .cancel-btn, .join-session-btn {
+    /* Normalize sizes for all three session action buttons */
+    .session-actions > button {
         padding: 0.5rem 1rem;
+        min-width: 96px;
+        height: 40px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        display: flex;
+        display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
         transition: all 0.2s ease;
+        font-weight: 500;
     }
 
     .reschedule-btn {
@@ -178,6 +183,7 @@
                             <span class="material-icons">add</span>
                             Book New Session
                         </button>
+                        <!-- Calendly messaging removed per project request -->
                     </div>
                 </div>
                 <div class="upcoming-sessions">
@@ -205,32 +211,6 @@
                         Back to Sessions
                     </button>
                 </div>
-                <div class="subject-selection">
-                    <h3>Select Subject</h3>
-                    <ul class="subject-list">
-                        <li class="subject-item" data-subject="World History">
-                            <span class="material-icons">public</span>
-                            World History
-                        </li>
-                        <li class="subject-item" data-subject="European History">
-                            <span class="material-icons">account_balance</span>
-                            European History
-                        </li>
-                        <li class="subject-item" data-subject="Ancient History">
-                            <span class="material-icons">emoji_people</span>
-                            Ancient History
-                        </li>
-                        <li class="subject-item" data-subject="Government & Politics">
-                            <span class="material-icons">gavel</span>
-                            Government & Politics
-                        </li>
-                        <li class="subject-item" data-subject="US History">
-                            <span class="material-icons">flag</span>
-                            US History
-                        </li>
-                    </ul>
-                </div>
-
                 <div class="session-type-selection" style="margin-top: 2rem;">
                     <h3>Select Session Type</h3>
                     <div class="session-type-options">
@@ -257,6 +237,32 @@
                     </div>
                 </div>
 
+                <div class="subject-selection">
+                    <h3>Select Subject</h3>
+                    <ul class="subject-list">
+                        <li class="subject-item" data-subject="World History">
+                            <span class="material-icons">public</span>
+                            World History
+                        </li>
+                        <li class="subject-item" data-subject="European History">
+                            <span class="material-icons">account_balance</span>
+                            European History
+                        </li>
+                        <li class="subject-item" data-subject="Ancient History">
+                            <span class="material-icons">emoji_people</span>
+                            Ancient History
+                        </li>
+                        <li class="subject-item" data-subject="Government & Politics">
+                            <span class="material-icons">gavel</span>
+                            Government & Politics
+                        </li>
+                        <li class="subject-item" data-subject="US History">
+                            <span class="material-icons">flag</span>
+                            US History
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="calendar" id="sessionCalendar" style="display: none;">
                     <div class="calendar-header">
                         <button class="calendar-nav"><span class="material-icons">chevron_left</span></button>
@@ -270,26 +276,11 @@
 
                 <div class="time-slots" id="timeSlots" style="display: none;">
                     <h3>Available Time Slots</h3>
-                    <div class="time-slot">
-                        <span class="material-icons">schedule</span>
-                        9:00 AM - 10:00 AM
-                    </div>
-                    <div class="time-slot">
-                        <span class="material-icons">schedule</span>
-                        10:30 AM - 11:30 AM
-                    </div>
-                    <div class="time-slot">
-                        <span class="material-icons">schedule</span>
-                        1:00 PM - 2:00 PM
-                    </div>
-                    <div class="time-slot">
-                        <span class="material-icons">schedule</span>
-                        2:30 PM - 3:30 PM
-                    </div>
-                    <div class="time-slot">
-                        <span class="material-icons">schedule</span>
-                        4:00 PM - 5:00 PM
-                    </div>
+                    <div class="time-slot">9:00 AM - 10:00 AM</div>
+                        <div class="time-slot">10:30 AM - 11:30 AM</div>
+                        <div class="time-slot">1:00 PM - 2:00 PM</div>
+                        <div class="time-slot">2:30 PM - 3:30 PM</div>
+                        <div class="time-slot">4:00 PM - 5:00 PM</div>
                 </div>
             </div>
         </div>
@@ -341,8 +332,33 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Constants
-        const ZOOM_LINK = 'https://us02web.zoom.us/j/86878301632?pwd=XFKHYWOAmJ';
+        // gentle animated scroll helper to reduce jarring jumps
+        function gentleAnimateScrollTo(startY, endY, duration = 600) {
+            const startTime = performance.now();
+            const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            function step(now) {
+                const t = Math.min(1, (now - startTime) / duration);
+                const eased = easeInOutCubic(t);
+                const current = Math.round(startY + (endY - startY) * eased);
+                window.scrollTo(0, current);
+                if (t < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        function gentleScrollToElement(el, opts = {}) {
+            if (!el) return;
+            const header = document.querySelector('.header');
+            const headerOffset = header ? header.offsetHeight : 64;
+            const extra = typeof opts.offset === 'number' ? opts.offset : 12;
+            const duration = typeof opts.duration === 'number' ? opts.duration : 600;
+            const targetY = el.getBoundingClientRect().top + window.pageYOffset - headerOffset - extra;
+            const startY = window.scrollY || window.pageYOffset;
+            gentleAnimateScrollTo(startY, Math.max(0, targetY), duration);
+        }
+
+    // Constants
+    const ZOOM_LINK = 'https://us05web.zoom.us/j/4855197166?pwd=7VU8TwyS0si6MaesRriSNB8AngZEyW.1';
         
         // DOM Elements
         const subjectItems = document.querySelectorAll('.subject-item');
@@ -459,20 +475,16 @@
                     sessionTypeRadio.checked = true;
                 }
                 
-                // Scroll to booking section
-                bookingContainer.scrollIntoView({ behavior: 'smooth' });
+                // Scroll to booking section (gentle)
+                gentleScrollToElement(bookingContainer, { offset: 16, duration: 600 });
             });
 
             card.querySelector('.join-session-btn').addEventListener('click', function() {
-                if (session.meetLink) {
-                    // Open Zoom link in new tab
-                    const newWindow = window.open(session.meetLink, '_blank');
-                    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-                        // Popup was blocked
-                        alert('Please allow popups for this site to join the session. You can manually open: ' + session.meetLink);
-                    }
-                } else {
-                    alert('Meeting link not available for this session.');
+                // Open the fixed waiting-room Zoom link in new tab
+                const newWindow = window.open(ZOOM_LINK, '_blank');
+                if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                    // Popup was blocked
+                    alert('Please allow popups for this site to join the session. You can manually open: ' + ZOOM_LINK);
                 }
             });
 
@@ -563,13 +575,71 @@
                         selectedDate = `${monthNames[currentMonth]} ${i}, ${currentYear}`;
                         timeSlots.style.display = 'block';
                         timeSlots.classList.add('active');
-                        timeSlots.scrollIntoView({ behavior: 'smooth' });
+                        gentleScrollToElement(timeSlots, { offset: 12, duration: 520 });
                     });
                 } else {
                     dayElement.classList.add('disabled');
                 }
                 
                 calendarGrid.appendChild(dayElement);
+            }
+
+            // Add event popups for booked sessions (match schedule page structure)
+            try {
+                const allSessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+                // Group sessions by YYYY-MM-DD
+                const grouped = {};
+                allSessions.forEach(s => {
+                    if (!s.date) return;
+                    const d = new Date(s.date);
+                    if (isNaN(d)) return;
+                    const y = d.getFullYear();
+                    const m = (d.getMonth() + 1).toString().padStart(2, '0');
+                    const dd = d.getDate().toString().padStart(2, '0');
+                    const key = `${y}-${m}-${dd}`;
+                    if (!grouped[key]) grouped[key] = [];
+                    grouped[key].push({
+                        title: s.subject + ' (Booked)',
+                        time: s.time,
+                        topic: s.topic || '',
+                        sessionType: s.sessionType || 'Live Tutoring',
+                        meetLink: s.meetLink
+                    });
+                });
+
+                // Attach popups to day elements
+                const dayEls = calendarGrid.querySelectorAll('.calendar-day');
+                dayEls.forEach(function(el) {
+                    const dayNum = parseInt(el.textContent, 10);
+                    if (!dayNum) return;
+                    const m = (currentMonth + 1).toString().padStart(2, '0');
+                    const d = dayNum.toString().padStart(2, '0');
+                    const key = `${currentYear}-${m}-${d}`;
+                    const events = grouped[key];
+                    if (events && events.length) {
+                        el.classList.add('has-event');
+                        // Build popup HTML
+                        const eventHtml = events.map(function(event) {
+                            return '<div class="event-item booked">'
+                                + '<div class="event-title" style="color: var(--accent-color); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem;">' + event.title + '</div>'
+                                + '<div class="event-time" style="color:#666; font-weight:700; font-size:1rem; margin-bottom:0.5rem;">' + event.time + '</div>'
+                                + '<div style="margin-top:0.5rem; color: var(--accent-color); font-weight:600; display:flex; align-items:center; gap:0.5rem;">'
+                                    + (event.sessionType === 'Group Study' ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C11 14.17 6.33 13 4 13zM16 13c-.29 0-.62.02-.97.05 1.16.84 1.97 1.86 1.97 3.45V20h6v-3.5C23 14.17 18.33 13 16 13z"/></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>')
+                                    + '<span>' + (event.sessionType || 'Live Tutoring') + '</span>'
+                                + '</div>'
+                                + '<div style="margin-top:0.6rem;">' + (event.meetLink ? '<a href="' + (event.meetLink || ZOOM_LINK) + '" target="_blank" style="color:#1e88e5;text-decoration:underline;">Join Link</a>' : '') + '</div>'
+                            + '</div>';
+                        }).join('<hr style="margin: 0.5rem 0; border: none; border-top: 1px solid #eee;">');
+
+                        const popup = document.createElement('div');
+                        popup.className = 'event-popup';
+                        popup.innerHTML = eventHtml;
+                        el.appendChild(popup);
+                    }
+                });
+            } catch (e) {
+                // ignore parse errors
+                console.warn('Could not build event popups:', e);
             }
 
             // Disable previous month navigation if current month
@@ -627,7 +697,7 @@
                 timeSlots.classList.remove('active');
                 timeSlots.style.display = 'none';
                 generateCalendar();
-                calendar.scrollIntoView({ behavior: 'smooth' });
+                gentleScrollToElement(calendar, { offset: 12, duration: 520 });
             });
         });
 
@@ -668,7 +738,7 @@
             bookingContainer.style.display = 'block';
             bookingContainer.classList.add('active');
             resetBookingForm();
-            bookingContainer.scrollIntoView({ behavior: 'smooth' });
+            gentleScrollToElement(bookingContainer, { offset: 16, duration: 600 });
         });
         */
 
@@ -713,7 +783,7 @@
                 `;
 
                 timeSlots.appendChild(bookingMessageDiv);
-                bookingMessageDiv.scrollIntoView({ behavior: 'smooth' });
+                gentleScrollToElement(bookingMessageDiv, { offset: 12, duration: 520 });
 
                 bookingMessageDiv.querySelector('.confirm-booking-btn').addEventListener('click', function() {
                     const user = getCurrentUser();
@@ -776,8 +846,10 @@
                     alert(message);
                     
                     // Scroll to sessions section
-                    upcomingSessionsContainer.scrollIntoView({ behavior: 'smooth' });
+                    gentleScrollToElement(upcomingSessionsContainer, { offset: 16, duration: 520 });
                 });
+
+        
             });
         });
 
