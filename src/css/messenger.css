@@ -221,3 +221,9 @@
         margin: 0;
     }
 }
+
+    /* Mirror chatbot bubble styles for messenger messages to ensure visual parity */
+    .chat-msg { padding: 10px 14px; border-radius:16px; max-width:78%; line-height:1.35; box-shadow:0 6px 18px rgba(20,20,60,0.04); }
+    .chat-bot { background: #fff; color: #111; align-self: flex-start; border-top-left-radius:4px; }
+    .chat-user { background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); color: #fff; align-self: flex-end; border-top-right-radius:4px; }
+    .message-text { white-space:pre-wrap; }

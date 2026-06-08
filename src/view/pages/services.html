@@ -124,8 +124,8 @@
             </div>
 
             <div class="service-card">
-                <!-- clicking this will show the chatbot section -->
-                <a href="#services-chatbot" class="toggle-link" data-target="services-chatbot" style="text-decoration: none; color: inherit;">
+                <!-- clicking this will open the full-page chatbot -->
+                <a href="chatbot.html" class="toggle-link" data-target="services-chatbot" style="text-decoration: none; color: inherit;">
                     <span class="material-icons">chat</span>
                     <h3>Chatbot</h3>
                     <p>Ask the Navigate Bot quick questions about scheduling, resources, and joining sessions.</p>
@@ -133,8 +133,8 @@
             </div>
 
             <div class="service-card">
-                <!-- clicking this will show the messenger (tutor chat) section -->
-                <a href="#services-messenger" class="toggle-link" data-target="services-messenger" style="text-decoration: none; color: inherit;">
+                <!-- clicking this will open the full-page tutor chat -->
+                <a href="tutor-chat.html" class="toggle-link" data-target="services-messenger" style="text-decoration: none; color: inherit;">
                     <span class="material-icons">forum</span>
                     <h3>Tutor Chat</h3>
                     <p>Get direct help from our expert tutors during business hours (9 AM - 5 PM).</p>
@@ -248,11 +248,14 @@
                 sec.scrollIntoView({behavior:'smooth', block:'start'});
             }
 
-            // attach click handlers to toggle links
+            // attach click handlers to toggle links for in-page hash navigation only
             toggles.forEach(a => {
                 a.addEventListener('click', function (e) {
+                    const href = a.getAttribute('href') || '';
+                    // if this is a normal link (points to a page), allow navigation
+                    if (!href.startsWith('#')) return; 
                     e.preventDefault();
-                    const target = a.getAttribute('data-target') || (a.getAttribute('href') || '').slice(1);
+                    const target = a.getAttribute('data-target') || href.slice(1);
                     if (!target) return;
                     // toggle: if visible, hide; otherwise show
                     const sec = sections[target];

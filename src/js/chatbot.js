@@ -39,7 +39,13 @@
       if (!text) return;
       appendMessage(text, 'user');
       input.value = '';
-      setTimeout(() => appendMessage(botReply(text), 'bot'), 500);
+      // show typing indicator
+      const typing = document.getElementById('typing');
+      if (typing) typing.style.display = 'inline-flex';
+      setTimeout(() => {
+        if (typing) typing.style.display = 'none';
+        appendMessage(botReply(text), 'bot');
+      }, 700);
     });
 
     // Voice-to-text (mic)

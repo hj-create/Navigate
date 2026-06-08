@@ -1,14 +1,18 @@
 (function() {
   const STORAGE_KEY = 'navigate_tutor_messages';
-  
+
   document.addEventListener('DOMContentLoaded', () => {
-    const messagesEl = document.getElementById('tutor-messages');
-    const form = document.getElementById('messenger-form');
-    const input = document.getElementById('messenger-input');
-    const statusEl = document.getElementById('tutor-status');
+    // Be flexible: different pages use different ids/classes for the messenger form
+    const messagesEl = document.getElementById('tutor-messages') || document.getElementById('messenger-thread') || document.querySelector('.messenger-messages') || document.querySelector('.chat-messages');
+    let form = document.getElementById('messenger-form') || document.getElementById('tutor-form');
+    const input = document.getElementById('messenger-input') || document.querySelector('.messenger-input') || document.querySelector('.chat-input') || document.querySelector('#message-input') || document.querySelector('textarea.chat-input');
+    const statusEl = document.getElementById('tutor-status') || null;
+    // If we couldn't find a form by id, try to locate it from the input element
+    if (!form && input) form = input.closest('form');
     const micBtn = form ? form.querySelector('.mic-btn') : null;
 
-    if (!messagesEl || !form || !input) return;
+    // Require at minimum the messages container and the input
+    if (!messagesEl || !input) return;
 
     function formatTime(date) {
       return new Intl.DateTimeFormat('en', {
@@ -17,21 +21,15 @@
       }).format(date);
     }
 
-    function appendMessage(text, sender, time = new Date()) {
+    // Use the same bubble markup and classes as the Chatbot for visual parity
+    function appendMessage(text, sender = 'System', time = new Date()) {
       const msg = document.createElement('div');
-      msg.className = 'messenger-message';
-      // Tag for TTS: user vs tutor/system
-      msg.dataset.from = sender === 'You' ? 'you' : (sender.toLowerCase());
-      msg.innerHTML = `
-        <div class="message-avatar">
-          <span class="material-icons">${sender === 'You' ? 'person' : (sender === 'Tutor' ? 'school' : 'info')}</span>
-        </div>
-        <div class="message-content">
-          <div class="message-sender">${sender}</div>
-          <div class="message-text">${text}</div>
-          <div class="message-time">${formatTime(time)}</div>
-        </div>
-      `;
+      const from = (sender === 'You' || sender === 'user') ? 'user' : (sender === 'Tutor' || sender === 'tutor' ? 'tutor' : 'system');
+      msg.className = 'chat-msg ' + (from === 'user' ? 'chat-user' : 'chat-bot');
+      msg.dataset.from = from === 'user' ? 'user' : (from === 'tutor' ? 'tutor' : 'system');
+      msg.classList.add('message');
+      // Keep a small meta block similar to chatbot
+      msg.innerHTML = `<div class="message-text">${text}</div>`;
       messagesEl.appendChild(msg);
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
@@ -39,24 +37,57 @@
     function updateTutorStatus() {
       const hr = new Date().getHours();
       const isAvailable = hr >= 9 && hr < 17;
-      statusEl.className = `tutor-status ${isAvailable ? '' : 'offline'}`;
+      if (statusEl) {
+        statusEl.className = `tutor-status ${isAvailable ? '' : 'offline'}`;
+        // Friendly human-readable status text when the element exists
+        statusEl.textContent = isAvailable ? 'Online • A tutor will respond shortly' : 'Offline • Leave a message';
+      }
       return isAvailable;
     }
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const text = input.value.trim();
-      if (!text) return;
-      appendMessage(text, 'You');
-      input.value = '';
-      setTimeout(() => {
-        if (!updateTutorStatus()) {
-          appendMessage("Our tutors are currently offline. They'll respond during business hours (9 AM - 5 PM).", 'System');
-          return;
+    // Attach submit handler if we have a form (or fallback to listening to keydown on input)
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        appendMessage(text, 'You');
+        input.value = '';
+        // show typing indicator if present
+        const typing = document.getElementById('typing-tutor');
+        if (typing) typing.style.display = 'inline-flex';
+        setTimeout(() => {
+          if (typing) typing.style.display = 'none';
+          // Always accept messages; provide an auto-reply depending on hours
+          if (!updateTutorStatus()) {
+            appendMessage("Thanks — our tutors are currently offline. They'll respond during business hours (9 AM - 5 PM).", 'System');
+          } else {
+            appendMessage("Thanks for your message. A tutor will see this shortly.", 'System');
+          }
+        }, 900);
+      });
+    } else {
+      // Fallback: allow enter key to send when there's no form element
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          const text = input.value.trim();
+          if (!text) return;
+          appendMessage(text, 'You');
+          input.value = '';
+          const typing = document.getElementById('typing-tutor');
+          if (typing) typing.style.display = 'inline-flex';
+          setTimeout(() => {
+            if (typing) typing.style.display = 'none';
+            if (!updateTutorStatus()) {
+              appendMessage("Thanks — our tutors are currently offline. They'll respond during business hours (9 AM - 5 PM).", 'System');
+            } else {
+              appendMessage("Thanks for your message. A tutor will see this shortly.", 'System');
+            }
+          }, 900);
         }
-        appendMessage("Thanks for your message. A tutor will respond shortly.", 'System');
-      }, 800);
-    });
+      });
+    }
 
     // Voice-to-text (mic)
     if (micBtn && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
@@ -157,13 +188,12 @@
 
   function extractText(node) {
     if (!node) return '';
-    // Prefer inner .message-text
-    const txtEl = node.querySelector?.('.message-text');
+    const txtEl = node.querySelector?.('.message-text') || node.querySelector?.('.chat-msg, .chat-bot, .chat-user');
     return (txtEl ? txtEl.textContent : node.textContent || '').trim();
   }
 
   function readLastTutorMessage() {
-    const tutorNodes = messages.querySelectorAll('.messenger-message[data-from="tutor"], .messenger-message[data-from="system"]');
+    const tutorNodes = messages.querySelectorAll('.chat-bot, .chat-msg[data-from="system"], .chat-msg[data-from="tutor"]');
     const last = tutorNodes[tutorNodes.length - 1];
     if (last) speak(extractText(last));
   }
@@ -173,7 +203,7 @@
       for (const m of muts) {
         for (const n of m.addedNodes) {
           if (!(n instanceof HTMLElement)) continue;
-          const isTutor = n.matches('.messenger-message[data-from="tutor"], .messenger-message[data-from="system"]');
+          const isTutor = n.matches('.chat-bot, .chat-msg[data-from="system"], .chat-msg[data-from="tutor"]') || n.querySelector?.('.chat-bot, .chat-msg[data-from="system"], .chat-msg[data-from="tutor"]');
           if (isTutor && !spokenSet.has(n)) {
             spokenSet.add(n);
             speak(extractText(n));
