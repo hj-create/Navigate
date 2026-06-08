@@ -65,6 +65,7 @@ function signup(username, email, password) {
         email: email,
         password: password, // In production, this should be hashed
         createdAt: new Date().toISOString(),
+        sessions: [], // Initialize empty sessions array
         progress: {
             completedLessons: [],
             quizScores: [],
@@ -79,6 +80,11 @@ function signup(username, email, password) {
     
     // Set as current user
     setCurrentUser(newUser);
+    
+    // Initialize rewards data for new user
+    if (typeof window.Rewards !== 'undefined' && window.Rewards.reload) {
+        window.Rewards.reload();
+    }
     
     return { success: true, user: newUser };
 }
@@ -112,6 +118,14 @@ function signin(usernameOrEmail, password, rememberMe = false) {
     users[userIndex] = user;
     saveUsers(users);
     
+    // Restore user's sessions if they have any
+    if (user.sessions && user.sessions.length > 0) {
+        localStorage.setItem('sessions', JSON.stringify(user.sessions));
+    } else {
+        // Clear any existing sessions from localStorage
+        localStorage.removeItem('sessions');
+    }
+    
     // Set as current user
     setCurrentUser(user);
     
@@ -122,15 +136,50 @@ function signin(usernameOrEmail, password, rememberMe = false) {
         localStorage.removeItem('navigate_remember_me');
     }
     
+    // Reload rewards data for this user
+    if (typeof window.Rewards !== 'undefined' && window.Rewards.reload) {
+        window.Rewards.reload();
+    }
+    
     return { success: true, user: user };
 }
 
 /**
  * Log out current user
  */
+/**
+ * Logout current user
+ * Saves their sessions to their account before clearing current session
+ */
 function logout() {
+    const currentUser = getCurrentUser();
+    
+    if (currentUser) {
+        // Get current sessions from localStorage
+        const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+        
+        // Save sessions to user's account data
+        const users = getAllUsers();
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        
+        if (userIndex !== -1) {
+            // Store sessions in user's account
+            users[userIndex].sessions = sessions;
+            saveUsers(users);
+        }
+        
+        // Clear sessions from general localStorage
+        localStorage.removeItem('sessions');
+    }
+    
+    // Remove current user and remember me flag
     localStorage.removeItem('navigate_current_user');
     localStorage.removeItem('navigate_remember_me');
+    
+    // Clear/reload rewards data (will switch to guest mode)
+    if (typeof window.Rewards !== 'undefined' && window.Rewards.clear) {
+        window.Rewards.clear();
+    }
 }
 
 /**
@@ -197,6 +246,94 @@ function updateUserProgress(type, data) {
 function getUserProgress() {
     const currentUser = getCurrentUser();
     return currentUser ? currentUser.progress : null;
+}
+
+/**
+ * Create guest user session
+ * @param {string} name - Guest's name
+ * @param {string} email - Guest's email
+ * @returns {Object} Guest user object
+ */
+function createGuestUser(name, email) {
+    const guestUser = {
+        id: 'guest_' + Date.now().toString(),
+        username: name || 'Guest',
+        email: email,
+        isGuest: true,
+        createdAt: new Date().toISOString(),
+        sessions: []
+    };
+    
+    localStorage.setItem('navigate_guest_user', JSON.stringify(guestUser));
+    return guestUser;
+}
+
+/**
+ * Get current guest user
+ * @returns {Object|null} Guest user object or null
+ */
+function getGuestUser() {
+    const guestUser = localStorage.getItem('navigate_guest_user');
+    return guestUser ? JSON.parse(guestUser) : null;
+}
+
+/**
+ * Check if current user is a guest
+ * @returns {boolean} True if user is a guest
+ */
+function isGuestUser() {
+    const user = getCurrentUser();
+    const guest = getGuestUser();
+    return guest !== null || (user && user.isGuest);
+}
+
+/**
+ * Get current user or guest
+ * @returns {Object|null} Current user, guest, or null
+ */
+function getCurrentUserOrGuest() {
+    return getCurrentUser() || getGuestUser();
+}
+
+/**
+ * Book session for guest
+ * @param {Object} sessionData - Session booking data
+ * @returns {boolean} True if booking successful
+ */
+function bookGuestSession(sessionData) {
+    const guest = getGuestUser();
+    if (!guest) return false;
+    
+    // Guests can only book sessions for today
+    const today = new Date().toDateString();
+    const sessionDate = new Date(sessionData.date).toDateString();
+    
+    if (today !== sessionDate) {
+        return false;
+    }
+    
+    guest.sessions.push({
+        ...sessionData,
+        bookedAt: new Date().toISOString()
+    });
+    
+    localStorage.setItem('navigate_guest_user', JSON.stringify(guest));
+    return true;
+}
+
+/**
+ * Clear guest session
+ */
+function clearGuestSession() {
+    localStorage.removeItem('navigate_guest_user');
+}
+
+/**
+ * Logout user or guest
+ */
+function logoutAll() {
+    logout();
+    clearGuestSession();
 }
 
 /**

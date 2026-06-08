@@ -322,6 +322,7 @@
         <li><a href="privacy-policy.html">Privacy Policy</a></li>
         <li><a href="terms-of-service.html">Terms of Service</a></li>
         <li><a href="accessibility-statement.html">Accessibility Statement</a></li>
+        <li><a href="credits.html"><span class="material-icons" style="font-size: 14px; vertical-align: middle;">verified</span> Credits & Attributions</a></li>
       </ul>
     </div>
 
@@ -332,6 +333,11 @@
     <p><span class="material-icons" style="vertical-align:middle;font-size:14px">copyright</span> 2025 Navigate. All rights reserved.</p>
   </div>
 </footer>
+
+    <!-- Load dependencies BEFORE inline script -->
+    <script src="../../controller/auth.js"></script>
+    <script src="../../controller/auth-state.js"></script>
+    <script src="../../js/guest-booking.js"></script>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -365,6 +371,15 @@
 
         // Helper Functions
         function loadZoomSessions() {
+            // Only show sessions if user is logged in or is a guest
+            const currentUser = getCurrentUser();
+            const guestUser = getGuestUser();
+            
+            if (!currentUser && !guestUser) {
+                // Not logged in - return empty array
+                return [];
+            }
+            
             const all = JSON.parse(localStorage.getItem('sessions') || '[]');
             return all.filter(s => s.meetLink === ZOOM_LINK);
         }
@@ -483,7 +498,15 @@
             upcomingSessionsEl.innerHTML = '';
 
             if (sessions.length === 0) {
-                upcomingSessionsEl.innerHTML = '<p class="empty-state">No scheduled sessions. Book a session to see it here.</p>';
+                // Check if user is logged in
+                const currentUser = getCurrentUser();
+                const guestUser = getGuestUser();
+                
+                if (!currentUser && !guestUser) {
+                    upcomingSessionsEl.innerHTML = '<p class="empty-state">Sign in or create an account to view and book sessions.</p>';
+                } else {
+                    upcomingSessionsEl.innerHTML = '<p class="empty-state">No scheduled sessions. Book a session to see it here.</p>';
+                }
                 return;
             }
 
@@ -608,20 +631,46 @@
             });
         });
 
+        // Note: bookNewBtn event listener is handled by live-sessions.js
+        // Commenting out duplicate to prevent conflicts
+        /*
         bookNewBtn.addEventListener('click', function() {
-            // Check if user is logged in
-            if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
-                alert('Please sign in to book a session.');
-                window.location.href = 'signin.html';
+            console.log('Book New Button clicked');
+            const user = getCurrentUser();
+            const guest = getGuestUser();
+            console.log('User:', user, 'Guest:', guest);
+            
+            // If not logged in and not a guest, show guest booking modal
+            if (!user && !guest) {
+                console.log('Showing guest booking modal');
+                showGuestBookingModal(
+                    function(guestUser) {
+                        // Guest created successfully, show booking form
+                        console.log('Guest user created:', guestUser);
+                        upcomingSessionsContainer.style.display = 'none';
+                        bookingContainer.style.display = 'block';
+                        bookingContainer.classList.add('active');
+                        resetBookingForm();
+                        bookingContainer.scrollIntoView({ behavior: 'smooth' });
+                    },
+                    function() {
+                        // User chose to sign up
+                        console.log('User chose to sign up');
+                        window.location.href = 'signup.html';
+                    }
+                );
                 return;
             }
             
+            // User or guest is already logged in
+            console.log('User/guest already exists, showing booking form');
             upcomingSessionsContainer.style.display = 'none';
             bookingContainer.style.display = 'block';
             bookingContainer.classList.add('active');
             resetBookingForm();
             bookingContainer.scrollIntoView({ behavior: 'smooth' });
         });
+        */
 
         backToSessions.addEventListener('click', function() {
             bookingContainer.style.display = 'none';
@@ -667,6 +716,26 @@
                 bookingMessageDiv.scrollIntoView({ behavior: 'smooth' });
 
                 bookingMessageDiv.querySelector('.confirm-booking-btn').addEventListener('click', function() {
+                    const user = getCurrentUser();
+                    const guest = getGuestUser();
+                    const sessionData = {
+                        subject: selectedSubject,
+                        sessionType: selectedSessionType,
+                        date: selectedDate,
+                        time: selectedTime,
+                        meetLink: ZOOM_LINK
+                    };
+                    
+                    // Check if guest can book this session (date restriction)
+                    if (guest && !user) {
+                        const canBook = canBookSession(selectedDate);
+                        if (!canBook.canBook) {
+                            // Guest trying to book future session - show modal
+                            showGuestDateRestrictionModal();
+                            return;
+                        }
+                    }
+                    
                     const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
                     
                     const wasReschedule = !!sessionToReschedule;
@@ -682,16 +751,15 @@
                         sessionToReschedule = null;
                     }
                     
-                    // Add new session with session type
-                    sessions.push({
-                        subject: selectedSubject,
-                        sessionType: selectedSessionType,
-                        date: selectedDate,
-                        time: selectedTime,
-                        meetLink: ZOOM_LINK
-                    });
+                    // Add new session
+                    sessions.push(sessionData);
                     
                     localStorage.setItem('sessions', JSON.stringify(sessions));
+                    
+                    // If guest, also save to guest sessions
+                    if (guest && !user) {
+                        bookGuestSession(sessionData);
+                    }
                     
                     // Reset the form
                     resetBookingForm();
@@ -748,7 +816,5 @@
 <!-- REPLACE the long inline script with this -->
 <script src="../../js/live-sessions.js" defer></script>
 
-<script src="../../controller/auth.js"></script>
-<script src="../../controller/auth-state.js"></script>
 </body>
 </html>

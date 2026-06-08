@@ -166,7 +166,7 @@ function createActivityRow(activity) {
  * Update welcome message with username
  */
 function updateWelcomeMessage(user) {
-    const dashboardHeader = document.querySelector('.dashboard-header h1');
+    const dashboardHeader = document.querySelector('.dashboard-header h1') || document.getElementById('dashboardWelcome');
     if (dashboardHeader) {
         dashboardHeader.textContent = `Welcome back, ${user.username}!`;
     }

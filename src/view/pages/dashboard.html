@@ -31,6 +31,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -50,10 +51,10 @@
                     <span>Sign Up</span>
                 </a>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
@@ -90,7 +91,7 @@
         </nav>
 
         <div class="dashboard-header">
-            <h1>Learning Progress Dashboard</h1>
+            <h1 id="dashboardWelcome">Learning Progress Dashboard</h1>
             <div class="date-range">
                 <span class="material-icons">date_range</span>
                 <div class="date-inputs">
@@ -217,6 +218,37 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Rewards & Levels -->
+      <section class="rewards-overview card">
+        <h2>Achievements & Rewards</h2>
+        <p class="muted">Earn points through learning activities, unlock certificates, and redeem rewards.</p>
+
+        <div class="rewards-stats">
+          <div class="stat">
+            <div class="stat-label">Current Points</div>
+            <div class="stat-value" id="rewards-points">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Level</div>
+            <div class="stat-value" id="rewards-level">Stone Tablet Starter</div>
+          </div>
+        </div>
+
+        <div class="rewards-levels-section" role="region" aria-labelledby="achievement-levels-heading">
+          <h3 id="achievement-levels-heading">Achievement Levels</h3>
+          <div class="levels-grid" id="levels-grid" role="list" aria-label="Available achievement levels">
+            <!-- Populated by rewards-overview.js -->
+          </div>
+        </div>
+
+        <div class="earned-certificates" role="region" aria-labelledby="certificates-heading">
+          <h3 id="certificates-heading">Your Certificates</h3>
+          <div class="certificates-grid" id="certificates-grid" role="list" aria-label="Earned certificates with special rewards">
+            <!-- Populated by rewards-overview.js -->
+          </div>
+        </div>
+      </section>
     </main>
     
     <footer class="footer">
@@ -245,6 +277,7 @@
         <li><a href="privacy-policy.html">Privacy Policy</a></li>
         <li><a href="terms-of-service.html">Terms of Service</a></li>
         <li><a href="accessibility-statement.html">Accessibility Statement</a></li>
+        <li><a href="credits.html"><span class="material-icons" style="font-size: 14px; vertical-align: middle;">verified</span> Credits & Attributions</a></li>
       </ul>
     </div>
 
@@ -260,12 +293,31 @@
     <script src="../../controller/auth-state.js"></script>
     <script src="../../controller/user-tracking.js"></script>
     <script src="../../controller/dashboard.js"></script>
+    <!-- Ensure rewards engine is loaded, then the store UI -->
+    <script src="../../js/rewards.js"></script>
+    <script src="../../js/rewards-integration.js"></script>
+    <script src="../../js/rewards-store.js"></script>
+    <!-- Rewards overview renderer (no changes to engine) -->
+    <script src="../../js/rewards-overview.js"></script>
+    
     <script>
-        // Require authentication to view dashboard
-        requireAuth('signin.html');
-        
-        // Display user progress
-        displayUserProgress();
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking auth...');
+            
+            // Require authentication to view dashboard
+            const hasAccess = requireAuth('signin.html');
+            
+            if (hasAccess) {
+                console.log('User has access, displaying dashboard');
+                // Display user progress
+                displayUserProgress();
+                
+                // Award daily login once per day
+                document.dispatchEvent(new CustomEvent('user:login'));
+            } else {
+                console.log('User does not have access, modal should be shown');
+            }
+        });
     </script>
 </body>
 </html>
