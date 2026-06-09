@@ -1,0 +1,160 @@
+/* Homepage-specific modern visual refresh (keeps all content text identical)
+   Non-destructive: scoped under .homepage body class where possible.
+*/
+
+.homepage .main-content {
+  padding: 48px 20px;
+}
+
+.homepage .hero-image-section {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(12,18,36,0.12);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+}
+
+/* Enhanced image integration: clipped shapes, soft overlay, and CSS vars for JS-driven pan/parallax */
+.homepage .carousel-container { position: relative; }
+.homepage .carousel-slide { position: relative; overflow: hidden; }
+.homepage .carousel-slide .carousel-image {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  display: block;
+  /* transform controlled via CSS vars so JS can update pan/parallax */
+  transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) scale(var(--s, 1.03));
+  transition: transform 450ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
+  filter: saturate(1.06) contrast(1.03);
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+.homepage .carousel-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8,12,20,0.18), rgba(8,12,20,0.02));
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.homepage .carousel-slide:hover .carousel-image { transform: translate3d(var(--tx,0px), calc(var(--ty,0px) - 6px), 0) scale(1.06); }
+
+/* Make image height responsive */
+@media (max-width: 1024px) { .homepage .carousel-slide .carousel-image { height: 420px; } }
+@media (max-width: 640px) { .homepage .carousel-slide .carousel-image { height: 260px; clip-path:none; } }
+
+/* Gentle vignette for images (subtle) */
+.homepage .carousel-image { border-radius: 8px; }
+
+.homepage .carousel-overlay {
+  padding: 3rem 2rem;
+  text-align: left;
+}
+
+.homepage .carousel-overlay h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.homepage .carousel-overlay p {
+  margin: 0;
+  font-size: 1.05rem;
+  opacity: 0.92;
+}
+
+.homepage .carousel-btn {
+  background: rgba(255,255,255,0.95);
+  color: var(--primary-color);
+  width: 56px; height: 56px;
+  box-shadow: 0 8px 24px rgba(12,18,36,0.12);
+}
+
+.homepage .menu-list { justify-content: center; gap: 12px; }
+.homepage .menu-item a { padding: 10px 18px; border-radius: 999px; background: rgba(255,255,255,0.9); box-shadow: none; }
+.homepage .menu-item a:hover { transform: translateY(-3px); }
+
+/* Ensure the horizontal menu centers within the main content area */
+.homepage .horizontal-menu { display: flex; justify-content: center; }
+.homepage .menu-list { margin: 0 auto; }
+
+.homepage .content-wrapper { gap: 32px; }
+.homepage .mission, .homepage .value-prop, .homepage .mini-carousel {
+  background: white; padding: 28px; border-radius: 12px; box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+}
+
+.homepage .mission h2, .homepage .value-prop h2, .homepage .mini-carousel h2 { font-size: 1.25rem; display:flex; gap:10px; align-items:center; }
+.homepage .mission p, .homepage .value-prop p { color: #333740; line-height:1.6; }
+
+.homepage .title { display: block; font-size: 1.25rem; font-weight:700; color: #fff; }
+.homepage .header { background: linear-gradient(90deg, #ff8a00, #ff5722); }
+
+/* Cards grid for value props */
+.homepage .value-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 12px; }
+
+.homepage .cta-row { display:flex; gap:12px; align-items:center; margin-top: 1rem; }
+.homepage .cta-btn { padding: 12px 20px; border-radius: 999px; border: none; background: linear-gradient(90deg,var(--primary-color),var(--accent-color)); color: white; cursor: pointer; box-shadow: 0 12px 30px rgba(255,120,0,0.12); }
+
+/* Reviews widget container style reset */
+.homepage #shapo-widget-968a77fadaee2c7739fb { min-height: 140px; }
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .homepage .carousel-overlay { padding: 1.2rem; text-align:center; }
+  .homepage .carousel-overlay h2 { font-size: 1.6rem; }
+  .homepage .menu-list { justify-content: center; }
+}
+
+/* Image grid for interspersed visuals */
+.homepage .image-grid-section { margin-top: 22px; }
+.homepage .image-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+.homepage .image-feature { background: linear-gradient(180deg,#fff,#fbfbff); border-radius: 12px; overflow: hidden; display:flex; flex-direction:column; box-shadow: 0 12px 30px rgba(12,18,36,0.06); }
+.homepage .image-feature .feature-img { width:100%; height: 220px; object-fit: cover; display:block; transition: transform 600ms cubic-bezier(.2,.9,.2,1), filter 400ms; }
+.homepage .image-feature figcaption { padding: 14px 16px; font-size: 0.95rem; color: #333740; }
+.homepage .image-feature:hover .feature-img { transform: scale(1.035) translateY(-6px); filter: saturate(1.05) contrast(1.02); }
+
+@media (max-width: 900px) { .homepage .image-grid { grid-template-columns: repeat(2, 1fr); } .homepage .image-feature .feature-img { height: 180px; } }
+@media (max-width: 560px) { .homepage .image-grid { grid-template-columns: 1fr; } .homepage .image-feature .feature-img { height: 260px; } }
+
+/* Instagram embed carousel styles */
+.homepage .instagram-section { max-width: 1120px; margin: 28px auto; background: linear-gradient(180deg,#fff,#fcfcff); padding: 16px; border-radius: 12px; box-shadow: 0 10px 30px rgba(12,18,36,0.04); }
+.homepage .ig-carousel { position: relative; display:flex; align-items:center; gap:12px; }
+.homepage .ig-viewport { flex:1; min-width: 0; overflow-x:hidden; overflow-y:visible; }
+.homepage .ig-track { display:flex; gap:28px; min-width: 0; will-change: transform; }
+.homepage .ig-slide { flex: 0 0 calc((100% - 56px) / 3); min-width: 0; min-height: 380px; border-radius: 10px; background: #fff; padding: 4px; box-shadow: 0 6px 20px rgba(12,18,36,0.06); display:flex; align-items:flex-start; justify-content:center; overflow:visible; }
+.homepage .ig-slide > * { width:100%; }
+.homepage .ig-slide .instagram-media { min-width: 0 !important; width: 100% !important; }
+.homepage .instagram-section .carousel-btn {
+  background: rgba(255,255,255,0.95);
+  color: var(--primary-color);
+  border: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(12,18,36,0.12);
+}
+
+@media (max-width: 900px) { .homepage .instagram-section { max-width: 760px; } .homepage .ig-slide { flex-basis: calc((100% - 28px) / 2); } }
+@media (max-width: 720px) { .homepage .instagram-section { padding: 12px; } .homepage .ig-slide { flex-basis: 100%; min-height: 360px; } .homepage .ig-carousel { gap:8px; } }
+
+/* Reveal / whoosh-up animations */
+.homepage .reveal {
+  opacity: 0;
+  transform: translateY(12px) scale(0.998);
+  transition:
+    transform 460ms cubic-bezier(.22, 1, .36, 1),
+    opacity 360ms ease-out;
+  will-change: transform, opacity;
+}
+.homepage .reveal.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Allow per-element stagger using data-reveal-delay (in ms) */
+.homepage .reveal[data-reveal-delay] {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homepage .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
+}

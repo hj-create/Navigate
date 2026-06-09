@@ -11,6 +11,209 @@
         
           gtag('config', 'G-45DLQZN7DN');
         </script>
+        <script>
+            // Instagram embed carousel: accepts either full embed HTML in templates or plain post URLs
+            document.addEventListener('DOMContentLoaded', () => {
+                const section = document.getElementById('instagram-section');
+                if (!section) return;
+                const templates = Array.from(section.querySelectorAll('template.ig-source'));
+                const track = section.querySelector('.ig-track');
+                const prev = section.querySelector('.ig-prev');
+                const next = section.querySelector('.ig-next');
+                if (!track || !prev || !next) return;
+                let index = 0;
+                const visibleCount = 3;
+                const slides = [];
+                const gap = 28;
+
+                function createEmbedFromUrl(url) {
+                    // Instagram blockquote embed structure for a post URL
+                    const wrap = document.createElement('div');
+                    wrap.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="background:#fff; border:0; margin:0; padding:0;">` +
+                                     `</blockquote>`;
+                    return wrap;
+                }
+
+                function renderTemplate(tpl) {
+                    const slide = document.createElement('div');
+                    slide.className = 'ig-slide';
+                    // If template has data-url attribute, create an Instagram blockquote from URL
+                    const dataUrl = tpl.getAttribute('data-url') || tpl.dataset.url;
+                    if (dataUrl) {
+                        slide.appendChild(createEmbedFromUrl(dataUrl));
+                        return slide;
+                    }
+
+                    // Otherwise clone the template content (expecting full embed HTML)
+                    const frag = tpl.content.cloneNode(true);
+                    slide.appendChild(frag);
+                    // Recreate scripts so they execute
+                    const scripts = slide.querySelectorAll('script');
+                    scripts.forEach(s => {
+                        const nx = document.createElement('script');
+                        if (s.src) nx.src = s.src;
+                        nx.textContent = s.textContent;
+                        s.replaceWith(nx);
+                    });
+                    return slide;
+                }
+
+                // Build slides from templates. If templates are empty but the user will add URLs later,
+                // the structure is ready for dynamic insertion.
+                templates.forEach(t => {
+                    const s = renderTemplate(t);
+                    track.appendChild(s);
+                    slides.push(s);
+                });
+                slides.slice(0, visibleCount).forEach(slide => {
+                    const clone = slide.cloneNode(true);
+                    clone.setAttribute('aria-hidden', 'true');
+                    clone.classList.add('ig-clone');
+                    track.appendChild(clone);
+                });
+                show(0);
+
+                function loadInstagramSDK(cb) {
+                    if (window.instgrm && window.instgrm.Embeds) return cb && cb();
+                    // inject SDK
+                    const s = document.createElement('script');
+                    s.async = true;
+                    s.src = 'https://www.instagram.com/embed.js';
+                    s.onload = () => cb && cb();
+                    document.body.appendChild(s);
+                }
+
+                function processEmbeds() {
+                    if (window.instgrm && window.instgrm.Embeds && typeof window.instgrm.Embeds.process === 'function') {
+                        window.instgrm.Embeds.process();
+                    }
+                }
+
+                function show(i) {
+                    if (!slides.length) return;
+                    index = i < 0 ? Math.max(slides.length - visibleCount, 0) : i;
+                    track.style.transition = 'transform 650ms ease';
+                    const slideStep = slides[0].getBoundingClientRect().width + gap;
+                    track.style.transform = `translateX(${-index * slideStep}px)`;
+                    slides.forEach((slide, slideIndex) => {
+                        const isActive = slideIndex >= index && slideIndex < index + visibleCount;
+                        slide.setAttribute('aria-hidden', String(!isActive));
+                    });
+                    processEmbeds();
+                }
+
+                track.addEventListener('transitionend', () => {
+                    if (index >= slides.length) {
+                        index = 0;
+                        track.style.transition = 'none';
+                        track.style.transform = 'translateX(0)';
+                    }
+                });
+                window.addEventListener('resize', () => {
+                    track.style.transition = 'none';
+                    const slideStep = slides[0].getBoundingClientRect().width + gap;
+                    track.style.transform = `translateX(${-index * slideStep}px)`;
+                });
+
+                // Next/Prev
+                prev.addEventListener('click', ()=> show(index-1));
+                next.addEventListener('click', ()=> show(index+1));
+
+                // Auto-rotate every 6s
+                let rot = setInterval(()=> show(index+1), 6000);
+                function stopRotation() {
+                    clearInterval(rot);
+                    rot = null;
+                }
+                function startRotation() {
+                    if (!rot) rot = setInterval(()=> show(index+1), 6000);
+                }
+                [prev,next,track].forEach(n => n.addEventListener('mouseover', stopRotation));
+                [prev,next,track].forEach(n => n.addEventListener('mouseleave', startRotation));
+
+                // After load, ensure Instagram SDK is present and process embeds
+                window.addEventListener('load', ()=> {
+                    // If there are any blockquote embeds or url-based templates, load SDK and process
+                    if (slides.length) {
+                        loadInstagramSDK(processEmbeds);
+                    }
+                    show(0);
+                });
+            });
+        </script>
+        <script>
+            // Reveal-on-scroll micro-interactions for homepage
+            (function(){
+                if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                const observer = new IntersectionObserver((entries) => {
+                    entries
+                        .filter(entry => entry.isIntersecting)
+                        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+                        .forEach((e) => {
+                            if (e.isIntersecting) {
+                                const el = e.target;
+                                const delay = el.getAttribute('data-reveal-delay');
+                                if (delay) el.style.setProperty('--reveal-delay', delay + 'ms');
+                                el.classList.add('in-view');
+                                observer.unobserve(el);
+                            }
+                        });
+                }, { root: null, rootMargin: '0px 0px -3% 0px', threshold: 0.06 });
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    const sel = '.homepage .hero-image-section, .homepage .mission, .homepage .value-prop, .homepage .instagram-section, .homepage .mini-carousel, .homepage .service-card, .homepage .carousel-slide, .homepage .image-feature';
+                    document.querySelectorAll(sel).forEach((node, i) => {
+                        node.classList.add('reveal');
+                        // Keep the stagger subtle so scroll reveals feel immediate.
+                        node.setAttribute('data-reveal-delay', String((i % 3) * 45));
+                        observer.observe(node);
+                    });
+                });
+            })();
+        </script>
+            <script>
+                // Subtle pan/parallax for hero carousel images
+                (function(){
+                    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                    const slides = Array.from(document.querySelectorAll('.homepage .carousel-slide'));
+                    if (!slides.length) return;
+
+                    // Auto-pan: slowly adjust --tx on each slide over time
+                    slides.forEach((slide, idx) => {
+                        const img = slide.querySelector('.carousel-image');
+                        if (!img) return;
+                        let tx = 0, ty = 0;
+                        img.style.setProperty('--tx','0px');
+                        img.style.setProperty('--ty','0px');
+                        img.style.setProperty('--s','1.02');
+
+                        // Mouse move parallax (desktop)
+                        if (!isTouch) {
+                            slide.addEventListener('mousemove', (ev)=>{
+                                const r = slide.getBoundingClientRect();
+                                const px = (ev.clientX - r.left) / r.width - 0.5; // -0.5..0.5
+                                const py = (ev.clientY - r.top) / r.height - 0.5;
+                                const max = 12; // px
+                                img.style.setProperty('--tx', `${-px * max}px`);
+                                img.style.setProperty('--ty', `${-py * (max/2)}px`);
+                            });
+                            slide.addEventListener('mouseleave', ()=>{
+                                img.style.setProperty('--tx','0px');
+                                img.style.setProperty('--ty','0px');
+                            });
+                        }
+
+                        // Slow subtle auto-pan to give life
+                        let direction = 1;
+                        setInterval(()=>{
+                            // small oscillation
+                            tx = direction * (idx % 2 ? 6 : 4);
+                            img.style.setProperty('--tx', `${tx}px`);
+                            direction *= -1;
+                        }, 4200 + (idx * 300));
+                    });
+                })();
+            </script>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -167,8 +370,9 @@
                 }
             }
         </style>
+    <link rel="stylesheet" href="css/homepage.css">
     </head>
-    <body>
+    <body class="homepage">
         <a href="#main-content" class="skip-link">Skip to main content</a>
         <header class="header">
             <div class="header-content">
@@ -280,6 +484,26 @@
                     <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Image courtesy of Pexabay.</p>
                 </section>
 
+                <!-- IMAGE GRID: intersperse curated images with captions -->
+                <section class="image-grid-section">
+                    <div class="image-grid">
+                        <figure class="image-feature reveal" data-reveal-delay="120">
+                            <img class="feature-img" src="images/ylanite-compass-2946959_1920.jpg" alt="Compass and map">
+                            <figcaption><strong>Navigate the past</strong> — Curated lessons to guide your learning journey.</figcaption>
+                        </figure>
+
+                        <figure class="image-feature reveal" data-reveal-delay="240">
+                            <img class="feature-img" src="images/darkmoon_art-compass-3408928_1920.jpg" alt="Historic compass art">
+                            <figcaption><strong>Expert guidance</strong> — Tutors and resources tailored to your goals.</figcaption>
+                        </figure>
+
+                        <figure class="image-feature reveal" data-reveal-delay="360">
+                            <img class="feature-img" src="images/goldandred.jpg" alt="Historical artifacts">
+                            <figcaption><strong>Explore artifacts</strong> — Visual materials to spark curiosity and memory.</figcaption>
+                        </figure>
+                    </div>
+                </section>
+
                 <!-- MISSION STATEMENT SECTION -->
     <section class="mission">
     <h2><span class="material-icons" style = "color: darkorange">flag</span> Our Purpose</h2>
@@ -300,7 +524,33 @@
     </p>
     </section>
    
-  <!-- WIDGET SECTION -->
+    <!-- INSTAGRAM EMBED CAROUSEL (place above Reviews widget) -->
+<section id="instagram-section" class="instagram-section">
+        <h2 style="display:flex;gap:10px;align-items:center"><span class="material-icons" style="color:darkorange">photo_library</span>From our Instagram</h2>
+        <div class="ig-carousel" aria-roledescription="carousel">
+                <button class="ig-prev carousel-btn prev" aria-label="Previous post"><span class="material-icons">chevron_left</span></button>
+                <div class="ig-viewport">
+                        <div class="ig-track" role="group" aria-live="polite">
+                                <!-- Slides are rendered lazily from the templates below -->
+                        </div>
+                </div>
+                <button class="ig-next carousel-btn next" aria-label="Next post"><span class="material-icons">chevron_right</span></button>
+        </div>
+
+        <!-- Add your Instagram embed snippets inside these <template> elements.
+                 Paste the full embed HTML provided by Instagram between the template tags. -->
+    <template class="ig-source" data-url="https://www.instagram.com/p/DZDDF7SxmXd/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DZDC66ExHSh/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DZAz9YIOLSz/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DY2xO0WO52q/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DY2we2dOHN_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DY2wDl2u1vZ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DY2X56wRCTl/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DY2XVZZxiBw/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+    <template class="ig-source" data-url="https://www.instagram.com/p/DY2yNh-ueew/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="></template>
+</section>
+
+    <!-- WIDGET SECTION -->
 <section class="mini-carousel">
     <h2>
         <span class="material-icons" style="color:darkorange">stars</span>
@@ -399,9 +649,3 @@
         </script>
     </body>
     </html>
-
-
-
-
-
-
