@@ -2,10 +2,6 @@
    Non-destructive: scoped under .homepage body class where possible.
 */
 
-.homepage .main-content {
-  padding: 48px 20px;
-}
-
 .homepage .hero-image-section {
   border-radius: 16px;
   overflow: hidden;
@@ -69,24 +65,13 @@
   box-shadow: 0 8px 24px rgba(12,18,36,0.12);
 }
 
-.homepage .menu-list { justify-content: center; gap: 12px; }
-.homepage .menu-item a { padding: 10px 18px; border-radius: 999px; background: rgba(255,255,255,0.9); box-shadow: none; }
-.homepage .menu-item a:hover { transform: translateY(-3px); }
-
-/* Ensure the horizontal menu centers within the main content area */
-.homepage .horizontal-menu { display: flex; justify-content: center; }
-.homepage .menu-list { margin: 0 auto; }
-
-.homepage .content-wrapper { gap: 32px; }
+.homepage .content-wrapper { gap: 32px; padding: 0; }
 .homepage .mission, .homepage .value-prop, .homepage .mini-carousel {
   background: white; padding: 28px; border-radius: 12px; box-shadow: 0 10px 30px rgba(12,18,36,0.06);
 }
 
 .homepage .mission h2, .homepage .value-prop h2, .homepage .mini-carousel h2 { font-size: 1.25rem; display:flex; gap:10px; align-items:center; }
 .homepage .mission p, .homepage .value-prop p { color: #333740; line-height:1.6; }
-
-.homepage .title { display: block; font-size: 1.25rem; font-weight:700; color: #fff; }
-.homepage .header { background: linear-gradient(90deg, #ff8a00, #ff5722); }
 
 /* Cards grid for value props */
 .homepage .value-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 12px; }
@@ -101,7 +86,6 @@
 @media (max-width: 768px) {
   .homepage .carousel-overlay { padding: 1.2rem; text-align:center; }
   .homepage .carousel-overlay h2 { font-size: 1.6rem; }
-  .homepage .menu-list { justify-content: center; }
 }
 
 /* Image grid for interspersed visuals */
