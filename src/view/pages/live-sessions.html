@@ -51,7 +51,7 @@
         min-width: 96px;
         height: 40px;
         border: none;
-        border-radius: 4px;
+        border-radius: 8px;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
@@ -62,7 +62,7 @@
     }
 
     .reschedule-btn {
-        background-color: var(--hover-color, #e3f2fd);
+        background-color: #fff3e0;
         color: var(--accent-color, #1e88e5);
     }
 
@@ -72,7 +72,7 @@
     }
 
     .join-session-btn {
-        background-color: var(--accent-color, #1e88e5);
+        background: linear-gradient(90deg,var(--primary-color),var(--accent-color));
         color: white;
     }
 
@@ -163,11 +163,42 @@
             </ul>
         </nav>
 
+        <section class="live-hero" aria-labelledby="liveSessionsTitle">
+            <img src="../../images/ylanite-compass-2946959_1920.jpg" alt="" class="live-hero-image" loading="lazy">
+            <div class="live-hero-overlay">
+                <div class="live-hero-copy">
+                    <span class="live-kicker">
+                        <span class="material-icons">event_available</span>
+                        Live history tutoring
+                    </span>
+                    <h1 id="liveSessionsTitle">Live Sessions</h1>
+                    <p>Schedule and join guided sessions that help you move from dates and names to real understanding.</p>
+                </div>
+                <div class="live-hero-panel" aria-label="Session highlights">
+                    <div>
+                        <span class="material-icons">person</span>
+                        <strong>1:1 Support</strong>
+                        <small>Personalized tutoring</small>
+                    </div>
+                    <div>
+                        <span class="material-icons">groups</span>
+                        <strong>Group Study</strong>
+                        <small>Collaborative review</small>
+                    </div>
+                    <div>
+                        <span class="material-icons">video_call</span>
+                        <strong>Zoom Ready</strong>
+                        <small>Join from your session card</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="session-grid">
             <div class="content-header">
                 <div class="content-title">
-                    <h1>Live Sessions</h1>
-                    <p>Schedule and join your live learning sessions</p>
+                    <h2>Plan Your Next Session</h2>
+                    <p>Manage upcoming meetings or book a new time with a Navigate tutor.</p>
                 </div>
             </div>
 
