@@ -15,8 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>European History Videos - Navigate</title>
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/accessibility.css">
+    <link rel="stylesheet" href="../../css/styles.css">    <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -122,8 +121,10 @@
             line-height: 1.6;
         }
     </style>
+    <link rel="stylesheet" href="../../css/video-libraries.css">
 </head>
-<body>
+<body class="video-library-page">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -146,7 +147,7 @@
         </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
@@ -187,11 +188,42 @@
             Back to European History Roadmap
         </a>
 
-        <h1>European History Videos</h1>
-        <p>Watch engaging video content covering European civilizations, empires, and transformative periods.</p>
+        <section class="videos-hero" aria-labelledby="videoPageTitle">
+            <div class="videos-hero-copy">
+                <span class="videos-kicker">
+                    <span class="material-icons">account_balance</span>
+                    European History
+                </span>
+                <h1 id="videoPageTitle">Video Library</h1>
+                <p>Watch engaging video content covering European civilizations, empires, and transformative periods.</p>
+            </div>
+            <div class="videos-hero-panel" aria-label="Video library features">
+                <div>
+                    <span class="material-icons">play_circle</span>
+                    <strong>Curated Videos</strong>
+                    <small>Open each selection directly on YouTube</small>
+                </div>
+                <div>
+                    <span class="material-icons">task_alt</span>
+                    <strong>Progress Tracking</strong>
+                    <small>Video clicks connect with rewards activity</small>
+                </div>
+                <div>
+                    <span class="material-icons">castle</span>
+                    <strong>Systems Review</strong>
+                    <small>Trace empires, religion, and medieval order</small>
+                </div>
+            </div>
+        </section>
 
-        <div class="resources-grid">
-            <a href="https://www.youtube.com/watch?v=3PszVWZNWVA" class="video-card" target="_blank" data-video-id="european-video-1" data-video-title="The Fall of the Roman Empire">
+        <section class="video-section" aria-labelledby="videoListTitle">
+            <div class="video-section-header">
+                <h2 id="videoListTitle">Choose a Video</h2>
+                <p>Review the Roman Empire, Christianity, and medieval European systems.</p>
+            </div>
+
+            <div class="resources-grid video-grid">
+                <a href="https://www.youtube.com/watch?v=3PszVWZNWVA" class="video-card" target="_blank" data-video-id="european-video-1" data-video-title="The Fall of the Roman Empire">
                 <div class="video-thumbnail">
                     <img src="https://img.youtube.com/vi/3PszVWZNWVA/maxresdefault.jpg" alt="The Fall of the Roman Empire - CrashCourse" loading="lazy">
                     <div class="play-button">
@@ -202,8 +234,8 @@
                     <h3>The Fall of the Roman Empire</h3>
                     <p>Examine the complex factors that led to the decline and fall of one of history's greatest empires.</p>
                 </div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=TG55ErfdaeY" class="video-card" target="_blank" data-video-id="european-video-2" data-video-title="The Rise of Christianity">
+                </a>
+                <a href="https://www.youtube.com/watch?v=TG55ErfdaeY" class="video-card" target="_blank" data-video-id="european-video-2" data-video-title="The Rise of Christianity">
                 <div class="video-thumbnail">
                     <img src="https://img.youtube.com/vi/TG55ErfdaeY/maxresdefault.jpg" alt="The Rise of Christianity - CrashCourse" loading="lazy">
                     <div class="play-button">
@@ -214,8 +246,8 @@
                     <h3>The Rise of Christianity</h3>
                     <p>Discover how Christianity emerged from ancient Judaism and spread throughout the Roman Empire to become a dominant world religion.</p>
                 </div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=rNCw2MOfnLQ" class="video-card" target="_blank" data-video-id="european-video-3" data-video-title="Feudalism and Manorialism">
+                </a>
+                <a href="https://www.youtube.com/watch?v=rNCw2MOfnLQ" class="video-card" target="_blank" data-video-id="european-video-3" data-video-title="Feudalism and Manorialism">
                 <div class="video-thumbnail">
                     <img src="https://img.youtube.com/vi/rNCw2MOfnLQ/maxresdefault.jpg" alt="Feudalism and Manorialism - CrashCourse" loading="lazy">
                     <div class="play-button">
@@ -226,10 +258,11 @@
                     <h3>Feudalism and Manorialism</h3>
                     <p>Learn about the medieval social, political, and economic systems that shaped European society for centuries.</p>
                 </div>
-            </a>
-        </div>
+                </a>
+            </div>
+        </section>
 
-        <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+        <div class="video-citations" style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
             <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
             <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">"The Fall of the Roman Empire (Crash Course World History #12)." <em>YouTube</em>, uploaded by CrashCourse, 22 Mar. 2012, https://www.youtube.com/watch?v=3PszVWZNWVA.</p>
             <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">"Feudalism and Manorialism: Crash Course European History #10." <em>YouTube</em>, uploaded by CrashCourse, 25 Apr. 2019, https://www.youtube.com/watch?v=rNCw2MOfnLQ.</p>
@@ -302,7 +335,6 @@
     </script>
 </body>
 </html>
-
 
 
 

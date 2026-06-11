@@ -15,8 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World History Videos - Navigate</title>
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/accessibility.css">
+    <link rel="stylesheet" href="../../css/styles.css">    <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -122,8 +121,10 @@
             line-height: 1.6;
         }
     </style>
+    <link rel="stylesheet" href="../../css/video-libraries.css">
 </head>
-<body>
+<body class="video-library-page">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -146,7 +147,7 @@
         </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
@@ -187,11 +188,42 @@
             Back to World History Roadmap
         </a>
 
-        <h1>World History Videos</h1>
-        <p>Watch engaging video content covering major civilizations and global historical events.</p>
+        <section class="videos-hero" aria-labelledby="videoPageTitle">
+            <div class="videos-hero-copy">
+                <span class="videos-kicker">
+                    <span class="material-icons">public</span>
+                    World History
+                </span>
+                <h1 id="videoPageTitle">Video Library</h1>
+                <p>Watch engaging video content covering major civilizations and global historical events.</p>
+            </div>
+            <div class="videos-hero-panel" aria-label="Video library features">
+                <div>
+                    <span class="material-icons">play_circle</span>
+                    <strong>Curated Videos</strong>
+                    <small>Open each selection directly on YouTube</small>
+                </div>
+                <div>
+                    <span class="material-icons">task_alt</span>
+                    <strong>Progress Tracking</strong>
+                    <small>Video clicks connect with rewards activity</small>
+                </div>
+                <div>
+                    <span class="material-icons">travel_explore</span>
+                    <strong>Civilization Review</strong>
+                    <small>Survey India, Egypt, and Mesopotamia</small>
+                </div>
+            </div>
+        </section>
 
-        <div class="resources-grid">
-            <a href="https://www.youtube.com/watch?v=sohXPx_XZ6Y" class="video-card" target="_blank" data-video-id="world-video-1" data-video-title="Ancient Mesopotamia">
+        <section class="video-section" aria-labelledby="videoListTitle">
+            <div class="video-section-header">
+                <h2 id="videoListTitle">Choose a Video</h2>
+                <p>Review major early civilizations through short visual explainers.</p>
+            </div>
+
+            <div class="resources-grid video-grid">
+                <a href="https://www.youtube.com/watch?v=sohXPx_XZ6Y" class="video-card" target="_blank" data-video-id="world-video-1" data-video-title="Ancient Mesopotamia">
                 <div class="video-thumbnail">
                     <img src="https://img.youtube.com/vi/sohXPx_XZ6Y/maxresdefault.jpg" alt="Ancient Mesopotamia - CrashCourse" loading="lazy">
                     <div class="play-button">
@@ -202,8 +234,8 @@
                     <h3>Ancient Mesopotamia</h3>
                     <p>Explore the "Cradle of Civilization" and learn about the Sumerians, Babylonians, and their lasting contributions to human history.</p>
                 </div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=Z3Wvw6BivVI" class="video-card" target="_blank" data-video-id="world-video-2" data-video-title="Ancient Egypt">
+                </a>
+                <a href="https://www.youtube.com/watch?v=Z3Wvw6BivVI" class="video-card" target="_blank" data-video-id="world-video-2" data-video-title="Ancient Egypt">
                 <div class="video-thumbnail">
                     <img src="https://img.youtube.com/vi/Z3Wvw6BivVI/maxresdefault.jpg" alt="Ancient Egypt - CrashCourse" loading="lazy">
                     <div class="play-button">
@@ -214,8 +246,8 @@
                     <h3>Ancient Egypt</h3>
                     <p>Discover the fascinating civilization of Ancient Egypt, from the construction of pyramids to the reign of pharaohs along the Nile River.</p>
                 </div>
-            </a>
-            <a href="https://www.youtube.com/watch?v=n7ndRwqJYDM" class="video-card" target="_blank" data-video-id="world-video-3" data-video-title="Ancient India">
+                </a>
+                <a href="https://www.youtube.com/watch?v=n7ndRwqJYDM" class="video-card" target="_blank" data-video-id="world-video-3" data-video-title="Ancient India">
                 <div class="video-thumbnail">
                     <img src="https://img.youtube.com/vi/n7ndRwqJYDM/maxresdefault.jpg" alt="Ancient India - CrashCourse" loading="lazy">
                     <div class="play-button">
@@ -226,10 +258,11 @@
                     <h3>Ancient India</h3>
                     <p>Learn about the rich history of Ancient India, including the Indus Valley Civilization and the development of major religions and philosophies.</p>
                 </div>
-            </a>
-        </div>
+                </a>
+            </div>
+        </section>
 
-        <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+        <div class="video-citations" style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
             <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
             <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">"World History: Ancient Egypt." <em>YouTube</em>, uploaded by CrashCourse, 15 Aug. 2018, https://www.youtube.com/watch?v=Z3Wvw6BivVI.</p>
             <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">"World History: Ancient India." <em>YouTube</em>, uploaded by CrashCourse, 5 Sept. 2018, https://www.youtube.com/watch?v=n7ndRwqJYDM.</p>
@@ -302,7 +335,6 @@
     </script>
 </body>
 </html>
-
 
 
 

@@ -15,72 +15,163 @@
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Services - Navigate</title>
+    <title>Chatbot - Navigate</title>
 
     <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/chatbot.css">
-    <link rel="stylesheet" href="../../css/messenger.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Active tab highlighting */
-        .menu-item a[href*="services"] { background-color: var(--hover-color); color: var(--text-color); }
-        .menu-item a[href*="services"] .material-icons { color: var(--accent-color); }
-
-        /* hide chatbot & messenger by default; show when .visible added */
-        .toggle-section { display: none; }
-        .toggle-section.visible { display: block; }
-
-        /* a small visual transition */
-        .chat-window, .messenger-window { transition: transform .12s ease, opacity .12s ease; }
-        .toggle-section.visible .chat-window,
-        .toggle-section.visible .messenger-window { transform: none; opacity: 1; }
-
-        /* Responsive image gallery */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        .menu-item a[href*="services"] {
+            background-color: var(--hover-color);
+            color: var(--text-color);
         }
 
-        .image-gallery img {
+        .menu-item a[href*="services"] .material-icons {
+            color: var(--accent-color);
+        }
+
+        .sap-chat-page {
+            max-width: 900px;
+            margin: 32px auto 0;
+            display: grid;
+            gap: 20px;
+        }
+
+        .sap-chat-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            min-height: 320px;
+            background: #222;
+            box-shadow: 0 18px 40px rgba(12,18,36,0.12);
+        }
+
+        .sap-chat-hero img {
             width: 100%;
-            height: 200px;
+            height: 100%;
+            min-height: 320px;
             object-fit: cover;
+            display: block;
+            filter: saturate(1.06) contrast(1.03);
+        }
+
+        .sap-chat-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(10,12,20,0.78), rgba(10,12,20,0.34) 64%, rgba(10,12,20,0.12)),
+                linear-gradient(180deg, rgba(255,152,0,0.22), rgba(255,87,34,0.08));
+        }
+
+        .sap-chat-copy {
+            position: absolute;
+            inset: auto 0 0 0;
+            padding: clamp(24px, 5vw, 44px);
+            color: #fff;
+        }
+
+        .sap-chat-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.15);
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .sap-chat-kicker .material-icons {
+            color: #ffcc80;
+            font-size: 1.2rem;
+        }
+
+        .sap-chat-copy h1 {
+            margin: 12px 0 10px;
+            font-size: clamp(2.1rem, 5vw, 4rem);
+            line-height: 1;
+        }
+
+        .sap-chat-copy p {
+            max-width: 620px;
+            margin: 0;
+            color: rgba(255,255,255,0.92);
+            font-size: clamp(1rem, 2vw, 1.16rem);
+        }
+
+        .sap-chat-card {
+            background: linear-gradient(180deg,#fff,#fcfcff);
             border-radius: 8px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+            display: grid;
+            grid-template-columns: 54px 1fr;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .sap-chat-card .material-icons {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 8px;
+            background: rgba(255,152,0,0.14);
+            color: var(--accent-color);
+            font-size: 30px;
+        }
+
+        .sap-chat-card h2 {
+            margin: 0 0 6px;
+            font-size: 1.35rem;
+        }
+
+        .sap-chat-card p {
+            margin: 0;
+            color: #5f6470;
+        }
+
+        .sap-chat-actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .sap-chat-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.85rem 1.2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            background: linear-gradient(90deg,var(--primary-color),var(--accent-color));
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(255,120,0,0.12);
+        }
+
+        .sap-chat-actions a.secondary {
+            background: #fff;
+            color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(12,18,36,0.08);
         }
 
         @media screen and (max-width: 768px) {
-            .image-gallery {
+            .sap-chat-page {
+                margin-top: 24px;
+            }
+
+            .sap-chat-card {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
-                margin: 1.5rem auto;
             }
 
-            .image-gallery img {
-                height: 180px;
-            }
-        }
-
-        @media screen and (min-width: 769px) and (max-width: 1024px) {
-            .image-gallery {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .image-gallery {
-                padding: 0 0.5rem;
-                gap: 0.5rem;
-            }
-
-            .image-gallery img {
-                height: 150px;
+            .sap-chat-hero,
+            .sap-chat-hero img {
+                min-height: 420px;
             }
         }
     </style>
@@ -122,65 +213,35 @@
             </ul>
         </nav>
 
-        <h1>Our Services</h1>
-        <div class="services-grid">
-            <div class="service-card">
-                <a href="live-sessions.html" style="text-decoration: none; color: inherit;">
-                    <span class="material-icons">live_tv</span>
-                    <h3>Live Sessions and Group Study</h3>
-                    <p>Live sessions, real-time Q&A, and group study opportunities.</p>
-                </a>
-            </div>
-
-            <div class="service-card">
-                <!-- clicking this will open the full-page chatbot -->
-                <a href="chatbot-full.html" class="toggle-link" data-target="services-chatbot" style="text-decoration: none; color: inherit;">
-                    <span class="material-icons">chat</span>
-                    <h3>Chatbot</h3>
-                    <p>Ask the Navigate Bot quick questions about scheduling, resources, and joining sessions.</p>
-                </a>
-            </div>
-
-            <div class="service-card">
-                <!-- clicking this will open the full-page tutor chat -->
-                <a href="tutor-chat.html" class="toggle-link" data-target="services-messenger" style="text-decoration: none; color: inherit;">
-                    <span class="material-icons">forum</span>
-                    <h3>Tutor Chat</h3>
-                    <p>Get direct help from our expert tutors during business hours (9 AM - 5 PM).</p>
-                </a>
-            </div>
-        </div>
-
-        <!-- chatbot is hidden by default; shown when user clicks the Chatbot card -->
-        <section id="services-chatbot" class="page-section toggle-section" aria-hidden="true">
-            <h2>Ask the Navigate Bot</h2>
-            <p>Get quick help about scheduling, resources, or how to use Navigate.</p>
-
-            <div class="chat-window">
-                <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-atomic="false"></div>
-                <form id="chat-form" class="chat-form">
-                    <input id="chat-input" class="chat-input" type="text" autocomplete="off"
-                           placeholder="Ask about schedules, resources, joining sessions..." />
-                    <button id="chat-send" class="chat-send" type="submit" aria-label="Send message to chatbot">Send</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- messenger is hidden by default; shown when user clicks the Tutor Chat card -->
-        <section id="services-messenger" class="page-section toggle-section" aria-hidden="true">
-            <h2>Message Our Tutors</h2>
-            <p>Get personalized help from our expert tutors during business hours (9 AM - 5 PM).</p>
-
-            <div class="messenger-window">
-                <div class="messenger-header">
-                    <div id="tutor-status" class="tutor-status"></div>
-                    <h3>Tutor Chat</h3>
+        <section class="sap-chat-page" aria-labelledby="sapChatTitle">
+            <div class="sap-chat-hero">
+                <img src="../../images/pantheon-paris-9065570_1280.jpg" alt="" loading="lazy">
+                <div class="sap-chat-copy">
+                    <span class="sap-chat-kicker">
+                        <span class="material-icons">smart_toy</span>
+                        SAP Conversational AI
+                    </span>
+                    <h1 id="sapChatTitle">Navigate Chatbot</h1>
+                    <p>Use the SAP chat popup on this page for quick help with Navigate, scheduling, resources, and sessions.</p>
                 </div>
-                <div id="tutor-messages" class="messenger-messages" aria-live="polite"></div>
-                <form id="messenger-form" class="messenger-form">
-                    <textarea id="messenger-input" class="messenger-input" placeholder="Type your message here..." rows="2"></textarea>
-                    <button type="submit" class="messenger-send" aria-label="Send message to tutor"><span class="material-icons">send</span><span>Send</span></button>
-                </form>
+            </div>
+
+            <div class="sap-chat-card">
+                <span class="material-icons">chat</span>
+                <div>
+                    <h2>Open the SAP chat popup</h2>
+                    <p>The chatbot is powered by SAP Conversational AI. Use the floating chat launcher on the page to start or continue your conversation.</p>
+                    <div class="sap-chat-actions">
+                        <a href="services.html">
+                            <span class="material-icons">arrow_back</span>
+                            Back to Services
+                        </a>
+                        <a href="resources.html" class="secondary">
+                            <span class="material-icons">library_books</span>
+                            Browse Resources
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -222,79 +283,10 @@
   </div>
 </footer>
 
-    <script src="../../js/chatbot.js" defer></script>
-    <script src="../../js/messenger.js" defer></script>
-
-    <script>
-        // show/hide logic for chatbot & messenger sections
-        (function () {
-            function $(s){ return document.querySelectorAll(s); }
-            const toggles = document.querySelectorAll('.toggle-link');
-            const sections = {
-                'services-chatbot': document.getElementById('services-chatbot'),
-                'services-messenger': document.getElementById('services-messenger')
-            };
-
-            function hideAll() {
-                Object.values(sections).forEach(sec => {
-                    if (sec) {
-                        sec.classList.remove('visible');
-                        sec.setAttribute('aria-hidden','true');
-                    }
-                });
-            }
-
-            function show(id) {
-                hideAll();
-                const sec = sections[id];
-                if (!sec) return;
-                sec.classList.add('visible');
-                sec.setAttribute('aria-hidden','false');
-                // focus first interactive element for accessibility
-                const focusEl = sec.querySelector('input, textarea, button, [tabindex]');
-                if (focusEl) focusEl.focus({preventScroll:true});
-                // smooth scroll into view
-                sec.scrollIntoView({behavior:'smooth', block:'start'});
-            }
-
-            // attach click handlers to toggle links for in-page hash navigation only
-            toggles.forEach(a => {
-                a.addEventListener('click', function (e) {
-                    const href = a.getAttribute('href') || '';
-                    // if this is a normal link (points to a page), allow navigation
-                    if (!href.startsWith('#')) return; 
-                    e.preventDefault();
-                    const target = a.getAttribute('data-target') || href.slice(1);
-                    if (!target) return;
-                    // toggle: if visible, hide; otherwise show
-                    const sec = sections[target];
-                    if (!sec) return;
-                    if (sec.classList.contains('visible')) {
-                        sec.classList.remove('visible');
-                        sec.setAttribute('aria-hidden','true');
-                    } else {
-                        show(target);
-                    }
-                    // update URL hash without jumping
-                    history.replaceState(null, '', '#'+target);
-                });
-            });
-
-            // if page loaded with hash that matches our sections, show it
-            document.addEventListener('DOMContentLoaded', () => {
-                const h = (location.hash || '').replace('#','');
-                if (h && sections[h]) show(h);
-            });
-        })();
-    </script>
-    
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
 </body>
 </html>
-
-
-
 
 
 

@@ -19,48 +19,8 @@
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Center the schedule heading and subtitle */
-        .content-header, .content-title {
-            text-align: center;
-        }
-        /* Increase subtitle font size */
-        .content-title p {
-            font-size: 1.25rem;
-        }
-        
-        /* Book a Session button styling */
-        .book-session-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.875rem 1.75rem;
-            margin-top: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .book-session-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
-        }
-        
-        .book-session-btn:active {
-            transform: translateY(0);
-        }
-        
-        .book-session-btn .material-icons {
-            font-size: 1.3rem;
-        }
-    </style>
 </head>
-<body>
+<body class="schedule-page">
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -118,18 +78,40 @@
             </ul>
         </nav>
 
-        <div class="content-header">
-            <div class="content-title">
-                <h1>Schedule</h1>
+        <section class="schedule-hero" aria-labelledby="scheduleTitle">
+            <div class="content-header">
+                <span class="schedule-kicker">
+                    <span class="material-icons">calendar_today</span>
+                    History tutoring calendar
+                </span>
+                <h1 id="scheduleTitle">Schedule</h1>
                 <p>View upcoming history sessions and your booked live sessions</p>
                 <a href="live-sessions.html" class="book-session-btn">
                     <span class="material-icons">event_available</span>
                     <span>Book a Session</span>
                 </a>
             </div>
-        </div>
 
-        <div class="calendar-container">
+            <div class="schedule-highlights" aria-label="Schedule highlights">
+                <div>
+                    <span class="material-icons">event_note</span>
+                    <strong>Monthly View</strong>
+                    <small>Scan sessions by date</small>
+                </div>
+                <div>
+                    <span class="material-icons">video_call</span>
+                    <strong>Booked Sessions</strong>
+                    <small>Join links appear when available</small>
+                </div>
+                <div>
+                    <span class="material-icons">history_edu</span>
+                    <strong>History Topics</strong>
+                    <small>Static and live sessions together</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="calendar-container" aria-label="Session calendar">
             <div class="calendar-header">
                 <button class="calendar-nav" id="prevMonth"><span class="material-icons">chevron_left</span></button>
                 <h2 id="currentMonth"></h2>
@@ -138,7 +120,7 @@
             <div class="calendar-grid" id="calendarGrid">
                 <!-- Calendar content will be loaded dynamically -->
             </div>
-        </div>
+        </section>
     </main>
 
     <script>
@@ -440,8 +422,6 @@
     <script src="../../controller/auth-state.js"></script>
 </body>
 </html>
-
-
 
 
 

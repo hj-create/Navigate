@@ -19,18 +19,8 @@
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Active tab highlighting */
-        .menu-item a[href*="dashboard"] {
-            background-color: var(--hover-color);
-            color: var(--text-color);
-        }
-        .menu-item a[href*="dashboard"] .material-icons {
-            color: var(--accent-color);
-        }
-    </style>
 </head>
-<body>
+<body class="dashboard-page">
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
@@ -51,7 +41,7 @@
                     <span>Sign Up</span>
                 </a>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main class="main-content" id="main-content">
@@ -90,26 +80,35 @@
             </ul>
         </nav>
 
-        <div class="dashboard-header">
-            <h1 id="dashboardWelcome">Learning Progress Dashboard</h1>
-            <div class="date-range">
-                <span class="material-icons">date_range</span>
-                <div class="date-inputs">
-                    <div class="date-field">
-                        <label for="fromDate">From:</label>
-                        <input type="date" id="fromDate" value="2025-10-01">
-                    </div>
-                    <div class="date-field">
-                        <label for="toDate">To:</label>
-                        <input type="date" id="toDate" value="2025-10-18">
-                    </div>
+        <section class="dashboard-hero" aria-labelledby="dashboardWelcome">
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <span class="dashboard-kicker">
+                        <span class="material-icons">dashboard</span>
+                        Learning command center
+                    </span>
+                    <h1 id="dashboardWelcome">Learning Progress Dashboard</h1>
+                    <p>Track sessions, resources, rewards, and progress from one focused view.</p>
                 </div>
-                <button class="update-btn">
-                    <span class="material-icons">refresh</span>
-                    Update
-                </button>
+                <div class="date-range">
+                    <span class="material-icons">date_range</span>
+                    <div class="date-inputs">
+                        <div class="date-field">
+                            <label for="fromDate">From:</label>
+                            <input type="date" id="fromDate" value="2025-10-01">
+                        </div>
+                        <div class="date-field">
+                            <label for="toDate">To:</label>
+                            <input type="date" id="toDate" value="2025-10-18">
+                        </div>
+                    </div>
+                    <button class="update-btn">
+                        <span class="material-icons">refresh</span>
+                        Update
+                    </button>
+                </div>
             </div>
-        </div>
+        </section>
 
         <div class="progress-summary">
             <div class="summary-card">
@@ -321,7 +320,6 @@
     </script>
 </body>
 </html>
-
 
 
 

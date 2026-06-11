@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>European History Lessons - Navigate</title>
     <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/lessons.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -49,7 +50,8 @@
         }
     </style>
 </head>
-<body>
+<body class="lesson-page">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -72,7 +74,7 @@
         </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
@@ -113,26 +115,64 @@
             Back to European History Roadmap
         </a>
 
-        <h1>European History Lessons</h1>
-        <p>Study European civilizations, empires, and pivotal moments that shaped the modern world.</p>
+        <section class="lessons-hero" aria-labelledby="lessonPageTitle">
+            <div class="lessons-hero-copy">
+                <span class="lessons-kicker">
+                    <span class="material-icons">account_balance</span>
+                    European History
+                </span>
+                <h1 id="lessonPageTitle">Interactive Lessons</h1>
+                <p>Study major European transitions through focused slide-based lessons.</p>
+            </div>
+            <div class="lessons-hero-panel" aria-label="Lesson format">
+                <div>
+                    <span class="material-icons">slideshow</span>
+                    <strong>Canva Slide Decks</strong>
+                    <small>Visual lessons that open as full interactive presentations</small>
+                </div>
+                <div>
+                    <span class="material-icons">task_alt</span>
+                    <strong>Progress Tracking</strong>
+                    <small>Lesson visits connect with the rewards dashboard</small>
+                </div>
+                <div>
+                    <span class="material-icons">castle</span>
+                    <strong>Historical Systems</strong>
+                    <small>Trace empires, religion, and medieval social order</small>
+                </div>
+            </div>
+        </section>
 
-        <div class="resources-grid">
-            <a href="fall-roman-empire-lesson.html" class="resource-card" data-lesson-id="european-history-1" data-lesson-title="The Fall of the Roman Empire">
+        <section class="lessons-list" aria-labelledby="lessonListTitle">
+            <div class="lessons-list-header">
+                <h2 id="lessonListTitle">Choose a Lesson</h2>
+                <p>Study European civilizations, empires, and pivotal moments that shaped the modern world.</p>
+            </div>
+
+            <div class="resources-grid lesson-grid">
+                <a href="fall-roman-empire-lesson.html" class="resource-card lesson-card" data-lesson-id="european-history-1" data-lesson-title="The Fall of the Roman Empire">
                 <span class="material-icons">menu_book</span>
+                <span class="lesson-number">Lesson 1</span>
                 <h3>The Fall of the Roman Empire</h3>
                 <p>Examine the complex factors that led to the decline and fall of one of history's greatest empires and its lasting impact on Western civilization.</p>
-            </a>
-            <a href="rise-christianity-lesson.html" class="resource-card" data-lesson-id="european-history-2" data-lesson-title="The Rise of Christianity">
+                <span class="lesson-cta">Open lesson <span class="material-icons">arrow_forward</span></span>
+                </a>
+                <a href="rise-christianity-lesson.html" class="resource-card lesson-card" data-lesson-id="european-history-2" data-lesson-title="The Rise of Christianity">
                 <span class="material-icons">menu_book</span>
+                <span class="lesson-number">Lesson 2</span>
                 <h3>The Rise of Christianity</h3>
                 <p>Discover how Christianity emerged from ancient Judaism and spread throughout the Roman Empire to become a dominant world religion.</p>
-            </a>
-            <a href="feudalism-manorialism-lesson.html" class="resource-card" data-lesson-id="european-history-3" data-lesson-title="Feudalism & Manorialism">
+                <span class="lesson-cta">Open lesson <span class="material-icons">arrow_forward</span></span>
+                </a>
+                <a href="feudalism-manorialism-lesson.html" class="resource-card lesson-card" data-lesson-id="european-history-3" data-lesson-title="Feudalism & Manorialism">
                 <span class="material-icons">menu_book</span>
+                <span class="lesson-number">Lesson 3</span>
                 <h3>Feudalism & Manorialism</h3>
                 <p>Learn about the medieval social, political, and economic systems that structured European society during the Middle Ages.</p>
-            </a>
-        </div>
+                <span class="lesson-cta">Open lesson <span class="material-icons">arrow_forward</span></span>
+                </a>
+            </div>
+        </section>
     </main>
     
     <footer class="footer">
@@ -197,7 +237,6 @@
     </script>
 </body>
 </html>
-
 
 
 

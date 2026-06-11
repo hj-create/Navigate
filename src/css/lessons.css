@@ -1,0 +1,286 @@
+/* Shared visual refresh for the four subject lesson index pages. */
+
+.lesson-page {
+    overflow-x: hidden;
+}
+
+.lesson-page .main-content {
+    max-width: 1200px;
+}
+
+.lesson-page .menu-item a[href*="resources"] {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+}
+
+.lesson-page .menu-item a[href*="resources"] .material-icons {
+    color: var(--accent-color);
+}
+
+.lesson-page .back-to-courses {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.78rem 1.15rem;
+    margin: 24px 0 0;
+    border: 1px solid #f0ece8;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+    box-shadow: 0 10px 24px rgba(12,18,36,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.lesson-page .back-to-courses:hover {
+    background: #fff7ed;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(12,18,36,0.1);
+}
+
+.lesson-page .lessons-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
+    gap: 24px;
+    align-items: stretch;
+    margin: 20px 0 28px;
+    padding: clamp(24px, 5vw, 44px);
+    border-radius: 16px;
+    background:
+        linear-gradient(135deg, rgba(255,152,0,0.16), rgba(255,87,34,0.08) 42%, rgba(255,255,255,0) 70%),
+        linear-gradient(180deg, #ffffff, #fbfbff);
+    box-shadow: 0 18px 40px rgba(12,18,36,0.12);
+    overflow: hidden;
+}
+
+.lesson-page .lessons-hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.lesson-page .lessons-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255,152,0,0.14);
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+.lesson-page .lessons-kicker .material-icons {
+    font-size: 1.2rem;
+}
+
+.lesson-page .lessons-hero h1 {
+    margin: 14px 0 10px;
+    font-size: clamp(2.2rem, 5vw, 4.1rem);
+    line-height: 1;
+    color: var(--text-color);
+}
+
+.lesson-page .lessons-hero p {
+    max-width: 650px;
+    margin: 0;
+    color: #5f6470;
+    font-size: clamp(1rem, 2vw, 1.16rem);
+    line-height: 1.55;
+}
+
+.lesson-page .lessons-hero-panel {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.84);
+    box-shadow: 0 16px 38px rgba(12,18,36,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.lesson-page .lessons-hero-panel div {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background: linear-gradient(180deg,#fff,#fbfbff);
+}
+
+.lesson-page .lessons-hero-panel .material-icons {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(255,152,0,0.14);
+    color: var(--accent-color);
+    font-size: 24px;
+}
+
+.lesson-page .lessons-hero-panel strong {
+    line-height: 1.2;
+    color: var(--text-color);
+}
+
+.lesson-page .lessons-hero-panel small {
+    color: #5f6470;
+    line-height: 1.35;
+}
+
+.lesson-page .lessons-list {
+    margin-bottom: 36px;
+}
+
+.lesson-page .lessons-list-header {
+    max-width: 760px;
+    margin: 0 auto 24px;
+    text-align: center;
+}
+
+.lesson-page .lessons-list-header h2 {
+    margin: 0 0 0.45rem;
+    color: var(--text-color);
+    font-size: clamp(1.7rem, 3vw, 2.35rem);
+}
+
+.lesson-page .lessons-list-header p {
+    margin: 0;
+    color: #5f6470;
+    font-size: 1.08rem;
+    line-height: 1.55;
+}
+
+.lesson-page .lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.lesson-page .lesson-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 310px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid #f0ece8;
+    border-radius: 8px;
+    background:
+        linear-gradient(90deg, rgba(255,152,0,0.12), rgba(255,255,255,0) 42%),
+        linear-gradient(180deg,#fff,#fcfcff);
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.lesson-page .lesson-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,152,0,0.34);
+    box-shadow: 0 16px 34px rgba(12,18,36,0.12);
+}
+
+.lesson-page .lesson-card:focus-visible,
+.lesson-page .back-to-courses:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+.lesson-page .lesson-card > .material-icons {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    margin: 0 0 16px;
+    border-radius: 8px;
+    background: rgba(255,152,0,0.14);
+    color: var(--accent-color);
+    font-size: 30px;
+}
+
+.lesson-page .lesson-number {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 30px;
+    align-items: center;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #f0ece8;
+    color: var(--accent-color);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04rem;
+}
+
+.lesson-page .lesson-card h3 {
+    margin: 14px 0 10px;
+    color: var(--text-color);
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+
+.lesson-page .lesson-card p {
+    margin: 0;
+    color: #5f6470;
+    line-height: 1.6;
+}
+
+.lesson-page .lesson-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 18px;
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+.lesson-page .lesson-cta .material-icons {
+    font-size: 18px;
+}
+
+@media (max-width: 960px) {
+    .lesson-page .lessons-hero,
+    .lesson-page .lesson-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-page .lesson-card {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .lesson-page .lessons-hero {
+        margin-top: 18px;
+        padding: 24px;
+    }
+
+    .lesson-page .lessons-hero-panel {
+        padding: 12px;
+    }
+
+    .lesson-page .lessons-hero-panel div {
+        grid-template-columns: 38px 1fr;
+        padding: 10px;
+    }
+
+    .lesson-page .lessons-hero-panel .material-icons,
+    .lesson-page .lesson-card > .material-icons {
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
+    }
+
+    .lesson-page .lesson-card {
+        padding: 20px;
+    }
+}

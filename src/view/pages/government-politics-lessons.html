@@ -1,27 +1,27 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-45DLQZN7DN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
+
       gtag('config', 'G-45DLQZN7DN');
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Downloads - Navigate</title>
+    <title>Government &amp; Politics Lessons - Navigate</title>
     <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/lessons.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-</head>
     <style>
-        /* Active tab highlighting (resources) */
+        /* Active tab highlighting (resources section) */
         .menu-item a[href*="resources"] {
             background-color: var(--hover-color);
             color: var(--text-color);
@@ -29,9 +29,29 @@
         .menu-item a[href*="resources"] .material-icons {
             color: var(--accent-color);
         }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-color);
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
     </style>
 </head>
-<body>
+<body class="lesson-page">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -54,7 +74,7 @@
         </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
@@ -90,33 +110,71 @@
             </ul>
         </nav>
 
-        <h1>Downloads</h1>
-        <p>Download course materials, PDFs, slides, and datasets for offline study.</p>
+        <a href="resources.html?course=government-politics" class="back-to-courses">
+            <span class="material-icons">arrow_back</span>
+            Back to Government &amp; Politics Roadmap
+        </a>
 
-        <div class="resources-grid">
-            <a href="../../downloads/US History Notes.docx.pdf" class="resource-card" download>
-                <span class="material-icons">file_download</span>
-                <h3>U.S. History Notes</h3>
-                <p>Comprehensive notes and references for United States History.</p>
-            </a>
-            <a href="../../downloads/World History Notes.docx.pdf" class="resource-card" download>
-                <span class="material-icons">file_download</span>
-                <h3>World History Notes</h3>
-                <p>Comprehensive guide on World History events and topics.</p>
-            </a>
-            <a href="../../downloads/European History Notes.docx.pdf" class="resource-card" download>
-                <span class="material-icons">file_download</span>
-                <h3>European History Notes</h3>
-                <p>Complete guide to European civilizations and historical events.</p>
-            </a>
-            <a href="../../downloads/Government &amp; Politics Notes.docx.pdf" class="resource-card" download>
-                <span class="material-icons">file_download</span>
-                <h3>Government &amp; Politics Notes</h3>
-                <p>Comprehensive notes and references for Government &amp; Politics.</p>
-            </a>
-        </div>
+        <section class="lessons-hero" aria-labelledby="lessonPageTitle">
+            <div class="lessons-hero-copy">
+                <span class="lessons-kicker">
+                    <span class="material-icons">gavel</span>
+                    Government &amp; Politics
+                </span>
+                <h1 id="lessonPageTitle">Interactive Lessons</h1>
+                <p>Explore civic systems, constitutional principles, and democratic participation through focused slide-based lessons.</p>
+            </div>
+            <div class="lessons-hero-panel" aria-label="Lesson format">
+                <div>
+                    <span class="material-icons">slideshow</span>
+                    <strong>Canva Slide Decks</strong>
+                    <small>Visual lessons that open as full interactive presentations</small>
+                </div>
+                <div>
+                    <span class="material-icons">task_alt</span>
+                    <strong>Progress Tracking</strong>
+                    <small>Lesson visits connect with the rewards dashboard</small>
+                </div>
+                <div>
+                    <span class="material-icons">how_to_vote</span>
+                    <strong>Civic Practice</strong>
+                    <small>Connect institutions, rights, and participation</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="lessons-list" aria-labelledby="lessonListTitle">
+            <div class="lessons-list-header">
+                <h2 id="lessonListTitle">Choose a Lesson</h2>
+                <p>Explore constitutional principles, government institutions, elections, and civic participation.</p>
+            </div>
+
+            <div class="resources-grid lesson-grid">
+                <a href="government-foundations-lesson.html" class="resource-card lesson-card" data-lesson-id="government-politics-1" data-lesson-title="Government Foundations">
+                <span class="material-icons">menu_book</span>
+                <span class="lesson-number">Lesson 1</span>
+                <h3>Government Foundations</h3>
+                <p>Review core ideas behind government, public authority, and how political systems organize power.</p>
+                <span class="lesson-cta">Open lesson <span class="material-icons">arrow_forward</span></span>
+                </a>
+                <a href="constitutional-principles-lesson.html" class="resource-card lesson-card" data-lesson-id="government-politics-2" data-lesson-title="Constitutional Principles">
+                <span class="material-icons">menu_book</span>
+                <span class="lesson-number">Lesson 2</span>
+                <h3>Constitutional Principles</h3>
+                <p>Study the Constitution, federalism, checks and balances, and the responsibilities of each branch.</p>
+                <span class="lesson-cta">Open lesson <span class="material-icons">arrow_forward</span></span>
+                </a>
+                <a href="democracy-participation-lesson.html" class="resource-card lesson-card" data-lesson-id="government-politics-3" data-lesson-title="Democracy & Participation">
+                <span class="material-icons">menu_book</span>
+                <span class="lesson-number">Lesson 3</span>
+                <h3>Democracy &amp; Participation</h3>
+                <p>Learn how citizens, elections, political parties, and civic action shape democratic decision-making.</p>
+                <span class="lesson-cta">Open lesson <span class="material-icons">arrow_forward</span></span>
+                </a>
+            </div>
+        </section>
     </main>
-    
+
     <footer class="footer">
   <div class="footer-content">
     <div class="footer-section">
@@ -138,6 +196,7 @@
     </div>
 
     <div class="footer-section">
+    <div class="footer-section">
       <h3><span class="material-icons">gavel</span> Legal</h3>
       <ul>
         <li><a href="privacy-policy.html">Privacy Policy</a></li>
@@ -154,31 +213,27 @@
     <p><span class="material-icons" style="vertical-align:middle;font-size:14px">copyright</span> 2025 Navigate. All rights reserved.</p>
   </div>
 </footer>
-    
+
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
     <script src="../../controller/user-tracking.js"></script>
+    <script src="../../js/rewards.js"></script>
+    <script src="../../js/rewards-integration.js"></script>
     <script>
-        // Track download clicks
+        // Track lesson clicks
         document.addEventListener('DOMContentLoaded', function() {
-            const downloadCards = document.querySelectorAll('.resource-card[download]');
-            
-            downloadCards.forEach(card => {
+            const lessonCards = document.querySelectorAll('.resource-card[data-lesson-id]');
+
+            lessonCards.forEach(card => {
                 card.addEventListener('click', function(e) {
-                    const downloadTitle = this.querySelector('h3').textContent;
-                    
-                    // Track download accessed
-                    if (typeof trackDownloadAccessed === 'function') {
-                        trackDownloadAccessed(downloadTitle);
-                    }
+                    const lessonId = this.dataset.lessonId;
+                    const lessonTitle = this.dataset.lessonTitle;
+
+                    // Track lesson completion
+                    trackLessonCompletion(lessonId, lessonTitle, 'Government & Politics');
                 });
             });
         });
     </script>
 </body>
 </html>
-
-
-
-
-

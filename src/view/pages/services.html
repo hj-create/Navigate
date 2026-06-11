@@ -17,74 +17,273 @@
     <title>Services - Navigate</title>
 
     <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/chatbot.css">
-    <link rel="stylesheet" href="../../css/messenger.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
     <style>
         /* Active tab highlighting */
         .menu-item a[href*="services"] { background-color: var(--hover-color); color: var(--text-color); }
         .menu-item a[href*="services"] .material-icons { color: var(--accent-color); }
 
-        /* hide chatbot & messenger by default; show when .visible added */
-        .toggle-section { display: none; }
-        .toggle-section.visible { display: block; }
-
-        /* a small visual transition */
-        .chat-window, .messenger-window { transition: transform .12s ease, opacity .12s ease; }
-        .toggle-section.visible .chat-window,
-        .toggle-section.visible .messenger-window { transform: none; opacity: 1; }
-
-        /* Responsive image gallery */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        .services-page .services-hero {
+            position: relative;
+            min-height: 360px;
+            margin: 32px 0 28px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #222;
+            box-shadow: 0 18px 40px rgba(12,18,36,0.12);
         }
 
-        .image-gallery img {
+        .services-page .services-hero-image {
             width: 100%;
-            height: 200px;
+            height: 100%;
+            min-height: 360px;
             object-fit: cover;
+            display: block;
+            filter: saturate(1.06) contrast(1.03);
+            transform: scale(1.02);
+            transition: transform 600ms cubic-bezier(.2,.9,.2,1), filter 400ms;
+        }
+
+        .services-page .services-hero:hover .services-hero-image {
+            transform: scale(1.045) translateY(-4px);
+            filter: saturate(1.1) contrast(1.04);
+        }
+
+        .services-page .services-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(90deg, rgba(10,12,20,0.78), rgba(10,12,20,0.36) 58%, rgba(10,12,20,0.14)),
+                linear-gradient(180deg, rgba(255,152,0,0.22), rgba(255,87,34,0.08));
+        }
+
+        .services-page .services-hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+            align-items: end;
+            gap: 28px;
+            padding: clamp(24px, 5vw, 48px);
+            color: #fff;
+        }
+
+        .services-page .services-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .services-page .services-kicker .material-icons {
+            color: #ffcc80;
+            font-size: 1.2rem;
+        }
+
+        .services-page .services-hero-copy h1 {
+            margin: 12px 0 10px;
+            font-size: clamp(2.1rem, 5vw, 4.2rem);
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .services-page .services-hero-copy p {
+            max-width: 620px;
+            margin: 0;
+            color: rgba(255,255,255,0.92);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.55;
+        }
+
+        .services-page .services-hero-panel {
+            display: grid;
+            gap: 12px;
+            padding: 16px;
             border-radius: 8px;
+            background: rgba(255,255,255,0.92);
+            color: var(--text-color);
+            box-shadow: 0 16px 38px rgba(12,18,36,0.18);
+            backdrop-filter: blur(12px);
+        }
+
+        .services-page .services-hero-panel div {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            column-gap: 12px;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            background: linear-gradient(180deg,#fff,#fbfbff);
+        }
+
+        .services-page .services-hero-panel .material-icons {
+            grid-row: span 2;
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255,152,0,0.14);
+            color: var(--accent-color);
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .services-page .services-hero-panel strong {
+            line-height: 1.2;
+        }
+
+        .services-page .services-hero-panel small {
+            color: #5f6470;
+        }
+
+        .services-page .services-intro {
+            margin: 0 auto 24px;
+            text-align: center;
+            max-width: 760px;
+        }
+
+        .services-page .services-intro h2 {
+            font-size: clamp(1.7rem, 3vw, 2.35rem);
+            margin-bottom: 0.35rem;
+            color: var(--text-color);
+        }
+
+        .services-page .services-intro p {
+            margin: 0;
+            color: #5f6470;
+            font-size: 1.08rem;
+        }
+
+        .services-page .services-grid {
+            gap: 20px;
+            padding: 0 0 32px;
+        }
+
+        .services-page .service-card {
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            text-align: left;
+            background: linear-gradient(180deg,#fff,#fcfcff);
+            box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+            cursor: pointer;
+        }
+
+        .services-page .service-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(255,152,0,0.13), rgba(255,255,255,0) 42%);
+            pointer-events: none;
+        }
+
+        .services-page .service-card a {
+            position: relative;
+            z-index: 1;
+            min-height: 230px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 28px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .services-page .service-card .material-icons {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            margin: 0;
+            border-radius: 8px;
+            background: rgba(255,152,0,0.14);
+            color: var(--accent-color);
+            font-size: 30px;
+        }
+
+        .services-page .service-card h3 {
+            font-size: 1.35rem;
+            line-height: 1.2;
+            margin: 4px 0 0;
+        }
+
+        .services-page .service-card p {
+            color: #5f6470;
+            margin: 0;
+        }
+
+        .services-page .service-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .services-page .service-cta .material-icons {
+            width: auto;
+            height: auto;
+            background: none;
+            font-size: 18px;
+            color: currentColor;
+        }
+
+        .services-page .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 34px rgba(12,18,36,0.12);
         }
 
         @media screen and (max-width: 768px) {
-            .image-gallery {
+            .services-page .services-hero {
+                min-height: 520px;
+                margin-top: 24px;
+            }
+
+            .services-page .services-hero-image {
+                min-height: 520px;
+            }
+
+            .services-page .services-hero-overlay {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
-                margin: 1.5rem auto;
+                align-items: end;
+                gap: 18px;
             }
 
-            .image-gallery img {
-                height: 180px;
-            }
-        }
-
-        @media screen and (min-width: 769px) and (max-width: 1024px) {
-            .image-gallery {
-                grid-template-columns: repeat(2, 1fr);
+            .services-page .services-hero-panel {
+                grid-template-columns: 1fr;
             }
         }
 
         @media screen and (max-width: 480px) {
-            .image-gallery {
-                padding: 0 0.5rem;
-                gap: 0.5rem;
+            .services-page .services-hero,
+            .services-page .services-hero-image {
+                min-height: 560px;
             }
 
-            .image-gallery img {
-                height: 150px;
+            .services-page .services-hero-overlay {
+                padding: 20px;
+            }
+
+            .services-page .service-card a {
+                min-height: 0;
+                padding: 22px;
             }
         }
     </style>
 </head>
-<body>
+<body class="services-page">
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
@@ -113,67 +312,70 @@
             </ul>
         </nav>
 
-        <h1>Our Services</h1>
+        <section class="services-hero" aria-labelledby="servicesTitle">
+            <img src="../../images/pantheon-paris-9065570_1280.jpg" alt="" class="services-hero-image" loading="lazy">
+            <div class="services-hero-overlay">
+                <div class="services-hero-copy">
+                    <span class="services-kicker">
+                        <span class="material-icons">miscellaneous_services</span>
+                        Navigate support
+                    </span>
+                    <h1 id="servicesTitle">Our Services</h1>
+                    <p>Choose the right kind of help for the moment, from guided live sessions to quick answers and direct tutor support.</p>
+                </div>
+                <div class="services-hero-panel" aria-label="Service highlights">
+                    <div>
+                        <span class="material-icons">live_tv</span>
+                        <strong>Live Sessions</strong>
+                        <small>Structured tutoring and group study</small>
+                    </div>
+                    <div>
+                        <span class="material-icons">chat</span>
+                        <strong>Quick Answers</strong>
+                        <small>Chatbot help for common questions</small>
+                    </div>
+                    <div>
+                        <span class="material-icons">forum</span>
+                        <strong>Tutor Chat</strong>
+                        <small>Message tutors during business hours</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services-intro" aria-labelledby="servicesOptionsTitle">
+            <h2 id="servicesOptionsTitle">How can we help?</h2>
+            <p>Each service connects to the same Navigate tools you already use, just presented in a clearer path.</p>
+        </section>
+
         <div class="services-grid">
             <div class="service-card">
-                <a href="live-sessions.html" style="text-decoration: none; color: inherit;">
+                <a href="live-sessions.html">
                     <span class="material-icons">live_tv</span>
                     <h3>Live Sessions and Group Study</h3>
                     <p>Live sessions, real-time Q&A, and group study opportunities.</p>
+                    <span class="service-cta">View sessions <span class="material-icons">arrow_forward</span></span>
                 </a>
             </div>
 
             <div class="service-card">
-                <!-- clicking this will open the full-page chatbot -->
-                <a href="chatbot-full.html" class="toggle-link" data-target="services-chatbot" style="text-decoration: none; color: inherit;">
+                <a href="#sap-chatbot" id="sapChatbotTrigger" aria-controls="cai-webclient-custom">
                     <span class="material-icons">chat</span>
                     <h3>Chatbot</h3>
                     <p>Ask the Navigate Bot quick questions about scheduling, resources, and joining sessions.</p>
+                    <span class="service-cta">Open chatbot <span class="material-icons">arrow_forward</span></span>
                 </a>
             </div>
 
             <div class="service-card">
-                <!-- clicking this will open the full-page tutor chat -->
-                <a href="tutor-chat.html" class="toggle-link" data-target="services-messenger" style="text-decoration: none; color: inherit;">
+                <a href="tutor-chat.html">
                     <span class="material-icons">forum</span>
                     <h3>Tutor Chat</h3>
                     <p>Get direct help from our expert tutors during business hours (9 AM - 5 PM).</p>
+                    <span class="service-cta">Message tutors <span class="material-icons">arrow_forward</span></span>
                 </a>
             </div>
         </div>
-
-        <!-- chatbot is hidden by default; shown when user clicks the Chatbot card -->
-        <section id="services-chatbot" class="page-section toggle-section" aria-hidden="true">
-            <h2>Ask the Navigate Bot</h2>
-            <p>Get quick help about scheduling, resources, or how to use Navigate.</p>
-
-            <div class="chat-window">
-                <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-atomic="false"></div>
-                <form id="chat-form" class="chat-form">
-                    <input id="chat-input" class="chat-input" type="text" autocomplete="off"
-                           placeholder="Ask about schedules, resources, joining sessions..." />
-                    <button id="chat-send" class="chat-send" type="submit" aria-label="Send message to chatbot">Send</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- messenger is hidden by default; shown when user clicks the Tutor Chat card -->
-        <section id="services-messenger" class="page-section toggle-section" aria-hidden="true">
-            <h2>Message Our Tutors</h2>
-            <p>Get personalized help from our expert tutors during business hours (9 AM - 5 PM).</p>
-
-            <div class="messenger-window">
-                <div class="messenger-header">
-                    <div id="tutor-status" class="tutor-status"></div>
-                    <h3>Tutor Chat</h3>
-                </div>
-                <div id="tutor-messages" class="messenger-messages" aria-live="polite"></div>
-                <form id="messenger-form" class="messenger-form">
-                    <textarea id="messenger-input" class="messenger-input" placeholder="Type your message here..." rows="2"></textarea>
-                    <button type="submit" class="messenger-send" aria-label="Send message to tutor"><span class="material-icons">send</span><span>Send</span></button>
-                </form>
-            </div>
-        </section>
     </main>
 
     <footer class="footer">
@@ -213,79 +415,104 @@
   </div>
 </footer>
 
-    <script src="../../js/chatbot.js" defer></script>
-    <script src="../../js/messenger.js" defer></script>
-
     <script>
-        // show/hide logic for chatbot & messenger sections
         (function () {
-            function $(s){ return document.querySelectorAll(s); }
-            const toggles = document.querySelectorAll('.toggle-link');
-            const sections = {
-                'services-chatbot': document.getElementById('services-chatbot'),
-                'services-messenger': document.getElementById('services-messenger')
-            };
+            const trigger = document.getElementById('sapChatbotTrigger');
+            if (!trigger) return;
+            let sapScriptLoading = false;
 
-            function hideAll() {
-                Object.values(sections).forEach(sec => {
-                    if (sec) {
-                        sec.classList.remove('visible');
-                        sec.setAttribute('aria-hidden','true');
-                    }
-                });
+            const launcherSelectors = [
+                'button',
+                '[role="button"]',
+                '[class*="expander" i]',
+                '[class*="launcher" i]',
+                '[class*="chat" i]',
+                '[aria-label*="chat" i]',
+                '[title*="chat" i]'
+            ];
+
+            function looksLikeSapLauncher(element) {
+                if (!element || element === trigger || element.tagName === 'SCRIPT') return false;
+
+                const text = [
+                    element.id,
+                    element.className,
+                    element.getAttribute('aria-label'),
+                    element.getAttribute('title'),
+                    element.getAttribute('data-testid')
+                ].join(' ').toLowerCase();
+
+                return /cai|sap|webclient|webchat|expander|launcher|chat/.test(text);
             }
 
-            function show(id) {
-                hideAll();
-                const sec = sections[id];
-                if (!sec) return;
-                sec.classList.add('visible');
-                sec.setAttribute('aria-hidden','false');
-                // focus first interactive element for accessibility
-                const focusEl = sec.querySelector('input, textarea, button, [tabindex]');
-                if (focusEl) focusEl.focus({preventScroll:true});
-                // smooth scroll into view
-                sec.scrollIntoView({behavior:'smooth', block:'start'});
+            function walkForSapLauncher(root) {
+                for (const selector of launcherSelectors) {
+                    const matches = root.querySelectorAll ? root.querySelectorAll(selector) : [];
+                    for (const element of matches) {
+                        if (looksLikeSapLauncher(element)) return element;
+                    }
+                }
+
+                const children = root.querySelectorAll ? root.querySelectorAll('*') : [];
+                for (const child of children) {
+                    if (child.shadowRoot) {
+                        const match = walkForSapLauncher(child.shadowRoot);
+                        if (match) return match;
+                    }
+                }
+
+                return null;
             }
 
-            // attach click handlers to toggle links for in-page hash navigation only
-            toggles.forEach(a => {
-                a.addEventListener('click', function (e) {
-                    const href = a.getAttribute('href') || '';
-                    // if this is a normal link (points to a page), allow navigation
-                    if (!href.startsWith('#')) return; 
-                    e.preventDefault();
-                    const target = a.getAttribute('data-target') || href.slice(1);
-                    if (!target) return;
-                    // toggle: if visible, hide; otherwise show
-                    const sec = sections[target];
-                    if (!sec) return;
-                    if (sec.classList.contains('visible')) {
-                        sec.classList.remove('visible');
-                        sec.setAttribute('aria-hidden','true');
-                    } else {
-                        show(target);
-                    }
-                    // update URL hash without jumping
-                    history.replaceState(null, '', '#'+target);
-                });
-            });
+            function findSapLauncher() {
+                const launcher = walkForSapLauncher(document);
+                if (launcher) return launcher;
 
-            // if page loaded with hash that matches our sections, show it
-            document.addEventListener('DOMContentLoaded', () => {
-                const h = (location.hash || '').replace('#','');
-                if (h && sections[h]) show(h);
+                const sapFrame = document.querySelector('iframe[src*="cai" i], iframe[src*="sap" i], iframe[title*="chat" i]');
+                if (sapFrame) return sapFrame;
+
+                return null;
+            }
+
+            function loadSapChat() {
+                if (document.getElementById('cai-webclient-custom') || sapScriptLoading) return;
+
+                sapScriptLoading = true;
+                const script = document.createElement('script');
+                script.src = 'https://cdn.cai.tools.sap/webclient/bootstrap.js';
+                script.id = 'cai-webclient-custom';
+                script.setAttribute('data-channel-id', 'bfdf3d0e-57da-4ac7-839d-37f164da8cf2');
+                script.setAttribute('data-token', 'a4303df80ddd15164ffa1fb65fe3781c');
+                script.setAttribute('data-expander-type', 'CAI');
+                script.setAttribute('data-expander-preferences', 'JTdCJTIyZXhwYW5kZXJMb2dvJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZjZG4uY2FpLnRvb2xzLnNhcCUyRndlYmNoYXQlMkZ3ZWJjaGF0LWxvZ28uc3ZnJTIyJTJDJTIyZXhwYW5kZXJUaXRsZSUyMiUzQSUyMkNsaWNrJTIwb24lMjBtZSElMjIlMkMlMjJvbmJvYXJkaW5nTWVzc2FnZSUyMiUzQSUyMkNoYXQlMjB3aXRoJTIwbWUhJTIyJTJDJTIydGhlbWUlMjIlM0ElMjJERUZBVUxUJTIyJTdE');
+                document.body.appendChild(script);
+            }
+
+            function openSapChat(attemptsLeft) {
+                const launcher = findSapLauncher();
+                if (launcher) {
+                    launcher.dispatchEvent(new MouseEvent('click', {
+                        bubbles: true,
+                        cancelable: true,
+                        view: window
+                    }));
+                    return;
+                }
+
+                if (attemptsLeft > 0) {
+                    window.setTimeout(() => openSapChat(attemptsLeft - 1), 250);
+                }
+            }
+
+            trigger.addEventListener('click', function (event) {
+                event.preventDefault();
+                loadSapChat();
+                openSapChat(24);
             });
         })();
     </script>
-    
+
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
 </body>
 </html>
-
-
-
-
-
-

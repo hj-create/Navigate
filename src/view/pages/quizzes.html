@@ -1,22 +1,21 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-45DLQZN7DN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
+
       gtag('config', 'G-45DLQZN7DN');
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizzes - Navigate</title>
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/accessibility.css">
+    <link rel="stylesheet" href="../../css/styles.css">    <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -28,16 +27,16 @@
         .menu-item a[href*="resources"] .material-icons {
             color: var(--accent-color);
         }
-        
+
         /* Quiz container styles */
         .quiz-selection {
             display: none;
         }
-        
+
         .quiz-selection.active {
             display: block;
         }
-        
+
         .quiz-container {
             max-width: 800px;
             margin: 2rem auto;
@@ -46,26 +45,26 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
+
         .question {
             margin-bottom: 2rem;
             padding: 1.5rem;
             background: #f9f9f9;
             border-radius: 8px;
         }
-        
+
         .question h3 {
             color: var(--accent-color);
             margin-bottom: 1rem;
         }
-        
+
         .options {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             margin: 1rem 0;
         }
-        
+
         .option-label {
             display: flex;
             align-items: center;
@@ -76,16 +75,16 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .option-label:hover {
             border-color: var(--accent-color);
             background: #fff5f0;
         }
-        
+
         .option-label input[type="radio"] {
             margin-right: 0.75rem;
         }
-        
+
         .feedback {
             display: none;
             margin-top: 1rem;
@@ -93,23 +92,23 @@
             border-radius: 4px;
             font-size: 0.95rem;
         }
-        
+
         .feedback.correct {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        
+
         .feedback.incorrect {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        
+
         .feedback.show {
             display: block;
         }
-        
+
         .submit-btn {
             display: block;
             width: 100%;
@@ -123,12 +122,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .submit-btn:hover {
             background: #e64a19;
             transform: translateY(-2px);
         }
-        
+
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -142,11 +141,11 @@
             margin-bottom: 1rem;
             transition: all 0.3s ease;
         }
-        
+
         .back-btn:hover {
             background: #555;
         }
-        
+
         .score-summary {
             display: none;
             background: #e3f2fd;
@@ -156,24 +155,26 @@
             text-align: center;
             border: 2px solid #2196f3;
         }
-        
+
         .score-summary.show {
             display: block;
         }
-        
+
         .score-summary h2 {
             color: #1976d2;
             margin: 0;
             font-size: 2rem;
         }
-        
+
         .score-summary p {
             margin: 0.5rem 0 0 0;
             font-size: 1.2rem;
         }
     </style>
+    <link rel="stylesheet" href="../../css/quizzes.css">
 </head>
-<body>
+<body class="quiz-page">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -196,7 +197,7 @@
         </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
         <nav class="horizontal-menu">
             <ul class="menu-list">
                 <li class="menu-item">
@@ -232,28 +233,64 @@
             </ul>
         </nav>
 
-        <h1>Quizzes</h1>
-        <p>Test your knowledge with our interactive quizzes covering World History, US History, and European History.</p>
+        <section class="quiz-hero" aria-labelledby="quizPageTitle">
+            <div class="quiz-hero-copy">
+                <span class="quiz-kicker">
+                    <span class="material-icons">quiz</span>
+                    Practice center
+                </span>
+                <h1 id="quizPageTitle">Interactive Quizzes</h1>
+                <p>Test your knowledge across World History, U.S. History, European History, and Government &amp; Politics.</p>
+            </div>
+            <div class="quiz-hero-panel" aria-label="Quiz features">
+                <div>
+                    <span class="material-icons">task_alt</span>
+                    <strong>Instant Feedback</strong>
+                    <small>Review the correct answer and explanation after submitting</small>
+                </div>
+                <div>
+                    <span class="material-icons">workspace_premium</span>
+                    <strong>Progress Tracking</strong>
+                    <small>Scores connect with the rewards dashboard</small>
+                </div>
+                <div>
+                    <span class="material-icons">school</span>
+                    <strong>Four Subjects</strong>
+                    <small>Choose the course quiz that matches your roadmap</small>
+                </div>
+            </div>
+        </section>
 
         <!-- Quiz Category Selection -->
-        <div id="quizCategories" class="resources-grid">
-            <div class="resource-card">
+        <section id="quizIntro" class="quiz-intro" aria-labelledby="quizPickerTitle">
+            <h2 id="quizPickerTitle">Choose a Quiz</h2>
+            <p>Pick a subject to begin a 10-question practice set.</p>
+        </section>
+
+        <div id="quizCategories" class="resources-grid quiz-grid">
+            <div class="resource-card quiz-card">
                 <span class="material-icons">public</span>
                 <h3>World History</h3>
                 <p>Test your knowledge of ancient civilizations and world events.</p>
-                <button onclick="showQuiz('world')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
+                <button onclick="showQuiz('world')" class="resource-link quiz-start-btn">Start Quiz</button>
             </div>
-            <div class="resource-card">
+            <div class="resource-card quiz-card">
                 <span class="material-icons">flag</span>
                 <h3>US History</h3>
                 <p>Explore American history from colonial times to present.</p>
-                <button onclick="showQuiz('us')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
+                <button onclick="showQuiz('us')" class="resource-link quiz-start-btn">Start Quiz</button>
             </div>
-            <div class="resource-card">
+            <div class="resource-card quiz-card">
                 <span class="material-icons">account_balance</span>
                 <h3>European History</h3>
                 <p>Journey through European civilizations and empires.</p>
-                <button onclick="showQuiz('european')" class="resource-link" style="display:inline-block;margin-top:16px;padding:8px 16px;border-radius:6px;background:var(--accent-color);color:white;text-decoration:none;border:none;cursor:pointer;font-size:1rem;font-family:'Roboto',sans-serif;transition:all 0.3s ease;">Start Quiz</button>
+                <button onclick="showQuiz('european')" class="resource-link quiz-start-btn">Start Quiz</button>
+            </div>
+            <div class="resource-card quiz-card">
+                <span class="material-icons">gavel</span>
+                <h3>Government &amp; Politics</h3>
+                <p>Review branches of government, civic responsibilities, and constitutional principles.</p>
+                <button onclick="showQuiz('government')" class="resource-link quiz-start-btn">Start Quiz</button>
             </div>
         </div>
 
@@ -263,15 +300,15 @@
                 <span class="material-icons">arrow_back</span>
                 Back to World History Roadmap
             </a>
-            
+
             <div class="quiz-container">
                 <h2>Ancient Civilizations Quiz</h2>
-                
+
                 <div class="score-summary" id="scoreSummary">
                     <h2 id="finalScore"></h2>
                     <p id="scoreMessage"></p>
                 </div>
-                
+
                 <form id="quizForm">
                     <!-- Question 1 -->
                     <div class="question">
@@ -515,7 +552,7 @@
 
                     <button type="submit" class="submit-btn">Submit Quiz</button>
                 </form>
-                
+
                 <!-- Citation -->
                 <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
                     <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
@@ -532,15 +569,15 @@
                 <span class="material-icons">arrow_back</span>
                 Back to U.S. History Roadmap
             </a>
-            
+
             <div class="quiz-container">
                 <h2>Worlds Collide Quiz</h2>
-                
+
                 <div class="score-summary" id="usScoreSummary">
                     <h2 id="usFinalScore"></h2>
                     <p id="usScoreMessage"></p>
                 </div>
-                
+
                 <form id="usQuizForm">
                     <!-- Question 1 -->
                     <div class="question">
@@ -784,7 +821,7 @@
 
                     <button type="submit" class="submit-btn">Submit Quiz</button>
                 </form>
-                
+
                 <!-- Citation -->
                 <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
                     <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
@@ -813,15 +850,15 @@
                 <span class="material-icons">arrow_back</span>
                 Back to European History Roadmap
             </a>
-            
+
             <div class="quiz-container">
                 <h2>European History Quiz</h2>
-                
+
                 <div class="score-summary" id="europeanScoreSummary">
                     <h2 id="europeanFinalScore"></h2>
                     <p id="europeanScoreMessage"></p>
                 </div>
-                
+
                 <form id="europeanQuizForm">
                     <!-- Question 1 -->
                     <div class="question">
@@ -1065,7 +1102,7 @@
 
                     <button type="submit" class="submit-btn">Submit Quiz</button>
                 </form>
-                
+
                 <!-- Citation -->
                 <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
                     <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
@@ -1091,12 +1128,293 @@
             </div>
         </div>
 
+        <!-- Government & Politics Quiz -->
+        <div id="governmentQuiz" class="quiz-selection">
+            <a href="resources.html?course=government-politics" class="back-to-courses">
+                <span class="material-icons">arrow_back</span>
+                Back to Government &amp; Politics Roadmap
+            </a>
+
+            <div class="quiz-container">
+                <h2>Government &amp; Politics Quiz</h2>
+
+                <div class="score-summary" id="governmentScoreSummary">
+                    <h2 id="governmentFinalScore"></h2>
+                    <p id="governmentScoreMessage"></p>
+                </div>
+
+                <form id="governmentQuizForm">
+                    <!-- Question 1 -->
+                    <div class="question">
+                        <h3>1. Which branch of government is responsible for making laws?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq1" value="Executive Branch">
+                                A. Executive Branch
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq1" value="Judicial Branch">
+                                B. Judicial Branch
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq1" value="Legislative Branch">
+                                C. Legislative Branch
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq1" value="Cabinet Branch">
+                                D. Cabinet Branch
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Legislative Branch" data-feedback="Congress is the legislative branch, and its main job is to write and pass laws."></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question">
+                        <h3>2. What is the primary role of the President of the United States?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq2" value="Interpret laws">
+                                A. Interpret laws
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq2" value="Enforce laws">
+                                B. Enforce laws
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq2" value="Make laws">
+                                C. Make laws
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq2" value="Approve court decisions">
+                                D. Approve court decisions
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Enforce laws" data-feedback="The President leads the executive branch, which carries out and enforces federal laws."></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question">
+                        <h3>3. Which document serves as the supreme law of the United States?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq3" value="Declaration of Independence">
+                                A. Declaration of Independence
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq3" value="Bill of Rights">
+                                B. Bill of Rights
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq3" value="Articles of Confederation">
+                                C. Articles of Confederation
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq3" value="Constitution">
+                                D. Constitution
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Constitution" data-feedback="The U.S. Constitution is the nation's highest legal authority."></div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question">
+                        <h3>4. Which branch of government can declare a law unconstitutional?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq4" value="Executive Branch">
+                                A. Executive Branch
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq4" value="Legislative Branch">
+                                B. Legislative Branch
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq4" value="Judicial Branch">
+                                C. Judicial Branch
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq4" value="State Governments">
+                                D. State Governments
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Judicial Branch" data-feedback="Through judicial review, courts can decide whether laws violate the Constitution."></div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question">
+                        <h3>5. What is the purpose of checks and balances?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq5" value="To speed up lawmaking">
+                                A. To speed up lawmaking
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq5" value="To limit the power of each branch of government">
+                                B. To limit the power of each branch of government
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq5" value="To elect government officials">
+                                C. To elect government officials
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq5" value="To collect taxes">
+                                D. To collect taxes
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="To limit the power of each branch of government" data-feedback="Checks and balances keep any one branch from becoming too powerful."></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question">
+                        <h3>6. How many voting members are in the U.S. Senate?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq6" value="50">
+                                A. 50
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq6" value="100">
+                                B. 100
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq6" value="435">
+                                C. 435
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq6" value="538">
+                                D. 538
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="100" data-feedback="Each state has two senators, so the 50 states have 100 voting senators total."></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question">
+                        <h3>7. Which of the following is a responsibility of citizens in a democracy?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq7" value="Serving as President">
+                                A. Serving as President
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq7" value="Declaring war">
+                                B. Declaring war
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq7" value="Voting in elections">
+                                C. Voting in elections
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq7" value="Appointing Supreme Court justices">
+                                D. Appointing Supreme Court justices
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Voting in elections" data-feedback="Voting lets citizens participate in choosing leaders and shaping public decisions."></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question">
+                        <h3>8. What is federalism?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq8" value="A system where judges make all laws">
+                                A. A system where judges make all laws
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq8" value="A system that divides power between national and state governments">
+                                B. A system that divides power between national and state governments
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq8" value="A type of election process">
+                                C. A type of election process
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq8" value="A political party">
+                                D. A political party
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="A system that divides power between national and state governments" data-feedback="Federalism divides governing authority between the federal government and state governments."></div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question">
+                        <h3>9. Which amendment guarantees freedom of speech?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq9" value="First Amendment">
+                                A. First Amendment
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq9" value="Second Amendment">
+                                B. Second Amendment
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq9" value="Fifth Amendment">
+                                C. Fifth Amendment
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq9" value="Tenth Amendment">
+                                D. Tenth Amendment
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="First Amendment" data-feedback="The First Amendment protects freedom of speech, religion, press, assembly, and petition."></div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question">
+                        <h3>10. What is the main function of political parties?</h3>
+                        <div class="options">
+                            <label class="option-label">
+                                <input type="radio" name="gq10" value="Interpret the Constitution">
+                                A. Interpret the Constitution
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq10" value="Conduct court trials">
+                                B. Conduct court trials
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq10" value="Organize and support candidates for public office">
+                                C. Organize and support candidates for public office
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="gq10" value="Command the military">
+                                D. Command the military
+                            </label>
+                        </div>
+                        <div class="feedback" data-correct="Organize and support candidates for public office" data-feedback="Political parties organize voters, develop platforms, and support candidates running for office."></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Quiz</button>
+                </form>
+
+                <!-- Citation -->
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--text-color);">Works Cited</h3>
+                    <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        National Archives. "The Constitution of the United States." <em>National Archives</em>, https://www.archives.gov/founding-docs/constitution.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        U.S. House of Representatives. "Branches of Government." <em>United States House of Representatives</em>, https://www.house.gov/the-house-explained/branches-of-government.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        United States Senate. "The Senate and the Constitution." <em>United States Senate</em>, https://www.senate.gov/about/origins-foundations/senate-and-constitution.htm.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        Supreme Court of the United States. "The Court and Constitutional Interpretation." <em>Supreme Court of the United States</em>, https://www.supremecourt.gov/about/constitutional.aspx.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.6; text-indent: -2rem; padding-left: 2rem;">
+                        iCivics. <em>iCivics</em>, https://www.icivics.org.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <script>
             // Check URL parameters on page load
             window.addEventListener('DOMContentLoaded', function() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const quizParam = urlParams.get('quiz');
-                
+
                 if (quizParam) {
                     showQuiz(quizParam);
                 }
@@ -1104,52 +1422,60 @@
 
             function showQuiz(category) {
                 document.getElementById('quizCategories').style.display = 'none';
+                document.getElementById('quizIntro').style.display = 'none';
                 if (category === 'world') {
                     document.getElementById('worldQuiz').classList.add('active');
                 } else if (category === 'us') {
                     document.getElementById('usQuiz').classList.add('active');
                 } else if (category === 'european') {
                     document.getElementById('europeanQuiz').classList.add('active');
+                } else if (category === 'government') {
+                    document.getElementById('governmentQuiz').classList.add('active');
                 }
             }
 
             function backToCategories() {
                 document.getElementById('quizCategories').style.display = 'grid';
+                document.getElementById('quizIntro').style.display = 'block';
                 document.getElementById('worldQuiz').classList.remove('active');
                 document.getElementById('usQuiz').classList.remove('active');
                 document.getElementById('europeanQuiz').classList.remove('active');
-                
+                document.getElementById('governmentQuiz').classList.remove('active');
+
                 // Reset all quizzes
                 const worldForm = document.getElementById('quizForm');
                 const usForm = document.getElementById('usQuizForm');
                 const europeanForm = document.getElementById('europeanQuizForm');
+                const governmentForm = document.getElementById('governmentQuizForm');
                 if (worldForm) worldForm.reset();
                 if (usForm) usForm.reset();
                 if (europeanForm) europeanForm.reset();
-                
+                if (governmentForm) governmentForm.reset();
+
                 document.getElementById('scoreSummary').classList.remove('show');
                 document.getElementById('usScoreSummary').classList.remove('show');
                 document.getElementById('europeanScoreSummary').classList.remove('show');
+                document.getElementById('governmentScoreSummary').classList.remove('show');
                 document.querySelectorAll('.feedback').forEach(f => f.classList.remove('show', 'correct', 'incorrect'));
             }
 
             // World History Quiz
             document.getElementById('quizForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 let score = 0;
                 let totalQuestions = 10;
-                
+
                 // Check all questions
                 for (let i = 1; i <= totalQuestions; i++) {
                     const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
                     const feedbackDiv = document.querySelector(`#worldQuiz .question:nth-child(${i}) .feedback`);
                     const correctAnswer = feedbackDiv.dataset.correct;
                     const feedbackText = feedbackDiv.dataset.feedback;
-                    
+
                     if (selectedAnswer) {
                         const userAnswer = selectedAnswer.value;
-                        
+
                         if (userAnswer === correctAnswer) {
                             score++;
                             feedbackDiv.classList.add('correct', 'show');
@@ -1163,14 +1489,14 @@
                         feedbackDiv.innerHTML = `<strong>No answer selected.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
                     }
                 }
-                
+
                 // Show score summary
                 const scoreSummary = document.getElementById('scoreSummary');
                 const finalScore = document.getElementById('finalScore');
                 const scoreMessage = document.getElementById('scoreMessage');
-                
+
                 finalScore.textContent = `Your Score: ${score}/${totalQuestions}`;
-                
+
                 const percentage = (score / totalQuestions) * 100;
                 if (percentage >= 90) {
                     scoreMessage.textContent = 'Excellent work! You have a strong understanding of ancient civilizations!';
@@ -1181,10 +1507,10 @@
                 } else {
                     scoreMessage.textContent = 'Keep studying! Review the feedback and try again.';
                 }
-                
+
                 scoreSummary.classList.add('show');
                 scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                
+
                 // Track quiz completion
                 if (typeof trackQuizCompletion === 'function') {
                     trackQuizCompletion('world-history-quiz', 'World History Quiz', percentage, totalQuestions);
@@ -1194,20 +1520,20 @@
             // US History Quiz
             document.getElementById('usQuizForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 let score = 0;
                 let totalQuestions = 10;
-                
+
                 // Check all questions
                 for (let i = 1; i <= totalQuestions; i++) {
                     const selectedAnswer = document.querySelector(`input[name="usq${i}"]:checked`);
                     const feedbackDiv = document.querySelector(`#usQuiz .question:nth-child(${i}) .feedback`);
                     const correctAnswer = feedbackDiv.dataset.correct;
                     const feedbackText = feedbackDiv.dataset.feedback;
-                    
+
                     if (selectedAnswer) {
                         const userAnswer = selectedAnswer.value;
-                        
+
                         if (userAnswer === correctAnswer) {
                             score++;
                             feedbackDiv.classList.add('correct', 'show');
@@ -1221,14 +1547,14 @@
                         feedbackDiv.innerHTML = `<strong>No answer selected.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
                     }
                 }
-                
+
                 // Show score summary
                 const scoreSummary = document.getElementById('usScoreSummary');
                 const finalScore = document.getElementById('usFinalScore');
                 const scoreMessage = document.getElementById('usScoreMessage');
-                
+
                 finalScore.textContent = `Your Score: ${score}/${totalQuestions}`;
-                
+
                 const percentage = (score / totalQuestions) * 100;
                 if (percentage >= 90) {
                     scoreMessage.textContent = 'Excellent work! You have a strong understanding of Native American history and early contact!';
@@ -1239,10 +1565,10 @@
                 } else {
                     scoreMessage.textContent = 'Keep studying! Review the feedback and try again.';
                 }
-                
+
                 scoreSummary.classList.add('show');
                 scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                
+
                 // Track quiz completion
                 if (typeof trackQuizCompletion === 'function') {
                     trackQuizCompletion('us-history-quiz', 'US History Quiz', percentage, totalQuestions);
@@ -1252,20 +1578,20 @@
             // European History Quiz
             document.getElementById('europeanQuizForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 let score = 0;
                 let totalQuestions = 10;
-                
+
                 // Check all questions
                 for (let i = 1; i <= totalQuestions; i++) {
                     const selectedAnswer = document.querySelector(`input[name="eq${i}"]:checked`);
                     const feedbackDiv = document.querySelector(`#europeanQuiz .question:nth-child(${i}) .feedback`);
                     const correctAnswer = feedbackDiv.dataset.correct;
                     const feedbackText = feedbackDiv.dataset.feedback;
-                    
+
                     if (selectedAnswer) {
                         const userAnswer = selectedAnswer.value;
-                        
+
                         if (userAnswer === correctAnswer) {
                             score++;
                             feedbackDiv.classList.add('correct', 'show');
@@ -1279,14 +1605,14 @@
                         feedbackDiv.innerHTML = `<strong>No answer selected.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
                     }
                 }
-                
+
                 // Show score summary
                 const scoreSummary = document.getElementById('europeanScoreSummary');
                 const finalScore = document.getElementById('europeanFinalScore');
                 const scoreMessage = document.getElementById('europeanScoreMessage');
-                
+
                 finalScore.textContent = `Your Score: ${score}/${totalQuestions}`;
-                
+
                 const percentage = (score / totalQuestions) * 100;
                 if (percentage >= 90) {
                     scoreMessage.textContent = 'Excellent work! You have a strong understanding of European history!';
@@ -1297,18 +1623,76 @@
                 } else {
                     scoreMessage.textContent = 'Keep studying! Review the feedback and try again.';
                 }
-                
+
                 scoreSummary.classList.add('show');
                 scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                
+
                 // Track quiz completion
                 if (typeof trackQuizCompletion === 'function') {
                     trackQuizCompletion('european-history-quiz', 'European History Quiz', percentage, totalQuestions);
                 }
             });
+
+            // Government & Politics Quiz
+            document.getElementById('governmentQuizForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                let score = 0;
+                let totalQuestions = 10;
+
+                // Check all questions
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const selectedAnswer = document.querySelector(`input[name="gq${i}"]:checked`);
+                    const feedbackDiv = document.querySelector(`#governmentQuiz .question:nth-child(${i}) .feedback`);
+                    const correctAnswer = feedbackDiv.dataset.correct;
+                    const feedbackText = feedbackDiv.dataset.feedback;
+
+                    if (selectedAnswer) {
+                        const userAnswer = selectedAnswer.value;
+
+                        if (userAnswer === correctAnswer) {
+                            score++;
+                            feedbackDiv.classList.add('correct', 'show');
+                            feedbackDiv.innerHTML = `<strong>âœ“ Correct!</strong><br>${feedbackText}`;
+                        } else {
+                            feedbackDiv.classList.add('incorrect', 'show');
+                            feedbackDiv.innerHTML = `<strong>âœ— Incorrect.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                        }
+                    } else {
+                        feedbackDiv.classList.add('incorrect', 'show');
+                        feedbackDiv.innerHTML = `<strong>No answer selected.</strong> The correct answer is: <strong>${correctAnswer}</strong><br>${feedbackText}`;
+                    }
+                }
+
+                // Show score summary
+                const scoreSummary = document.getElementById('governmentScoreSummary');
+                const finalScore = document.getElementById('governmentFinalScore');
+                const scoreMessage = document.getElementById('governmentScoreMessage');
+
+                finalScore.textContent = `Your Score: ${score}/${totalQuestions}`;
+
+                const percentage = (score / totalQuestions) * 100;
+                if (percentage >= 90) {
+                    scoreMessage.textContent = 'Excellent work! You have a strong understanding of government and politics!';
+                } else if (percentage >= 70) {
+                    scoreMessage.textContent = 'Good job! You have a solid grasp of the material.';
+                } else if (percentage >= 50) {
+                    scoreMessage.textContent = 'Not bad! Review the feedback to strengthen your knowledge.';
+                } else {
+                    scoreMessage.textContent = 'Keep studying! Review the feedback and try again.';
+                }
+
+                scoreSummary.classList.add('show');
+                scoreSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Track quiz completion
+                if (typeof trackQuizCompletion === 'function') {
+                    trackQuizCompletion('government-politics-quiz', 'Government & Politics Quiz', percentage, totalQuestions);
+                }
+            });
         </script>
     </main>
-    
+
     <footer class="footer">
   <div class="footer-content">
     <div class="footer-section">
@@ -1347,7 +1731,7 @@
     <p><span class="material-icons" style="vertical-align:middle;font-size:14px">copyright</span> 2025 Navigate. All rights reserved.</p>
   </div>
 </footer>
-    
+
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
     <script src="../../controller/user-tracking.js"></script>
@@ -1355,9 +1739,3 @@
     <script src="../../js/rewards-integration.js"></script>
 </body>
 </html>
-
-
-
-
-
-
