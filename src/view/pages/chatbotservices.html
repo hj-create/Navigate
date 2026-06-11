@@ -17,10 +17,13 @@
     // ...existing code...
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Services - Navigate</title>
 </head>
 <body>
     // ...existing code until services-grid...
 
+    <main id="main-content">
     <div class="services-grid">
         // ...first card stays same...
 
@@ -44,7 +47,7 @@
         <div class="chat-window">
             <div id="chat-messages" class="chat-messages"></div>
             <form id="chat-form" class="chat-form">
-                <input id="chat-input" class="chat-input" type="text" 
+                <input id="chat-input" class="chat-input" type="text" aria-label="Ask the Navigate Bot a question"
                        placeholder="Ask about schedules, resources, joining sessions..." />
                 <button id="chat-send" class="chat-send" type="submit">Send</button>
             </form>
@@ -96,8 +99,6 @@
 </footer>
 </body>
 </html>
-
-
 
 
 

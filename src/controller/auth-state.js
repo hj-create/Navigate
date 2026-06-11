@@ -214,10 +214,10 @@ function showDashboardAccessModal() {
     const modal = document.createElement('div');
     modal.className = 'navigate-modal-overlay';
     modal.innerHTML = `
-        <div class="navigate-modal-content">
+        <div class="navigate-modal-content" role="dialog" aria-modal="true" aria-labelledby="dashboardAccessTitle" tabindex="-1">
             <div class="navigate-modal-header">
-                <span class="material-icons navigate-modal-icon">dashboard</span>
-                <h2>Unlock Your Personal Learning Dashboard!</h2>
+                <span class="material-icons navigate-modal-icon" aria-hidden="true">dashboard</span>
+                <h2 id="dashboardAccessTitle">Unlock Your Personal Learning Dashboard!</h2>
             </div>
             
             <div class="navigate-modal-body">
@@ -307,6 +307,7 @@ function showDashboardAccessModal() {
     console.log('Appending modal to body');
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
+    modal.querySelector('.navigate-modal-content')?.focus();
     
     console.log('Modal appended, adding event listeners');
     

@@ -16,10 +16,10 @@ function showGuestBookingModal(onConfirm, onSignup) {
     const modal = document.createElement('div');
     modal.className = 'navigate-modal-overlay';
     modal.innerHTML = `
-        <div class="navigate-modal-content booking-modal">
+        <div class="navigate-modal-content booking-modal" role="dialog" aria-modal="true" aria-labelledby="guestBookingTitle" tabindex="-1">
             <div class="navigate-modal-header">
-                <span class="material-icons navigate-modal-icon">event_available</span>
-                <h2>Ready to Book Your Learning Session?</h2>
+                <span class="material-icons navigate-modal-icon" aria-hidden="true">event_available</span>
+                <h2 id="guestBookingTitle">Ready to Book Your Learning Session?</h2>
             </div>
             
             <div class="navigate-modal-body">
@@ -110,6 +110,7 @@ function showGuestBookingModal(onConfirm, onSignup) {
     `;
     
     document.body.appendChild(modal);
+    modal.querySelector('.navigate-modal-content')?.focus();
     
     // Store callbacks for button handlers
     window._guestModalCallbacks = { onConfirm, onSignup };
@@ -243,10 +244,10 @@ function showGuestDateRestrictionModal() {
     const modal = document.createElement('div');
     modal.className = 'navigate-modal-overlay';
     modal.innerHTML = `
-        <div class="navigate-modal-content">
+        <div class="navigate-modal-content" role="dialog" aria-modal="true" aria-labelledby="guestRestrictionTitle" tabindex="-1">
             <div class="navigate-modal-header">
-                <span class="material-icons navigate-modal-icon">event_busy</span>
-                <h2>Oops! Future Sessions Need an Account</h2>
+                <span class="material-icons navigate-modal-icon" aria-hidden="true">event_busy</span>
+                <h2 id="guestRestrictionTitle">Oops! Future Sessions Need an Account</h2>
             </div>
             
             <div class="navigate-modal-body">
@@ -312,6 +313,7 @@ function showGuestDateRestrictionModal() {
     `;
     
     document.body.appendChild(modal);
+    modal.querySelector('.navigate-modal-content')?.focus();
     document.body.style.overflow = 'hidden';
 }
 

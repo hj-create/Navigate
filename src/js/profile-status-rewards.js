@@ -76,7 +76,7 @@
           <div class="store-meta">
             <span class="cost">${item.cost} pts</span>
             ${owned ? '<span class="owned-label">Owned</span>' : `<button class="primary-btn" data-redeem="${item.id}" ${state.points >= item.cost ? '' : 'disabled'}>Redeem</button>`}
-            ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener">View</a>` : ''}
+            ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">View</a>` : ''}
           </div>
         </li>
       `;

@@ -270,7 +270,7 @@
         li.innerHTML = `
           <div class="store-text">
             <strong>${item.name}</strong>
-            <small>${item.type}${item.url ? ` • <a href="${item.url}" target="_blank" rel="noopener">Preview</a>` : ''}</small>
+            <small>${item.type}${item.url ? ` • <a href="${item.url}" target="_blank" rel="noopener noreferrer">Preview</a>` : ''}</small>
           </div>
           <div class="store-cta">
             <span class="cost">${item.cost} pts</span>

@@ -210,21 +210,63 @@
 }
 
 .about-page .team-member {
-    display: flex;
+    position: relative;
     min-width: 0;
+    min-height: 520px;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    perspective: 1200px;
+    text-align: center;
+}
+
+.about-page .team-member:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+}
+
+.about-page .team-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    transform-style: preserve-3d;
+    transition: transform 0.7s ease;
+}
+
+.about-page .team-member.is-flipped .team-card-inner {
+    transform: rotateY(180deg);
+}
+
+.about-page .team-card-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
     flex-direction: column;
     align-items: center;
     padding: 22px;
     border: 1px solid #f0ece8;
     border-radius: 8px;
-    background: linear-gradient(180deg,#fff,#fbfbff);
-    text-align: center;
+    background:
+        linear-gradient(90deg, rgba(255,152,0,0.1), rgba(255,255,255,0) 44%),
+        linear-gradient(180deg,#fff,#fbfbff);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     box-shadow: 0 10px 30px rgba(12,18,36,0.06);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.about-page .team-member:hover {
-    transform: translateY(-4px);
+.about-page .team-card-front {
+    justify-content: center;
+}
+
+.about-page .team-card-back {
+    justify-content: flex-start;
+    overflow-y: auto;
+    transform: rotateY(180deg);
+}
+
+.about-page .team-member:hover .team-card-face {
     border-color: rgba(255,152,0,0.34);
     box-shadow: 0 16px 34px rgba(12,18,36,0.12);
 }
@@ -237,6 +279,12 @@
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 12px 28px rgba(12,18,36,0.12);
+}
+
+.about-page .team-card-back img {
+    width: 168px;
+    height: 168px;
+    border-width: 5px;
 }
 
 .about-page .team-member img[src*="nandana.jpeg"] {
@@ -253,6 +301,46 @@
 .about-page .team-member p {
     color: #5f6470;
     font-weight: 700;
+}
+
+.about-page .flip-prompt {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 1.1rem;
+    padding: 0.58rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255,152,0,0.12);
+    color: var(--accent-color);
+    font-size: 0.88rem;
+    font-weight: 800;
+}
+
+.about-page .flip-prompt .material-icons {
+    font-size: 1.05rem;
+}
+
+.about-page .team-bio-list {
+    display: grid;
+    gap: 0.55rem;
+    width: 100%;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: #5f6470;
+    text-align: left;
+    line-height: 1.45;
+}
+
+.about-page .team-bio-list li {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid #f0ece8;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.72);
+}
+
+.about-page .team-bio-list strong {
+    color: var(--text-color);
 }
 
 .about-page .nonprofit-note {
@@ -303,6 +391,12 @@
     }
 
     .about-page .team-member {
-        padding: 20px;
+        min-height: 560px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .about-page .team-card-inner {
+        transition: none;
     }
 }

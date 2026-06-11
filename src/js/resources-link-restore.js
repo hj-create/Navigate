@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tgt = a.target;
       setTimeout(() => {
         if (document.visibilityState === 'visible') {
-          try { tgt === '_blank' ? window.open(abs, '_blank') : window.location.assign(abs); } catch {}
+          try { tgt === '_blank' ? window.open(abs, '_blank', 'noopener,noreferrer') : window.location.assign(abs); } catch {}
         }
       }, 0);
     }, true);
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetHref = el.dataset.href || el.dataset.navigate;
     if (!targetHref) return;
     const tgt = el.dataset.target || '_self';
-    try { tgt === '_blank' ? window.open(targetHref, '_blank') : window.location.assign(targetHref); } catch {}
+    try { tgt === '_blank' ? window.open(targetHref, '_blank', 'noopener,noreferrer') : window.location.assign(targetHref); } catch {}
   };
   document.addEventListener('click', (e) => {
     const card = e.target.closest('.resource-card, .course-card, .card, [data-href], [data-navigate]');

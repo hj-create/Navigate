@@ -133,21 +133,81 @@
             <section class="about-section">
                 <h2>Our Team</h2>
                 <div class="team-grid">
-                    <div class="team-member">
-                        <img src="../../images/haasini.png" alt="Lead Architect" loading="lazy">
-                        <h3>Haasini Jakkaraju</h3>
-                        <p>Lead Architect</p>
+                    <div class="team-member" role="button" tabindex="0" aria-label="Haasini Jakkaraju bio. Click to flip card." aria-pressed="false">
+                        <div class="team-card-inner">
+                            <div class="team-card-face team-card-front">
+                                <img src="../../images/haasini.png" alt="Haasini Jakkaraju" loading="lazy">
+                                <h3>Haasini Jakkaraju</h3>
+                                <p>Lead Architect</p>
+                                <span class="flip-prompt">
+                                    <span class="material-icons" aria-hidden="true">touch_app</span>
+                                    Click for bio
+                                </span>
+                            </div>
+                            <div class="team-card-face team-card-back">
+                                <img src="../../images/haasini.png" alt="Haasini Jakkaraju portrait" loading="lazy">
+                                <h3>Haasini Jakkaraju</h3>
+                                <ul class="team-bio-list">
+                                    <li><strong>Favorite History Class:</strong> AP US History</li>
+                                    <li><strong>Historical Figure I'd Meet:</strong> Ida B. Wells</li>
+                                    <li><strong>Favorite Book:</strong> The Naturals by Jennifer Lynn Barnes</li>
+                                    <li><strong>Dream Time-Travel Destination:</strong> Ancient Egypt</li>
+                                    <li><strong>Fun Fact:</strong> Double jointed in every finger</li>
+                                    <li><strong>Why I Joined:</strong> Because I love history, and think it should be accessible for all!</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="team-member">
-                        <img src="../../images/sayali.png" alt="Curriculum Designer" loading="lazy">
-                        <h3>Sayali Rane</h3>
-                        <p>Curriculum Designer</p>
+                    <div class="team-member" role="button" tabindex="0" aria-label="Sayali Rane bio. Click to flip card." aria-pressed="false">
+                        <div class="team-card-inner">
+                            <div class="team-card-face team-card-front">
+                                <img src="../../images/sayali.png" alt="Sayali Rane" loading="lazy">
+                                <h3>Sayali Rane</h3>
+                                <p>Curriculum Designer</p>
+                                <span class="flip-prompt">
+                                    <span class="material-icons" aria-hidden="true">touch_app</span>
+                                    Click for bio
+                                </span>
+                            </div>
+                            <div class="team-card-face team-card-back">
+                                <img src="../../images/sayali.png" alt="Sayali Rane portrait" loading="lazy">
+                                <h3>Sayali Rane</h3>
+                                <ul class="team-bio-list">
+                                    <li><strong>Favorite History Class:</strong> AP World History</li>
+                                    <li><strong>Historical Figure I'd Meet:</strong> Jane Austen</li>
+                                    <li><strong>Favorite Book:</strong> The Inheritance Games</li>
+                                    <li><strong>Dream Time-Travel Location:</strong> Medieval Europe</li>
+                                    <li><strong>Fun Fact:</strong> I did taekwondo for 7 years</li>
+                                    <li><strong>Why I Joined:</strong> To help students meet their learning needs</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="team-member">
-                        <img src="../../images/nandana.jpeg" alt="Project Lead" loading="lazy">
-                        <h3>Nandana Atukuri</h3>
-                        <p>Project Manager</p>
-                      </div>
+                    <div class="team-member" role="button" tabindex="0" aria-label="Nandana Atukuri bio. Click to flip card." aria-pressed="false">
+                        <div class="team-card-inner">
+                            <div class="team-card-face team-card-front">
+                                <img src="../../images/nandana.jpeg" alt="Nandana Atukuri" loading="lazy">
+                                <h3>Nandana Atukuri</h3>
+                                <p>Project Manager</p>
+                                <span class="flip-prompt">
+                                    <span class="material-icons" aria-hidden="true">touch_app</span>
+                                    Click for bio
+                                </span>
+                            </div>
+                            <div class="team-card-face team-card-back">
+                                <img src="../../images/nandana.jpeg" alt="Nandana Atukuri portrait" loading="lazy">
+                                <h3>Nandana Atukuri</h3>
+                                <ul class="team-bio-list">
+                                    <li><strong>Favorite History Class:</strong> AP World History</li>
+                                    <li><strong>Historical Figure I'd Meet:</strong> Martin Luther King Jr.</li>
+                                    <li><strong>Favorite Book:</strong> Restart by Gordon Korman</li>
+                                    <li><strong>Dream Vacation:</strong> Kyoto, Japan</li>
+                                    <li><strong>Fun Fact:</strong> I'm secretly a huge trivia nerd.</li>
+                                    <li><strong>Why I Joined:</strong> I want to help students overcome the challenge of conquering history.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -207,9 +267,24 @@
     
     <script src="../../controller/auth.js"></script>
     <script src="../../controller/auth-state.js"></script>
+    <script>
+        document.querySelectorAll('.team-member').forEach(card => {
+            function flipCard() {
+                card.classList.toggle('is-flipped');
+                card.setAttribute('aria-pressed', card.classList.contains('is-flipped') ? 'true' : 'false');
+            }
+
+            card.addEventListener('click', flipCard);
+            card.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    flipCard();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-
 
 
 

@@ -80,7 +80,7 @@
             </div>
             <div>
               ${owned ? '<span class="owned-label">Owned</span>' : `<button class="primary-btn" data-redeem="${item.id}" ${points >= item.cost ? '' : 'disabled'}>Redeem</button>`}
-              ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" style="margin-left:8px">View</a>` : ''}
+              ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="margin-left:8px">View</a>` : ''}
             </div>
           </li>
         `;
