@@ -31,9 +31,25 @@ id="cai-webclient-custom">
                 const next = section.querySelector('.ig-next');
                 if (!track || !prev || !next) return;
                 let index = 0;
-                const visibleCount = 3;
                 const slides = [];
-                const gap = 28;
+
+                function getVisibleCount() {
+                    if (window.matchMedia('(max-width: 720px)').matches) return 1;
+                    if (window.matchMedia('(max-width: 900px)').matches) return 2;
+                    return 3;
+                }
+
+                function getGap() {
+                    const styles = window.getComputedStyle(track);
+                    return parseFloat(styles.columnGap || styles.gap || '0') || 0;
+                }
+
+                function disableEmbedTabbing(root = track) {
+                    root.querySelectorAll('iframe, blockquote, a, button, input, textarea, select, [tabindex]').forEach(el => {
+                        if (el.classList.contains('ig-prev') || el.classList.contains('ig-next')) return;
+                        el.setAttribute('tabindex', '-1');
+                    });
+                }
 
                 function createEmbedFromUrl(url) {
                     // Instagram blockquote embed structure for a post URL
@@ -74,10 +90,11 @@ id="cai-webclient-custom">
                     track.appendChild(s);
                     slides.push(s);
                 });
-                slides.slice(0, visibleCount).forEach(slide => {
+                slides.slice(0, 3).forEach(slide => {
                     const clone = slide.cloneNode(true);
                     clone.setAttribute('aria-hidden', 'true');
                     clone.classList.add('ig-clone');
+                    clone.setAttribute('inert', '');
                     track.appendChild(clone);
                 });
                 show(0);
@@ -96,18 +113,28 @@ id="cai-webclient-custom">
                     if (window.instgrm && window.instgrm.Embeds && typeof window.instgrm.Embeds.process === 'function') {
                         window.instgrm.Embeds.process();
                     }
+                    setTimeout(() => disableEmbedTabbing(), 250);
+                    setTimeout(() => disableEmbedTabbing(), 1000);
                 }
 
                 function show(i) {
                     if (!slides.length) return;
+                    const visibleCount = getVisibleCount();
                     index = i < 0 ? Math.max(slides.length - visibleCount, 0) : i;
+                    if (index > Math.max(slides.length - visibleCount, 0)) index = 0;
                     track.style.transition = 'transform 650ms ease';
-                    const slideStep = slides[0].getBoundingClientRect().width + gap;
+                    const slideStep = slides[0].getBoundingClientRect().width + getGap();
                     track.style.transform = `translateX(${-index * slideStep}px)`;
                     slides.forEach((slide, slideIndex) => {
                         const isActive = slideIndex >= index && slideIndex < index + visibleCount;
                         slide.setAttribute('aria-hidden', String(!isActive));
+                        if (isActive) {
+                            slide.removeAttribute('inert');
+                        } else {
+                            slide.setAttribute('inert', '');
+                        }
                     });
+                    disableEmbedTabbing();
                     processEmbeds();
                 }
 
@@ -120,8 +147,11 @@ id="cai-webclient-custom">
                 });
                 window.addEventListener('resize', () => {
                     track.style.transition = 'none';
-                    const slideStep = slides[0].getBoundingClientRect().width + gap;
+                    const visibleCount = getVisibleCount();
+                    if (index > Math.max(slides.length - visibleCount, 0)) index = 0;
+                    const slideStep = slides[0].getBoundingClientRect().width + getGap();
                     track.style.transform = `translateX(${-index * slideStep}px)`;
+                    show(index);
                 });
 
                 // Next/Prev
