@@ -241,6 +241,7 @@
 .about-page .team-card-face {
     position: absolute;
     inset: 0;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -253,17 +254,33 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     box-shadow: 0 10px 30px rgba(12,18,36,0.06);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .about-page .team-card-front {
+    z-index: 2;
     justify-content: center;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .about-page .team-card-back {
     justify-content: flex-start;
     overflow-y: auto;
     transform: rotateY(180deg);
+}
+
+.about-page .team-member.is-flipped .team-card-front {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.about-page .team-member.is-flipped .team-card-back {
+    z-index: 2;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .about-page .team-member:hover .team-card-face {
