@@ -304,6 +304,13 @@
     border-width: 5px;
 }
 
+.about-page .team-card-face > .image-credit {
+    margin-top: -0.35rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.7rem;
+    text-align: center;
+}
+
 .about-page .team-member img[src*="nandana.jpeg"] {
     transform: rotate(90deg);
 }

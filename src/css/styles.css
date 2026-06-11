@@ -14,6 +14,45 @@
 /* Reset and Base Styles */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+.image-credit {
+  display: block;
+  margin-top: 0.45rem;
+  color: #6b7280;
+  font-size: 0.74rem;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.carousel-overlay .image-credit {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.services-hero .image-credit,
+.live-hero .image-credit,
+.sap-chat-hero .image-credit,
+.video-thumbnail .image-credit {
+  position: absolute;
+  z-index: 3;
+  margin: 0;
+  padding: 0.22rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.58);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.68rem;
+}
+
+.services-hero .image-credit,
+.live-hero .image-credit,
+.sap-chat-hero .image-credit {
+  right: 14px;
+  bottom: 10px;
+}
+
+.video-thumbnail .image-credit {
+  left: 10px;
+  bottom: 8px;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
@@ -21,6 +60,27 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe,
+embed,
+object {
+  max-width: 100%;
+}
+
+iframe,
+embed,
+object {
+  border: 0;
+}
+
+table {
+  max-width: 100%;
 }
 
 /* Header (sticky) */
@@ -44,6 +104,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
 }
 
 .logo a {
@@ -52,6 +114,7 @@ body {
   text-decoration: none;
   color: var(--light-text);
   gap: 8px;
+  min-width: 0;
 }
 
 .logo .material-icons { font-size: 32px; }
@@ -74,6 +137,9 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,.1);
   padding: 12px;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .menu-list {
@@ -128,6 +194,8 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+  flex-shrink: 0;
 }
 
 .auth-btn {
@@ -286,6 +354,12 @@ body {
 @media screen and (max-width: 768px) {
   .header-content { padding: 0 16px; }
   .title { display: none; }
+  .logo-text {
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .auth-btn span:not(.material-icons) { display: none; }
   .auth-buttons,
   .auth-session {
@@ -313,17 +387,220 @@ body {
   .social-icons { justify-content: center; }
 
   .header-content { justify-content: space-between; }
+  .main-content { padding: 24px 14px; }
   .content-wrapper { padding: 16px; }
   .horizontal-menu { padding: 8px; }
   .menu-list { flex-direction: column; gap: 8px; }
   .menu-item { width: 100%; }
   .menu-item a { padding: 12px 16px; justify-content: flex-start; }
   .content-area { padding: 16px; }
+
+  .footer .quick-links ul {
+    grid-auto-flow: row;
+    grid-template-rows: none;
+    justify-items: center;
+  }
+
+  .presentation-container {
+    min-height: 360px !important;
+    height: min(62vh, 520px) !important;
+  }
+
+  .pdf-viewer-container iframe,
+  .pdf-viewer-container embed,
+  embed[type="application/pdf"] {
+    min-height: 420px;
+    height: 62vh;
+  }
+
+  .carousel-overlay {
+    padding: 1.1rem;
+  }
+
+  .carousel-overlay h2 {
+    font-size: 1.35rem;
+  }
+
+  .services-hero,
+  .live-hero,
+  .sap-chat-hero {
+    min-height: 320px;
+  }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .header-content { padding: 0 24px; }
   .footer-content { padding: 0 24px; }
+  .main-content { padding: 32px 18px; }
+  .menu-item a { padding: 14px 20px; }
+}
+
+@media screen and (max-width: 900px) {
+  .about-hero,
+  .resources-hero,
+  .schedule-hero,
+  .dashboard-hero,
+  .videos-hero,
+  .lesson-hero,
+  .quiz-hero,
+  .services-hero-overlay,
+  .live-hero-overlay,
+  .sap-chat-layout,
+  .about-story-grid,
+  .dashboard-header,
+  .date-range {
+    grid-template-columns: 1fr !important;
+  }
+
+  .table-container,
+  .progress-table,
+  .calendar-container,
+  .download-container,
+  .pdf-viewer-container,
+  .presentation-container,
+  .chat-window {
+    max-width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Cross-page responsive hardening for older and inline page layouts. */
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+}
+
+.service-card,
+.resource-card,
+.dashboard-card,
+.summary-card,
+.course-box,
+.pathway-step,
+.video-card,
+.lesson-card,
+.quiz-card,
+.download-card,
+.team-member,
+.certificate-card,
+.reward-card,
+.store-item,
+.badge-item {
+  min-width: 0;
+}
+
+.chat-form,
+.booking-actions,
+.modal-actions,
+.form-actions,
+.download-button-container,
+.auth-actions {
+  max-width: 100%;
+}
+
+.chat-input,
+.chat-form input,
+.chat-form textarea {
+  min-width: 0;
+}
+
+.progress-bar,
+.calendar,
+.calendar-grid,
+.calendar-container,
+.resources-grid,
+.services-grid,
+.dashboard-grid,
+.team-grid,
+.course-grid,
+.video-grid,
+.lesson-grid,
+.quiz-grid {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .rewards-summary,
+  .store-item,
+  .chat-form,
+  .booking-actions,
+  .modal-actions,
+  .form-actions,
+  .download-button-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .chat-form {
+    flex-wrap: wrap;
+  }
+
+  .chat-actions {
+    flex: 0 0 auto;
+  }
+
+  .download-btn,
+  .book-session-btn,
+  .update-btn,
+  .submit-btn,
+  .primary-btn,
+  .secondary-btn {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header-content {
+    gap: 8px;
+  }
+
+  .auth-buttons,
+  .auth-session {
+    gap: 4px;
+  }
+
+  .auth-btn,
+  .auth-user-chip {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0.5rem;
+  }
+
+  .auth-user-chip {
+    max-width: 92px;
+  }
+
+  .main-content {
+    padding: 20px 12px;
+  }
+
+  .footer-bottom p {
+    padding: 0 16px;
+  }
+
+  .carousel-btn,
+  .calendar-nav,
+  .icon-btn {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .presentation-container {
+    min-height: 320px !important;
+    height: 58vh !important;
+  }
+
+  .pdf-viewer-container iframe,
+  .pdf-viewer-container embed,
+  embed[type="application/pdf"] {
+    min-height: 360px;
+    height: 58vh;
+  }
 }
 
 /* Page-specific cards/grids */
