@@ -1,0 +1,308 @@
+/* Shared visual refresh for about.html. */
+
+.about-page {
+    overflow-x: hidden;
+}
+
+.about-page .main-content {
+    max-width: 1200px;
+}
+
+.about-page .menu-item a[href*="about"] {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+}
+
+.about-page .menu-item a[href*="about"] .material-icons {
+    color: var(--accent-color);
+}
+
+.about-page .about-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+    gap: 24px;
+    align-items: stretch;
+    margin: 32px 0 28px;
+    padding: clamp(24px, 5vw, 44px);
+    border-radius: 16px;
+    background:
+        linear-gradient(135deg, rgba(255,152,0,0.16), rgba(255,87,34,0.08) 42%, rgba(255,255,255,0) 70%),
+        linear-gradient(180deg, #ffffff, #fbfbff);
+    box-shadow: 0 18px 40px rgba(12,18,36,0.12);
+    overflow: hidden;
+}
+
+.about-page .about-hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.about-page .about-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255,152,0,0.14);
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+.about-page .about-kicker .material-icons {
+    font-size: 1.2rem;
+}
+
+.about-page .about-hero h1 {
+    margin: 14px 0 10px;
+    color: var(--text-color);
+    font-size: clamp(2.2rem, 5vw, 4.1rem);
+    line-height: 1;
+}
+
+.about-page .about-hero p {
+    max-width: 650px;
+    margin: 0;
+    color: #5f6470;
+    font-size: clamp(1rem, 2vw, 1.16rem);
+    line-height: 1.55;
+}
+
+.about-page .student-built-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin-top: 16px;
+    padding: 0.72rem 0.95rem;
+    border: 1px solid rgba(255,152,0,0.3);
+    border-radius: 8px;
+    background: rgba(255,152,0,0.1);
+    color: var(--text-color);
+    font-weight: 800;
+}
+
+.about-page .student-built-note .material-icons {
+    color: var(--accent-color);
+    font-size: 1.25rem;
+}
+
+.about-page .about-hero-panel {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.84);
+    box-shadow: 0 16px 38px rgba(12,18,36,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.about-page .about-hero-panel div {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background: linear-gradient(180deg,#fff,#fbfbff);
+}
+
+.about-page .about-hero-panel .material-icons {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(255,152,0,0.14);
+    color: var(--accent-color);
+    font-size: 24px;
+}
+
+.about-page .about-hero-panel strong {
+    color: var(--text-color);
+    line-height: 1.2;
+}
+
+.about-page .about-hero-panel small {
+    color: #5f6470;
+    line-height: 1.35;
+}
+
+.about-page .about-content {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+.about-page .about-story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+    gap: 18px;
+    align-items: stretch;
+}
+
+.about-page .about-copy-stack {
+    display: grid;
+    gap: 18px;
+}
+
+.about-page .about-section,
+.about-page .feedback-form {
+    border: 1px solid #f0ece8;
+    border-radius: 8px;
+    background:
+        linear-gradient(90deg, rgba(255,152,0,0.1), rgba(255,255,255,0) 44%),
+        linear-gradient(180deg,#fff,#fcfcff);
+    box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+}
+
+.about-page .about-section {
+    padding: 24px;
+}
+
+.about-page .about-section h2,
+.about-page .feedback-form h2 {
+    margin: 0 0 0.7rem;
+    color: var(--text-color);
+    font-size: clamp(1.45rem, 3vw, 2rem);
+    line-height: 1.15;
+}
+
+.about-page .about-section p {
+    margin: 0;
+    color: #5f6470;
+    font-size: 1.03rem;
+    line-height: 1.7;
+}
+
+.about-page .about-image-card {
+    overflow: hidden;
+    align-self: stretch;
+    border: 1px solid #f0ece8;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+}
+
+.about-page .about-image {
+    display: block;
+    width: 100%;
+    height: min(430px, 46vw);
+    min-height: 300px;
+    object-fit: cover;
+}
+
+.about-page .image-credit {
+    margin: 0;
+    padding: 12px 16px;
+    color: #5f6470;
+    font-size: 0.86rem;
+    text-align: right;
+}
+
+.about-page .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 1rem;
+}
+
+.about-page .team-member {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    padding: 22px;
+    border: 1px solid #f0ece8;
+    border-radius: 8px;
+    background: linear-gradient(180deg,#fff,#fbfbff);
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.about-page .team-member:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,152,0,0.34);
+    box-shadow: 0 16px 34px rgba(12,18,36,0.12);
+}
+
+.about-page .team-member img {
+    width: 118px;
+    height: 118px;
+    margin-bottom: 1rem;
+    border: 4px solid rgba(255,152,0,0.14);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 12px 28px rgba(12,18,36,0.12);
+}
+
+.about-page .team-member img[src*="nandana.jpeg"] {
+    transform: rotate(90deg);
+}
+
+.about-page .team-member h3 {
+    margin: 0 0 0.35rem;
+    color: var(--text-color);
+    font-size: 1.15rem;
+    line-height: 1.2;
+}
+
+.about-page .team-member p {
+    color: #5f6470;
+    font-weight: 700;
+}
+
+.about-page .nonprofit-note {
+    padding: 20px 24px;
+    border-color: rgba(255,152,0,0.3);
+    background: rgba(255,152,0,0.08);
+    text-align: center;
+}
+
+.about-page .nonprofit-note p {
+    max-width: 780px;
+    margin: 0 auto;
+    font-size: 0.98rem;
+}
+
+.about-page .feedback-form {
+    padding: 24px;
+}
+
+.about-page .feedback-form h2 {
+    text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+    .about-page .about-hero,
+    .about-page .about-story-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-page .about-hero-copy {
+        align-items: center;
+        text-align: center;
+    }
+
+    .about-page .about-image {
+        height: 340px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .about-page .about-hero {
+        margin-top: 24px;
+        padding: 24px;
+    }
+
+    .about-page .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-page .team-member {
+        padding: 20px;
+    }
+}

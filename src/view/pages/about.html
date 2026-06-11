@@ -5,79 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Navigate</title>
     <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/about.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Active tab highlighting */
-        .menu-item a[href*="about"] {
-            background-color: var(--hover-color);
-            color: var(--text-color);
-        }
-        .menu-item a[href*="about"] .material-icons {
-            color: var(--accent-color);
-        }
-        .team-grid {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-        .team-member {
-            background: #f5f5f5;
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-            flex: 1 1 200px;
-            min-width: 200px;
-            max-width: 250px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .team-member .material-icons {
-            font-size: 48px;
-            color: var(--accent-color, #1e88e5);
-            margin-bottom: 0.5rem;
-        }
-        .team-member img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .team-member img[src*="nandana.jpeg"] {
-            transform: rotate(90deg);
-        }
-        
-        /* About page image styling */
-        .about-image {
-            float: right;
-            width: 400px;
-            max-width: 45%;
-            height: auto;
-            margin: 0 0 1.5rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            object-fit: cover;
-        }
-        
-        @media (max-width: 768px) {
-            .about-image {
-                float: none;
-                width: 100%;
-                max-width: 100%;
-                margin: 1rem 0;
-            }
-        }
-             /* Center the feedback form heading */
-        .feedback-form h2 {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-    </style>
 </head>
-<body>
+<body class="about-page">
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -136,27 +69,68 @@
             </ul>
         </nav>
 
-        <h1>About Us</h1>
+        <section class="about-hero" aria-labelledby="about-heading">
+            <div class="about-hero-copy">
+                <span class="about-kicker">
+                    <span class="material-icons">explore</span>
+                    About Navigate
+                </span>
+                <h1 id="about-heading">History learning with clearer direction.</h1>
+                <p>Navigate was developed by three students building accessible resources, live support, and structured pathways for students learning history.</p>
+                <p class="student-built-note">
+                    <span class="material-icons" aria-hidden="true">school</span>
+                    Built by students, for students.
+                </p>
+            </div>
+            <div class="about-hero-panel" aria-label="Navigate priorities">
+                <div>
+                    <span class="material-icons">school</span>
+                    <strong>Student focused</strong>
+                    <small>Resources built around real learning needs.</small>
+                </div>
+                <div>
+                    <span class="material-icons">groups</span>
+                    <strong>Supportive team</strong>
+                    <small>Guidance, structure, and feedback in one place.</small>
+                </div>
+                <div>
+                    <span class="material-icons">volunteer_activism</span>
+                    <strong>Nonprofit mission</strong>
+                    <small>Accessible history education for more learners.</small>
+                </div>
+                <div>
+                    <span class="material-icons">engineering</span>
+                    <strong>Student developed</strong>
+                    <small>Created and maintained by a three-student team.</small>
+                </div>
+            </div>
+        </section>
+
         <div class="about-content">
-            <img src="../../images/ancientgreeceagain.jpg" alt="Ancient Greece" class="about-image" loading="lazy">
-            
-            <section class="about-section">
-                <h2>Our Story</h2>
-                <p>
-                    Navigate was founded with a vision to make history learning engaging, accessible, and effective for students everywhere. Our team saw the need for a platform that combines live sessions, curated resources, and interactive tools to help students succeed in their history courses and exams.
-                </p>
-            </section>
+            <div class="about-story-grid">
+                <div class="about-copy-stack">
+                    <section class="about-section">
+                        <h2>Our Story</h2>
+                        <p>
+                            Navigate was founded with a vision to make history learning engaging, accessible, and effective for students everywhere. Our team saw the need for a platform that combines live sessions, curated resources, and interactive tools to help students succeed in their history courses and exams.
+                        </p>
+                    </section>
+
+                    <section class="about-section">
+                        <h2>Our Mission</h2>
+                        <p>
+                            Our mission is to empower students to master history through structured learning, expert guidance, and a supportive community. We strive to provide high-quality educational experiences that inspire curiosity and foster academic growth.
+                        </p>
+                    </section>
+                </div>
+
+                <figure class="about-image-card">
+                    <img src="../../images/ancientgreeceagain.jpg" alt="Ancient Greece" class="about-image" loading="lazy">
+                    <figcaption class="image-credit">Image courtesy of Pexabay.</figcaption>
+                </figure>
+            </div>
 
             <section class="about-section">
-                <h2>Our Mission</h2>
-                <p>
-                    Our mission is to empower students to master history through structured learning, expert guidance, and a supportive community. We strive to provide high-quality educational experiences that inspire curiosity and foster academic growth.
-                </p>
-            </section>
-            
-            <p style="text-align: right; font-size: 0.875rem; color: #666; margin: 0.25rem 0 1rem 0;">Image courtesy of Pexabay.</p>
-
-            <section class="about-section" style="clear: both;">
                 <h2>Our Team</h2>
                 <div class="team-grid">
                     <div class="team-member">
@@ -177,21 +151,20 @@
                 </div>
             </section>
 
-            <section class="about-section">
-                <p style="text-align: center; color: #666; font-size: 0.9rem; margin-top: 2rem;">
+            <section class="about-section nonprofit-note">
+                <p>
                     Navigate is a 501(c)(3) nonprofit organization. Contributions are tax-deductible to the extent permitted by law.
                 </p>
             </section>
 
-             <!-- FEEDBACK FORM SECTION -->
-<section class="feedback-form">
- <h2> We'd love to hear your feedback!
-    </h2>
-    <div id="shapo-form-6342d22929"></div>
-<script id="shapo-embed-js" type="text/javascript" src="https://cdn.shapo.io/js/embed.js" defer></script>
-</section>
- </div> <!-- content-wrapper -->
-</main>
+            <!-- FEEDBACK FORM SECTION -->
+            <section class="feedback-form">
+                <h2>We'd love to hear your feedback!</h2>
+                <div id="shapo-form-6342d22929"></div>
+                <script id="shapo-embed-js" type="text/javascript" src="https://cdn.shapo.io/js/embed.js" defer></script>
+            </section>
+        </div>
+    </main>
 
     
     <footer class="footer">
@@ -236,8 +209,6 @@
     <script src="../../controller/auth-state.js"></script>
 </body>
 </html>
-
-
 
 
 

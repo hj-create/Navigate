@@ -333,29 +333,17 @@ td {
 
 /* Logged-in User Display - High contrast */
 .user-info {
-    background: rgba(255, 255, 255, 0.2) !important;
-    border: 2px solid var(--light-text) !important;
-    border-radius: 4px;
-    padding: 4px 12px;
+    border-radius: 999px;
 }
 
 /* Logout Button - Distinct styling */
-.auth-btn[onclick*="logout"],
-.auth-btn[style*="f44336"] {
-    background: repeating-linear-gradient(
-        45deg,
-        #c62828,
-        #c62828 10px,
-        #d32f2f 10px,
-        #d32f2f 20px
-    ) !important;
-    border: 3px solid #fff !important;
+.auth-btn-logout {
+    border: 1px solid rgba(255, 255, 255, 0.72) !important;
 }
 
 /* Hover States - Always add scale transform */
 a:hover,
 button:hover,
-.auth-btn:hover,
 .resource-card:hover,
 .service-card:hover {
     transform: scale(1.05);

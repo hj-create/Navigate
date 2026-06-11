@@ -79,12 +79,12 @@ function updateAuthUI() {
     if (currentUser) {
         // Regular user is logged in - show user info and logout button
         authButtons.innerHTML = `
-            <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
-                <span style="color: white; font-size: 0.95rem; font-family: 'Roboto', sans-serif; font-weight: 400; display: flex; align-items: center; gap: 0.5rem;">
-                    <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">person</span>
+            <div class="user-info auth-session">
+                <span class="auth-user-chip">
+                    <span class="material-icons">person</span>
                     ${currentUser.username}
                 </span>
-                <button onclick="handleLogout()" class="auth-btn" style="background-color: #dc3545; color: white; border: none !important; cursor: pointer; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem; font-family: 'Roboto', sans-serif; font-weight: 500;">
+                <button onclick="handleLogout()" class="auth-btn auth-btn-logout" type="button">
                     <span class="material-icons">logout</span>
                     <span>Logout</span>
                 </button>
@@ -93,16 +93,16 @@ function updateAuthUI() {
     } else if (guestUser) {
         // Guest user - show guest indicator and option to sign up
         authButtons.innerHTML = `
-            <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
-                <span style="color: white; font-size: 0.95rem; font-family: 'Roboto', sans-serif; font-weight: 400; display: flex; align-items: center; gap: 0.5rem;">
-                    <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">person_outline</span>
+            <div class="user-info auth-session">
+                <span class="auth-user-chip">
+                    <span class="material-icons">person_outline</span>
                     ${guestUser.username} (Guest)
                 </span>
-                <a href="${getAuthPagePath('signup.html')}" class="auth-btn" style="background-color: #4caf50; color: white; border: none !important; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem; font-family: 'Roboto', sans-serif; font-weight: 500;">
+                <a href="${getAuthPagePath('signup.html')}" class="auth-btn auth-btn-signup">
                     <span class="material-icons">how_to_reg</span>
                     <span>Sign Up</span>
                 </a>
-                <button onclick="handleGuestLogout()" class="auth-btn" style="background-color: #dc3545; color: white; border: none !important; cursor: pointer; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem; font-family: 'Roboto', sans-serif; font-weight: 500;">
+                <button onclick="handleGuestLogout()" class="auth-btn auth-btn-logout" type="button">
                     <span class="material-icons">logout</span>
                     <span>End Session</span>
                 </button>
@@ -115,7 +115,7 @@ function updateAuthUI() {
                 <span class="material-icons">person_outline</span>
                 <span>Sign In</span>
             </a>
-            <a href="${getAuthPagePath('signup.html')}" class="auth-btn">
+            <a href="${getAuthPagePath('signup.html')}" class="auth-btn auth-btn-primary">
                 <span class="material-icons">person_add</span>
                 <span>Sign Up</span>
             </a>
@@ -286,7 +286,7 @@ function showDashboardAccessModal() {
                 <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: #e3f2fd; border-radius: 0.5rem;">
                     <p style="margin: 0; color: #1976d2; font-size: 0.95rem;">
                         <span class="material-icons" style="vertical-align: middle; font-size: 1.125rem;">celebration</span>
-                        <strong>100% Free Forever</strong> • No Credit Card • Ready in 30 Seconds
+                        <strong>100% Free Forever</strong> • Ready in 30 Seconds
                     </p>
                 </div>
             </div>

@@ -434,6 +434,190 @@
     padding-bottom: 1rem;
 }
 
+.dashboard-page .earned-certificates {
+    padding-top: 1.5rem;
+    border-top: 1px solid #f1ece8;
+}
+
+.dashboard-page .certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    align-items: stretch;
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+    margin-top: 1rem;
+}
+
+.dashboard-page .certificates-grid > .muted {
+    grid-column: 1 / -1;
+    border: 1px dashed rgba(255,152,0,0.35);
+    border-radius: 8px;
+    background: rgba(255,152,0,0.08);
+    color: #5f6470;
+}
+
+.dashboard-page .certificate-card {
+    min-width: 0;
+    min-height: 430px;
+    border-radius: 8px;
+}
+
+.dashboard-page .certificate-card:focus {
+    outline: 2px solid var(--accent-color) !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 0 6px rgba(255,152,0,0.16) !important;
+}
+
+.dashboard-page .certificate-flip-container {
+    min-height: 430px;
+}
+
+.dashboard-page .certificate-front,
+.dashboard-page .certificate-back {
+    overflow: hidden;
+    border: 1px solid #f1ece8;
+    border-radius: 8px;
+    background:
+        linear-gradient(90deg, rgba(255,152,0,0.1), rgba(255,255,255,0) 44%),
+        linear-gradient(180deg,#fff,#fcfcff);
+    box-shadow: 0 10px 30px rgba(12,18,36,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dashboard-page .certificate-back {
+    background:
+        linear-gradient(135deg, rgba(255,87,34,0.11), rgba(255,152,0,0.08) 38%, rgba(255,255,255,0) 72%),
+        linear-gradient(180deg,#fff,#fcfcff);
+}
+
+.dashboard-page .certificate-card:hover .certificate-front,
+.dashboard-page .certificate-card:hover .certificate-back {
+    box-shadow: 0 16px 34px rgba(12,18,36,0.12);
+}
+
+.dashboard-page .certificate-border {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100% - 16px);
+    margin: 8px;
+    padding: clamp(1rem, 2vw, 1.35rem);
+    border: 1px solid rgba(255,152,0,0.32);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.86);
+}
+
+.dashboard-page .certificate-header,
+.dashboard-page .reward-header {
+    display: grid;
+    justify-items: center;
+    gap: 0.45rem;
+    margin: 0 0 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1ece8;
+    text-align: center;
+}
+
+.dashboard-page .certificate-icon,
+.dashboard-page .reward-icon-large {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    margin: 0;
+    border-radius: 8px;
+    background: rgba(255,152,0,0.14);
+    color: var(--accent-color);
+    font-size: 34px;
+}
+
+.dashboard-page .reward-icon-large {
+    font-size: 36px;
+}
+
+.dashboard-page .certificate-header h4,
+.dashboard-page .reward-header h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04rem;
+}
+
+.dashboard-page .certificate-body,
+.dashboard-page .reward-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: 0.35rem 0;
+    text-align: center;
+}
+
+.dashboard-page .certificate-presented,
+.dashboard-page .certificate-for,
+.dashboard-page .certificate-date,
+.dashboard-page .certificate-desc,
+.dashboard-page .reward-description {
+    color: #5f6470;
+}
+
+.dashboard-page .certificate-recipient,
+.dashboard-page .certificate-title,
+.dashboard-page .reward-title {
+    color: var(--text-color);
+    font-family: inherit;
+    line-height: 1.2;
+}
+
+.dashboard-page .certificate-recipient {
+    font-size: clamp(1.2rem, 3vw, 1.55rem);
+}
+
+.dashboard-page .certificate-title,
+.dashboard-page .reward-title {
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    font-weight: 800;
+}
+
+.dashboard-page .certificate-footer {
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid #f1ece8;
+}
+
+.dashboard-page .certificate-seal {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: linear-gradient(90deg,var(--primary-color),var(--accent-color));
+    box-shadow: 0 10px 22px rgba(255,120,0,0.16);
+}
+
+.dashboard-page .flip-hint {
+    gap: 0.35rem;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px dashed rgba(255,152,0,0.35);
+    color: #5f6470;
+}
+
+.dashboard-page .reward-button {
+    align-self: center;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg,var(--primary-color),var(--accent-color));
+    box-shadow: 0 12px 30px rgba(255,120,0,0.14);
+}
+
+.dashboard-page .reward-button:hover {
+    background: linear-gradient(90deg,var(--primary-color),var(--accent-color));
+    box-shadow: 0 16px 34px rgba(255,120,0,0.2);
+}
+
 @media screen and (max-width: 900px) {
     .dashboard-page .dashboard-header {
         grid-template-columns: 1fr;

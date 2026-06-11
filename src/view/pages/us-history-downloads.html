@@ -7,94 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>U.S. History Downloads - Navigate</title>
     <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/downloads.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        .download-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .download-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .download-header h1 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .download-header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .pdf-viewer-container {
-            width: 100%;
-            height: calc(100vh - 350px);
-            min-height: 700px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            background: #f5f5f5;
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .pdf-viewer-container iframe,
-        .pdf-viewer-container embed {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .download-button-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
-        }
-
-        .download-btn .material-icons {
-            font-size: 1.5rem;
-        }
-
-        @media screen and (max-width: 768px) {
-            .download-container {
-                padding: 1rem;
-            }
-            
-            .pdf-viewer-container {
-                height: calc(100vh - 300px);
-                min-height: 500px;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="download-page">
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
     <header class="header">
